@@ -85,7 +85,7 @@ export function SiteHeader({ contact }: { contact: ContactSettings }) {
         </div>
       </div>
 
-      {/* Logo + orange nav strip to the right edge — overflow visible so dropdowns show */}
+      {/* Logo + orange nav — overflow visible so dropdowns show */}
       <div className="relative overflow-visible border-t border-white/0 bg-white">
         <div className="relative flex items-center gap-2 overflow-visible py-1.5 pl-[max(0.75rem,calc((100%-var(--page-max))/2+var(--page-gutter)))] pr-3 sm:gap-4 sm:py-2.5 sm:pr-0">
           <Link

@@ -59,10 +59,10 @@ export function HeaderNav() {
 
   return (
     <>
-      {/* Orange strip → right edge; open tab white+underline, rest pure black */}
+      {/* Orange strip — max 4xl, flush to right edge, round left only */}
       <nav
         aria-label="Primary"
-        className="nav-bar ml-3 hidden h-[50px] min-w-0 flex-1 items-stretch overflow-visible rounded-l-full bg-[var(--orange)] lg:flex"
+        className="nav-bar ml-auto hidden h-[50px] w-full max-w-4xl min-w-0 items-stretch overflow-visible rounded-l-full rounded-r-none bg-[var(--orange)] lg:flex"
       >
         {links.map((link, index) => {
           const active = index === activeIndex;
