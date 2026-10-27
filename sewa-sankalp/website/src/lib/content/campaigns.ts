@@ -45,9 +45,9 @@ export const FEATURED_CAMPAIGN: Campaign = {
   target: 500000,
   status: "featured",
   highlights: [
-    { icon: "book", label: "1,000+ Children Supported" },
-    { icon: "people", label: "25+ Learning Centers" },
-    { icon: "graduation", label: "Better Future Opportunities" },
+    { icon: "book", label: "1,000+\nChildren Supported" },
+    { icon: "people", label: "25+\nLearning Centers" },
+    { icon: "graduation", label: "Better\nFuture Opportunities" },
   ],
 };
 

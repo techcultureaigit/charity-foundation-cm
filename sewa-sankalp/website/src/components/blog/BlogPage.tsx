@@ -81,7 +81,7 @@ export function BlogPageView({ heroImageUrl }: { heroImageUrl: string }) {
               <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
                 Our Blog
               </p>
-              <h1 className="display mt-1.5 text-[clamp(1.55rem,7vw,3rem)] font-bold leading-[1.08] text-[#0A2E26] sm:mt-2">
+              <h1 className="display mt-1.5 text-[clamp(1.55rem,7vw,3rem)] font-bold leading-[1.08] text-[var(--forest)] sm:mt-2">
                 <AccentText
                   text="Stories that Create Change."
                   accent="Create Change."
@@ -336,7 +336,7 @@ export function BlogPageView({ heroImageUrl }: { heroImageUrl: string }) {
         <LeafCorner corner="br" className="opacity-25" />
         <div className="page-shell relative z-[1] flex flex-col items-start justify-between gap-5 md:flex-row md:items-center">
           <div>
-            <h2 className="display text-[clamp(1.4rem,2.2vw,1.9rem)] font-bold">
+            <h2 className="display text-[clamp(1.4rem,2.2vw,1.9rem)] font-bold text-white">
               Get the Latest Stories & Updates
             </h2>
             <p className="mt-1.5 max-w-md text-[13px] text-white/75">

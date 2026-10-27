@@ -50,7 +50,7 @@ export function InvolveSection({
           subtitle={extras.involveSubtitle}
         />
 
-        <div className="mx-auto mt-6 grid max-w-5xl gap-4 md:mt-7 md:grid-cols-3 md:gap-5">
+        <div className="mt-6 grid gap-4 md:mt-7 md:grid-cols-3 md:gap-5 lg:gap-7">
           {cards.map((card) => {
             const theme = themes[card.theme] ?? themes.cream;
             return (

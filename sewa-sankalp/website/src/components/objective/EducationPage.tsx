@@ -60,24 +60,24 @@ const campaigns = [
     title: "School Kit Drive 2026",
     text: "Bags, notebooks and stationery for children starting a new academic year.",
     image: "/uploads/event-02-education.jpg",
-    raised: "₹1,85,000",
-    target: "₹2,50,000",
+    raised: "?1,85,000",
+    target: "?2,50,000",
     pct: 74,
   },
   {
     title: "Girl Child Scholarship",
     text: "Annual scholarships keeping girls in secondary school across Dehradun.",
     image: "/uploads/education-mid.jpg",
-    raised: "₹3,20,000",
-    target: "₹5,00,000",
+    raised: "?3,20,000",
+    target: "?5,00,000",
     pct: 64,
   },
   {
     title: "Digital Learning Lab",
     text: "Tablets and after-school tutoring for first-generation learners.",
     image: "/uploads/cause-02-education.jpg",
-    raised: "₹95,000",
-    target: "₹2,00,000",
+    raised: "?95,000",
+    target: "?2,00,000",
     pct: 48,
   },
 ];
@@ -180,12 +180,12 @@ export function EducationPageView() {
         <LeafCorner corner="tl" className="opacity-80" />
         <LeafCorner corner="bl" className="opacity-55" />
 
-        <div className="relative z-[1] lg:min-h-[460px] xl:min-h-[520px]">
+        <div className="relative z-[1] lg:min-h-[322px] xl:min-h-[364px]">
           {/*
             Same left inset as header logo via page-shell — content parallel with logo.
             Top-aligned under header (not vertically centered under the logo).
           */}
-          <div className="page-shell relative pt-5 pb-8 sm:pt-6 sm:pb-10 lg:flex lg:min-h-[460px] lg:items-start lg:pt-6 lg:pb-14 xl:min-h-[520px] xl:pt-7">
+          <div className="page-shell relative pt-3.5 pb-5 sm:pt-4 sm:pb-7 lg:flex lg:min-h-[322px] lg:items-start lg:pt-4 lg:pb-9 xl:min-h-[364px] xl:pt-5">
             <div className="relative w-full max-w-xl lg:w-[44%] lg:max-w-none xl:w-[42%]">
               <nav
                 aria-label="Breadcrumb"
@@ -203,11 +203,11 @@ export function EducationPageView() {
                 <span className="font-semibold text-[#D68C23]">Education</span>
               </nav>
 
-              <p className="nav-bar mt-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#D68C23]">
+              <p className="nav-bar mt-3 text-[11px] font-bold uppercase tracking-[0.24em] text-[#D68C23]">
                 Our Objectives
               </p>
 
-              <h1 className="display mt-2 text-[clamp(1.65rem,7vw,3.2rem)] font-bold leading-[1.12] tracking-[-0.01em] text-[#0A2E26]">
+              <h1 className="display mt-1.5 text-[clamp(1.55rem,6.5vw,2.75rem)] font-bold leading-[1.12] tracking-[-0.01em] text-[var(--forest)]">
                 <AccentText
                   text="Building a Better Future Through Education"
                   accent="Education"
@@ -216,19 +216,19 @@ export function EducationPageView() {
                 />
               </h1>
 
-              <div className="relative mt-4 max-w-[34rem]">
-                <p className="text-[13.5px] leading-[1.7] text-[#4A4A4A] sm:text-[14.5px] sm:leading-[1.75]">
+              <div className="relative mt-3 max-w-[34rem]">
+                <p className="text-[13px] leading-[1.65] text-[#4A4A4A] sm:text-[14px] sm:leading-[1.7]">
                   We believe education is the foundation of a stronger, more
                   equitable society. Our initiatives focus on providing quality
                   education, learning resources and opportunities for
                   underprivileged children and youth.
                 </p>
-                <OrangeSpiral className="pointer-events-none absolute -right-1 top-1/2 hidden h-14 w-14 -translate-y-1/2 translate-x-full opacity-90 sm:block lg:-right-2 xl:-right-6" />
+                <OrangeSpiral className="pointer-events-none absolute -right-1 top-1/2 hidden h-12 w-12 -translate-y-1/2 translate-x-full opacity-90 sm:block lg:-right-2 xl:-right-6" />
               </div>
             </div>
 
             {/* Mobile image (flows under copy) */}
-            <div className="relative mt-8 aspect-[5/4] w-full lg:hidden">
+            <div className="relative mt-5 aspect-[5/3.5] w-full lg:hidden">
               <HeroPhotoFrame
                 src="/uploads/education-mid.jpg"
                 alt="Student learning with teacher support in classroom"
@@ -249,7 +249,7 @@ export function EducationPageView() {
       </section>
 
       {/* Key Focus Areas */}
-      <section className="relative bg-[#F7F3EA] pt-7 pb-12 sm:pt-8 sm:pb-14 lg:pt-9 lg:pb-16">
+      <section className="relative bg-white pt-7 pb-5 sm:pt-8 sm:pb-6 lg:pt-9 lg:pb-7">
         <div className="page-shell relative">
           <h2 className="display text-center text-[clamp(1.7rem,2.6vw,2.25rem)] font-bold text-[var(--forest)]">
             Key Focus Areas
@@ -262,17 +262,19 @@ export function EducationPageView() {
             {focusAreas.map((item) => (
               <div
                 key={item.title}
-                className="rounded-[1.25rem] bg-white px-6 py-8 text-center shadow-[0_8px_28px_rgba(0,51,43,0.06)]"
+                className="flex items-start gap-4 rounded-[1.25rem] border border-[#EFE6D8] bg-white px-5 py-5 shadow-[0_8px_28px_rgba(0,51,43,0.06)] sm:px-5 sm:py-6"
               >
-                <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#F3E0C8] text-[#D97706]">
-                  <UtilityIcon name={item.icon} className="h-6 w-6" />
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#F3E0C8] text-[#D97706] sm:h-14 sm:w-14">
+                  <UtilityIcon name={item.icon} className="h-5 w-5 sm:h-6 sm:w-6" />
                 </span>
-                <h3 className="mt-5 text-[15.5px] font-bold text-[var(--forest)]">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-[13px] leading-[1.65] text-[#6B6B6B]">
-                  {item.text}
-                </p>
+                <div className="min-w-0 text-left">
+                  <h3 className="text-[15px] font-bold leading-snug text-[var(--forest)] sm:text-[15.5px]">
+                    {item.title}
+                  </h3>
+                  <p className="mt-1.5 text-[13px] leading-[1.65] text-[#6B6B6B]">
+                    {item.text}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
@@ -280,7 +282,7 @@ export function EducationPageView() {
       </section>
 
       {/* How We Create Impact — icon left + text right, orange arrows between */}
-      <section className="relative overflow-hidden bg-white pt-7 pb-12 sm:pt-8 sm:pb-14 lg:pt-9 lg:pb-16">
+      <section className="relative overflow-hidden bg-white pt-4 pb-12 sm:pt-5 sm:pb-14 lg:pt-6 lg:pb-16">
         <div className="page-shell">
           <h2 className="display text-center text-[clamp(1.7rem,2.6vw,2.25rem)] font-bold text-[var(--forest)]">
             How We Create Impact
@@ -380,7 +382,7 @@ export function EducationPageView() {
                   <UtilityIcon name={stat.icon} className="h-5 w-5" />
                 </span>
                 <div className="min-w-0 text-left">
-                  <p className="display text-[1.55rem] font-bold leading-none text-[#D97706] sm:text-[1.7rem]">
+                  <p className="text-[1.55rem] font-bold leading-none text-[#D97706] sm:text-[1.7rem]">
                     {stat.value}
                   </p>
                   <p className="mt-1 text-[12px] leading-snug text-[#6B6B6B]">
@@ -398,6 +400,10 @@ export function EducationPageView() {
         <h2 className="display text-center text-[clamp(1.7rem,2.6vw,2.25rem)] font-bold text-[var(--forest)]">
           Related Campaigns
         </h2>
+        <p className="mx-auto mt-2 max-w-xl text-center text-[13.5px] leading-relaxed text-[#6B6B6B]">
+          Support our ongoing education campaigns and help us to create lasting
+          change.
+        </p>
         <div className="mt-9 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {campaigns.map((c) => (
             <article
@@ -438,7 +444,7 @@ export function EducationPageView() {
                 </div>
                 <Link
                   href="/get-involved"
-                  className="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#D97706] transition-colors hover:text-[#c46a08]"
+                  className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg border-2 border-[#D97706] bg-transparent px-4 py-2.5 text-[13px] font-semibold text-[#D97706] transition-colors hover:bg-[#D97706] hover:text-white"
                 >
                   View Campaign
                   <UtilityIcon name="arrow" className="h-3.5 w-3.5" />
@@ -462,7 +468,7 @@ export function EducationPageView() {
           </div>
           <div className="flex flex-1 flex-col justify-center gap-5 px-6 py-8 sm:px-9 lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:px-12">
             <div className="max-w-lg">
-              <h2 className="display text-[clamp(1.45rem,2.3vw,2rem)] font-bold leading-tight">
+              <h2 className="display text-[clamp(1.45rem,2.3vw,2rem)] font-bold leading-tight !text-white">
                 Support Education, Empower Lives.
               </h2>
               <p className="mt-2 text-[14px] leading-relaxed text-white/75">

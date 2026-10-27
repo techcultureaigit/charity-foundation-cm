@@ -52,7 +52,7 @@ export function CausesSection({
           accent={extras.causesAccentWords}
         />
 
-        <div className="mx-auto mt-6 grid max-w-5xl gap-4 md:mt-7 md:grid-cols-3 md:gap-5">
+        <div className="mt-6 grid gap-4 md:mt-7 md:grid-cols-3 md:gap-5 lg:gap-7">
           {causes.map((cause, index) => {
             const accent = accents[index % accents.length];
             const percent =

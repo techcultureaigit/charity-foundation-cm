@@ -98,7 +98,7 @@ export function ContactPageView({
               <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
                 Get in Touch
               </p>
-              <h1 className="display mt-1.5 text-[clamp(1.7rem,7vw,3.25rem)] font-bold leading-[1.05] text-[#0A2E26] sm:mt-2">
+              <h1 className="display mt-1.5 text-[clamp(1.7rem,7vw,3.25rem)] font-bold leading-[1.05] text-[var(--forest)] sm:mt-2">
                 <AccentText
                   text={page.headline || "Contact Us"}
                   accent={accent}
@@ -120,8 +120,8 @@ export function ContactPageView({
 
         {/*
           Reference layout:
-          LEFT  → Send Us a Message form
-          RIGHT → Our Contact Information (Address | Call | Email)
+          LEFT  ? Send Us a Message form
+          RIGHT ? Our Contact Information (Address | Call | Email)
                   + Find Us on Map
         */}
         <div className="page-shell relative z-[1] grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:items-start">
@@ -138,7 +138,7 @@ export function ContactPageView({
               </p>
 
               {/*
-                Address wider col + nowrap → exactly 2 lines.
+                Address wider col + nowrap ? exactly 2 lines.
                 Email smaller font so it doesn't steal width.
               */}
               <div className="mt-6 grid grid-cols-1 gap-4 min-[520px]:grid-cols-[1.45fr_0.7fr_0.95fr] min-[520px]:gap-2.5 lg:gap-3">

@@ -105,15 +105,19 @@ export function HeaderNav() {
                 </span>
               </Link>
               {link.children ? (
-                <div className="nav-dropdown absolute left-1/2 top-full z-[60] w-52 -translate-x-1/2 pt-2">
-                  <div className="overflow-hidden rounded-xl bg-white py-2 text-[var(--forest)] shadow-[0_18px_40px_rgba(0,51,43,0.18)]">
+                <div className="nav-dropdown absolute left-1/2 top-full z-[60] w-[10.75rem] -translate-x-1/2 pt-2">
+                  <div className="relative overflow-hidden rounded-xl border border-[#E8DFD0]/90 bg-[#FFFCF0] p-1 shadow-[0_4px_8px_rgba(0,51,43,0.04),0_14px_32px_rgba(0,51,43,0.14)] ring-1 ring-black/[0.03] before:absolute before:left-1/2 before:top-0 before:h-px before:w-8 before:-translate-x-1/2 before:bg-gradient-to-r before:from-transparent before:via-[#D97706]/55 before:to-transparent">
                     {link.children.map((child) => (
                       <Link
                         key={`${link.label}-${child.href}`}
                         href={child.href}
-                        className="block px-4 py-2.5 text-[13px] font-semibold normal-case tracking-normal transition-colors hover:bg-[#F8EBD7] hover:text-[#D97706]"
+                        className="group flex items-center justify-between gap-1.5 rounded-lg px-2.5 py-1.5 text-[12px] font-semibold normal-case tracking-[-0.01em] text-[var(--forest)] transition-[background-color,color] duration-200 hover:bg-[#FFF3E3] hover:text-[#C46A08]"
                       >
-                        {child.label}
+                        <span>{child.label}</span>
+                        <UtilityIcon
+                          name="chevron"
+                          className="h-3 w-3 shrink-0 text-[#C46A08] opacity-55 transition-[opacity,transform] duration-200 group-hover:translate-x-0.5 group-hover:opacity-100"
+                        />
                       </Link>
                     ))}
                   </div>

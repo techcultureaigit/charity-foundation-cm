@@ -2,7 +2,7 @@
 @import "lenis/dist/lenis.css";
 
 :root {
-  --forest: #00332b;
+  --forest: #00332b; /* rgb(0, 51, 43) — brand header / heading green */
   --forest-deep: #002820;
   --forest-soft: #0b4a3f;
   --orange: #e68a00;
@@ -90,6 +90,24 @@ video {
 .display {
   font-family: var(--font-playfair), Georgia, "Times New Roman", serif;
   letter-spacing: -0.01em;
+  color: var(--forest); /* rgb(0, 51, 43) */
+}
+
+/* Section / page headers — brand green unless a utility overrides (e.g. text-white) */
+h1,
+h2,
+h3,
+h4 {
+  color: var(--forest);
+}
+
+/* Let Tailwind text-white win over heading defaults */
+.display.text-white,
+h1.text-white,
+h2.text-white,
+h3.text-white,
+h4.text-white {
+  color: #fff;
 }
 
 .script {
@@ -206,14 +224,17 @@ video {
 .nav-item:focus-within > .nav-dropdown {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
 }
 .nav-dropdown {
   opacity: 0;
   visibility: hidden;
-  transform: translateY(6px);
+  pointer-events: none;
+  transform: translateY(8px) scale(0.98);
+  transform-origin: top center;
   transition:
-    opacity 0.2s ease,
-    transform 0.2s ease,
-    visibility 0.2s;
+    opacity 0.22s ease,
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0.22s;
 }

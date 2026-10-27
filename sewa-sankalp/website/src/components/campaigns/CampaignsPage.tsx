@@ -133,14 +133,15 @@ export function CampaignsPageView() {
         />
         <div className="pointer-events-none absolute inset-0 z-[2] flex items-start pt-4 sm:pt-6 lg:pt-7">
           <div className="page-shell pointer-events-auto flex w-full justify-start">
-            <div className="w-full max-w-[36rem] sm:pl-[4%] lg:pl-[8%]">
+            <div className="w-full max-w-[36rem]">
               <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
                 Our Campaigns
               </p>
-              <h1 className="display mt-1.5 text-[clamp(1.55rem,7vw,3rem)] font-bold leading-[1.08] text-[#0A2E26]">
-                Every Campaign.
-                <br />
-                <span className="text-[#D68C23]">A Brighter Tomorrow.</span>
+              <h1 className="display mt-1.5 text-[clamp(1.55rem,7vw,3rem)] font-bold leading-[1.08] text-[var(--forest)]">
+                <span className="block">Every Campaign.</span>
+                <span className="block whitespace-nowrap text-[#D68C23]">
+                  A Brighter Tomorrow.
+                </span>
               </h1>
               <p className="mt-2 max-w-[30rem] line-clamp-3 text-[12px] leading-[1.65] text-[#4A4A4A] sm:mt-2.5 sm:line-clamp-none sm:text-[13.5px] sm:leading-[1.7]">
                 Together, we can create real change. Our campaigns focus on
@@ -208,61 +209,71 @@ export function CampaignsPageView() {
               </p>
 
               {featured.highlights ? (
-                <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                  {featured.highlights.map((h) => (
-                    <div
-                      key={h.label}
-                      className="flex items-center gap-2.5 text-[12.5px] text-[var(--forest)]"
-                    >
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#D97706] text-white">
-                        <UtilityIcon name={h.icon} className="h-4 w-4" />
-                      </span>
-                      <span className="font-semibold leading-snug">
-                        {h.label}
-                      </span>
-                    </div>
-                  ))}
+                <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-2.5">
+                  {featured.highlights.map((h) => {
+                    const [title, ...rest] = h.label.split("\n");
+                    const subtitle = rest.join("\n");
+                    return (
+                      <div
+                        key={h.label}
+                        className="flex items-start gap-2.5 text-[12.5px]"
+                      >
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#D97706] text-white">
+                          <UtilityIcon name={h.icon} className="h-4 w-4" />
+                        </span>
+                        <span className="min-w-0 font-semibold leading-snug">
+                          <span className="block text-[#D97706]">{title}</span>
+                          {subtitle ? (
+                            <span className="block text-[var(--forest)]">
+                              {subtitle}
+                            </span>
+                          ) : null}
+                        </span>
+                      </div>
+                    );
+                  })}
                 </div>
               ) : null}
 
-              <div className="mt-6">
-                <div
-                  className="h-3 overflow-hidden rounded-full bg-[#ebe4d8]"
-                  role="progressbar"
-                  aria-valuenow={featuredPct}
-                  aria-valuemin={0}
-                  aria-valuemax={100}
-                >
+              <div className="mt-6 flex items-center gap-3 sm:gap-4">
+                <div className="min-w-0 w-[70%]">
                   <div
-                    className="h-full rounded-full bg-[var(--forest)]"
-                    style={{ width: `${featuredPct}%` }}
-                  />
-                </div>
-                <div className="mt-2.5 grid grid-cols-3 items-center gap-1 text-[10.5px] sm:text-[12.5px]">
-                  <span className="font-semibold leading-snug text-[var(--forest)]">
-                    {formatInr(featured.raised)}
-                    <span className="block font-medium text-[#6B6B6B] sm:inline sm:text-inherit">
-                      {" "}
-                      Raised
+                    className="h-3 overflow-hidden rounded-full bg-[#ebe4d8]"
+                    role="progressbar"
+                    aria-valuenow={featuredPct}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                  >
+                    <div
+                      className="h-full rounded-full bg-[#26624A]"
+                      style={{ width: `${featuredPct}%` }}
+                    />
+                  </div>
+                  <div className="mt-2.5 grid grid-cols-3 items-start gap-1 text-[10.5px] sm:text-[12.5px]">
+                    <span className="font-semibold leading-snug text-[var(--forest)]">
+                      {formatInr(featured.raised)}
+                      <span className="mt-0.5 block font-medium text-[#6B6B6B]">
+                        Raised
+                      </span>
                     </span>
-                  </span>
-                  <span className="text-center text-[13px] font-bold text-[var(--forest)] sm:text-[14px]">
-                    {featuredPct}%
-                  </span>
-                  <span className="text-right leading-snug text-[#6B6B6B]">
-                    {formatInr(featured.target)}
-                    <span className="block sm:inline"> Target</span>
-                  </span>
+                    <span className="text-center text-[13px] font-bold text-[#26624A] sm:text-[14px]">
+                      {featuredPct}%
+                    </span>
+                    <span className="text-right leading-snug text-[var(--forest)]">
+                      {formatInr(featured.target)}
+                      <span className="mt-0.5 block font-medium text-[#6B6B6B]">
+                        Target
+                      </span>
+                    </span>
+                  </div>
                 </div>
-              </div>
 
-              <div className="mt-7 flex justify-stretch sm:justify-end">
                 <Link
                   href="/get-involved"
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-b from-[#E8952A] to-[#C46A08] px-5 py-3.5 text-[12.5px] font-bold uppercase tracking-[0.04em] text-white shadow-[0_10px_24px_rgba(196,106,8,0.4)] transition-[filter,transform] hover:brightness-105 hover:shadow-[0_12px_28px_rgba(196,106,8,0.45)] active:translate-y-px sm:w-auto sm:px-6 sm:text-[13px]"
+                  className="inline-flex w-[30%] shrink-0 items-center justify-center gap-1.5 rounded-xl bg-gradient-to-b from-[#E8952A] to-[#C46A08] px-2 py-3 text-center text-[10px] font-bold uppercase leading-tight tracking-[0.03em] text-white shadow-[0_10px_24px_rgba(196,106,8,0.4)] transition-[filter,transform] hover:brightness-105 hover:shadow-[0_12px_28px_rgba(196,106,8,0.45)] active:translate-y-px sm:gap-2 sm:px-3 sm:py-3.5 sm:text-[12px] sm:tracking-[0.04em]"
                 >
-                  Support This Campaign
-                  <UtilityIcon name="arrow" className="h-4 w-4" />
+                  <span className="min-w-0">Support This Campaign</span>
+                  <UtilityIcon name="arrow" className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" />
                 </Link>
               </div>
             </div>
@@ -317,7 +328,7 @@ export function CampaignsPageView() {
                 <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.2em] text-[#D98A29] sm:text-[11px]">
                   Create a Bigger Impact
                 </p>
-                <h2 className="display mt-2 text-[clamp(1.55rem,2.6vw,2.15rem)] font-bold leading-[1.2]">
+                <h2 className="display mt-2 text-[clamp(1.55rem,2.6vw,2.15rem)] font-bold leading-[1.2] text-white">
                   <AccentText
                     text="Your Support Creates Lasting Change."
                     accent="Lasting Change."
@@ -361,7 +372,7 @@ export function CampaignsPageView() {
                   <UtilityIcon name={stat.icon} className="h-5 w-5" />
                 </span>
                 <div className="min-w-0 text-left">
-                  <p className="display text-[1.55rem] font-bold leading-none text-[#D97706] sm:text-[1.7rem]">
+                  <p className="text-[1.55rem] font-bold leading-none text-[#D97706] sm:text-[1.7rem]">
                     {stat.value}
                   </p>
                   <p className="mt-1 text-[12px] leading-snug text-[#6B6B6B]">

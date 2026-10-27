@@ -41,7 +41,7 @@ function FeatureParallax({
         if (!el) return;
         const rect = el.getBoundingClientRect();
         const viewH = window.innerHeight || 1;
-        // Map how far the frame is through the viewport → subtle Y shift
+        // Map how far the frame is through the viewport ? subtle Y shift
         const progress = (viewH - rect.top) / (viewH + rect.height);
         const clamped = Math.max(0, Math.min(1, progress));
         setShift((clamped - 0.5) * 48);
@@ -131,7 +131,7 @@ export function BlogPostPageView({
               <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
                 Our Blog
               </p>
-              <h1 className="display mt-1.5 text-[clamp(1.55rem,7vw,3rem)] font-bold leading-[1.08] text-[#0A2E26] sm:mt-2">
+              <h1 className="display mt-1.5 text-[clamp(1.55rem,7vw,3rem)] font-bold leading-[1.08] text-[var(--forest)] sm:mt-2">
                 <AccentText
                   text="Stories that Create Change."
                   accent="Create Change."
@@ -493,7 +493,7 @@ export function BlogPostPageView({
             <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.2em] text-[#E8C98A]">
               Stay Updated
             </p>
-            <h2 className="display mt-1.5 text-[clamp(1.4rem,2.2vw,1.9rem)] font-bold">
+            <h2 className="display mt-1.5 text-[clamp(1.4rem,2.2vw,1.9rem)] font-bold text-white">
               Get the Latest Stories & Updates
             </h2>
             <p className="mt-1.5 max-w-md text-[13px] text-white/75">

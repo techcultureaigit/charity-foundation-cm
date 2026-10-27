@@ -49,7 +49,7 @@ export function GalleryPageView({
               <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
                 Our Journey in Pictures
               </p>
-              <h1 className="display mt-1.5 text-[clamp(1.7rem,7vw,3.25rem)] font-bold leading-[1.05] text-[#0A2E26] sm:mt-2">
+              <h1 className="display mt-1.5 text-[clamp(1.7rem,7vw,3.25rem)] font-bold leading-[1.05] text-[var(--forest)] sm:mt-2">
                 <AccentText
                   text="Photo Gallery"
                   accent="Gallery"
@@ -67,8 +67,8 @@ export function GalleryPageView({
       </section>
 
       {/*
-        LEFT  → Gallery Albums sidebar (parallel to right column)
-        RIGHT → Filter pills ABOVE images (2nd SS), then cards
+        LEFT  ? Gallery Albums sidebar (parallel to right column)
+        RIGHT ? Filter pills ABOVE images (2nd SS), then cards
       */}
       <section className="relative overflow-hidden py-8 sm:py-10 lg:py-12">
         <LeafCorner corner="bl" tone="forest" className="opacity-70" />
@@ -194,7 +194,7 @@ export function GalleryPageView({
                       onClick={() => setActive("all")}
                       className="text-[11.5px] font-semibold text-[#D97706] hover:underline"
                     >
-                      ← All albums
+                      ? All albums
                     </button>
                   </div>
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3 lg:gap-3.5">
