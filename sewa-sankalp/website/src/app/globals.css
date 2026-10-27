@@ -18,8 +18,15 @@
   --foreground: var(--charcoal);
   /* Shared layout — every section uses the same gutters */
   --page-max: 1320px;
-  --page-gutter: 1rem;
-  --section-y: 3.5rem;
+  --page-gutter: 0.875rem;
+  --section-y: 3rem;
+}
+
+@media (min-width: 400px) {
+  :root {
+    --page-gutter: 1rem;
+    --section-y: 3.5rem;
+  }
 }
 
 @media (min-width: 640px) {
@@ -58,6 +65,7 @@
 
 html {
   scroll-behavior: auto;
+  overflow-x: clip;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -70,6 +78,13 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-poppins), system-ui, sans-serif;
+  overflow-x: clip;
+}
+
+/* Avoid wide media blowing past the viewport (keep absolute/h-* images intact) */
+img,
+video {
+  max-width: 100%;
 }
 
 .display {

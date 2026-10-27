@@ -34,10 +34,12 @@ export function SiteHeader({ contact }: { contact: ContactSettings }) {
     <header className="sticky top-0 z-50 bg-white shadow-[0_1px_0_rgba(0,51,43,0.08)]">
       {/* Top bar — Follow Us left · email + phone together on right */}
       <div className="bg-[var(--forest)] text-white">
-        <div className="page-shell flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 py-2 text-[13px] font-normal sm:text-[13.5px]">
-          <div className="flex items-center gap-2.5">
-            <span className="font-normal text-white">Follow Us:</span>
-            <div className="flex items-center gap-3">
+        <div className="page-shell flex items-center justify-between gap-x-2 py-1.5 text-[11px] font-normal sm:gap-x-4 sm:py-2 sm:text-[13.5px]">
+          <div className="flex min-w-0 items-center gap-1.5 sm:gap-2.5">
+            <span className="hidden font-normal text-white sm:inline">
+              Follow Us:
+            </span>
+            <div className="flex items-center gap-2 sm:gap-3">
               {socials.map((item) => (
                 <a
                   key={item.key}
@@ -47,26 +49,37 @@ export function SiteHeader({ contact }: { contact: ContactSettings }) {
                   aria-label={item.label}
                   className="text-white transition-colors hover:text-[var(--gold)]"
                 >
-                  <SocialIcon name={item.key} className="h-4 w-4" />
+                  <SocialIcon name={item.key} className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 </a>
               ))}
             </div>
           </div>
 
-          <div className="ml-auto flex flex-wrap items-center gap-x-6 gap-y-1">
+          <div className="ml-auto flex min-w-0 max-w-[62%] items-center justify-end gap-x-2.5 sm:max-w-none sm:gap-x-6">
             <a
               href={`mailto:${contact.email}`}
-              className="flex items-center gap-2 font-normal text-white transition-colors hover:text-[var(--gold)]"
+              className="hidden min-w-0 items-center gap-1.5 font-normal text-white transition-colors hover:text-[var(--gold)] sm:flex sm:gap-2 md:max-w-none"
             >
-              <UtilityIcon name="mail" className="h-4 w-4 shrink-0" />
-              <span>{contact.email}</span>
+              <UtilityIcon name="mail" className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" />
+              <span className="truncate sm:overflow-visible sm:whitespace-normal">
+                {contact.email}
+              </span>
+            </a>
+            <a
+              href={`mailto:${contact.email}`}
+              aria-label={`Email ${contact.email}`}
+              className="flex items-center text-white transition-colors hover:text-[var(--gold)] sm:hidden"
+            >
+              <UtilityIcon name="mail" className="h-3.5 w-3.5" />
             </a>
             <a
               href={`tel:${contact.phone.replace(/[^+\d]/g, "")}`}
-              className="flex items-center gap-2 font-normal text-white transition-colors hover:text-[var(--gold)]"
+              className="flex items-center gap-1 font-normal text-white transition-colors hover:text-[var(--gold)] sm:gap-2"
             >
-              <UtilityIcon name="phone" className="h-4 w-4 shrink-0" />
-              {contact.phone}
+              <UtilityIcon name="phone" className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" />
+              <span className="truncate text-[10.5px] sm:whitespace-nowrap sm:text-[inherit]">
+                {contact.phone}
+              </span>
             </a>
           </div>
         </div>
@@ -74,11 +87,11 @@ export function SiteHeader({ contact }: { contact: ContactSettings }) {
 
       {/* Logo + orange nav strip to the right edge — overflow visible so dropdowns show */}
       <div className="relative overflow-visible border-t border-white/0 bg-white">
-        <div className="relative flex items-center gap-3 overflow-visible py-2 pl-[max(1rem,calc((100%-var(--page-max))/2+var(--page-gutter)))] pr-0 sm:gap-4 sm:py-2.5">
+        <div className="relative flex items-center gap-2 overflow-visible py-1.5 pl-[max(0.75rem,calc((100%-var(--page-max))/2+var(--page-gutter)))] pr-3 sm:gap-4 sm:py-2.5 sm:pr-0">
           <Link
             href="/"
             aria-label="Sewa Sankalp Foundation home"
-            className="shrink-0"
+            className="min-w-0 shrink"
           >
             <BrandMark />
           </Link>

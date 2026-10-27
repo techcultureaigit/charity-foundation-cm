@@ -69,22 +69,26 @@ export function BlogPageView({ heroImageUrl }: { heroImageUrl: string }) {
           src={heroImageUrl}
           alt=""
           aria-hidden
-          className="m-0 block h-[200px] w-full max-w-none object-cover object-right sm:h-[230px] lg:h-[260px]"
+          className="m-0 block h-[240px] w-full max-w-none object-cover object-[85%_center] sm:h-[230px] sm:object-right lg:h-[260px]"
         />
-        <div className="pointer-events-none absolute inset-0 z-[1] flex items-center">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-[#FDF8EE] from-[0%] via-[#FDF8EE] via-[48%] to-transparent to-[78%] sm:from-[#FDF8EE]/70 sm:via-[#FDF8EE]/30 sm:to-transparent"
+        />
+        <div className="pointer-events-none absolute inset-0 z-[2] flex items-center">
           <div className="page-shell pointer-events-auto flex w-full justify-start">
-            <div className="w-full max-w-[36rem] py-4 sm:pl-[4%] lg:pl-[8%]">
+            <div className="w-full max-w-[36rem] py-3 sm:py-4 sm:pl-[4%] lg:pl-[8%]">
               <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
                 Our Blog
               </p>
-              <h1 className="display mt-2 text-[clamp(1.9rem,3.6vw,3rem)] font-bold leading-[1.08] text-[#0A2E26]">
+              <h1 className="display mt-1.5 text-[clamp(1.55rem,7vw,3rem)] font-bold leading-[1.08] text-[#0A2E26] sm:mt-2">
                 <AccentText
                   text="Stories that Create Change."
                   accent="Create Change."
                   accentClass="text-[#D68C23]"
                 />
               </h1>
-              <p className="mt-2.5 max-w-[30rem] text-[12.5px] leading-[1.7] text-[#4A4A4A] sm:text-[13.5px]">
+              <p className="mt-2 max-w-[30rem] line-clamp-3 text-[12px] leading-[1.65] text-[#4A4A4A] sm:mt-2.5 sm:line-clamp-none sm:text-[13.5px] sm:leading-[1.7]">
                 Real stories from classrooms, communities and campaigns — how
                 collective care creates lasting change.
               </p>

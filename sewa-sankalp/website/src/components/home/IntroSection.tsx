@@ -145,22 +145,22 @@ export function IntroSection({
                   />
 
                   {/* Text sits on the empty pastel left of the designed art */}
-                  <div className="absolute inset-0 z-10 flex w-[56%] flex-col justify-between p-3.5 sm:w-[54%] sm:p-4">
+                  <div className="absolute inset-0 z-10 flex w-[58%] flex-col justify-between p-3 sm:w-[54%] sm:p-4">
                     <div>
-                      <div className="flex items-start gap-2">
+                      <div className="flex items-start gap-1.5 sm:gap-2">
                         <span
-                          className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border bg-white/90 ${style.icon}`}
+                          className={`mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border bg-white/90 sm:h-8 sm:w-8 ${style.icon}`}
                         >
                           <IconByKey
                             iconKey={area.iconKey}
-                            className="h-3.5 w-3.5"
+                            className="h-3 w-3 sm:h-3.5 sm:w-3.5"
                           />
                         </span>
-                        <h4 className="display pt-0.5 text-[0.98rem] font-bold leading-[1.15] text-[var(--forest)] sm:text-[1.08rem]">
+                        <h4 className="display pt-0.5 text-[0.9rem] font-bold leading-[1.15] text-[var(--forest)] sm:text-[1.08rem]">
                           {area.title}
                         </h4>
                       </div>
-                      <p className="mt-1.5 line-clamp-3 text-[11px] leading-[1.5] text-[var(--charcoal)]/78 sm:line-clamp-4 sm:text-[11.5px]">
+                      <p className="mt-1.5 line-clamp-3 text-[10.5px] leading-[1.45] text-[var(--charcoal)]/78 sm:line-clamp-4 sm:text-[11.5px] sm:leading-[1.5]">
                         {area.description}
                       </p>
                     </div>

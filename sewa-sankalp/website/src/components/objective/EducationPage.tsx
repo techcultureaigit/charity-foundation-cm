@@ -207,7 +207,7 @@ export function EducationPageView() {
                 Our Objectives
               </p>
 
-              <h1 className="display mt-2 text-[clamp(2rem,3.8vw,3.2rem)] font-bold leading-[1.12] tracking-[-0.01em] text-[#0A2E26]">
+              <h1 className="display mt-2 text-[clamp(1.65rem,7vw,3.2rem)] font-bold leading-[1.12] tracking-[-0.01em] text-[#0A2E26]">
                 <AccentText
                   text="Building a Better Future Through Education"
                   accent="Education"
@@ -217,7 +217,7 @@ export function EducationPageView() {
               </h1>
 
               <div className="relative mt-4 max-w-[34rem]">
-                <p className="text-[14.5px] leading-[1.75] text-[#4A4A4A]">
+                <p className="text-[13.5px] leading-[1.7] text-[#4A4A4A] sm:text-[14.5px] sm:leading-[1.75]">
                   We believe education is the foundation of a stronger, more
                   equitable society. Our initiatives focus on providing quality
                   education, learning resources and opportunities for

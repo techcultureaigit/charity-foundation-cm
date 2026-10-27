@@ -125,20 +125,24 @@ export function CampaignsPageView() {
           src="/uploads/contact-hero.png"
           alt=""
           aria-hidden
-          className="m-0 block h-[200px] w-full max-w-none object-cover object-right sm:h-[230px] lg:h-[260px]"
+          className="m-0 block h-[240px] w-full max-w-none object-cover object-[85%_center] sm:h-[230px] sm:object-right lg:h-[260px]"
         />
-        <div className="pointer-events-none absolute inset-0 z-[1] flex items-start pt-5 sm:pt-6 lg:pt-7">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-[#FDF8EE] from-[0%] via-[#FDF8EE] via-[48%] to-transparent to-[78%] sm:from-[#FDF8EE]/70 sm:via-[#FDF8EE]/30 sm:to-transparent"
+        />
+        <div className="pointer-events-none absolute inset-0 z-[2] flex items-start pt-4 sm:pt-6 lg:pt-7">
           <div className="page-shell pointer-events-auto flex w-full justify-start">
             <div className="w-full max-w-[36rem] sm:pl-[4%] lg:pl-[8%]">
               <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
                 Our Campaigns
               </p>
-              <h1 className="display mt-1.5 text-[clamp(1.9rem,3.6vw,3rem)] font-bold leading-[1.08] text-[#0A2E26]">
+              <h1 className="display mt-1.5 text-[clamp(1.55rem,7vw,3rem)] font-bold leading-[1.08] text-[#0A2E26]">
                 Every Campaign.
                 <br />
                 <span className="text-[#D68C23]">A Brighter Tomorrow.</span>
               </h1>
-              <p className="mt-2.5 max-w-[30rem] text-[12.5px] leading-[1.7] text-[#4A4A4A] sm:text-[13.5px]">
+              <p className="mt-2 max-w-[30rem] line-clamp-3 text-[12px] leading-[1.65] text-[#4A4A4A] sm:mt-2.5 sm:line-clamp-none sm:text-[13.5px] sm:leading-[1.7]">
                 Together, we can create real change. Our campaigns focus on
                 supporting children, empowering women, improving health and
                 strengthening communities for a better tomorrow.
@@ -187,7 +191,7 @@ export function CampaignsPageView() {
               </span>
             </div>
 
-            <div className="flex flex-col justify-center px-6 py-8 sm:px-9 sm:py-10 lg:px-10 lg:py-11">
+            <div className="flex flex-col justify-center px-4 py-7 sm:px-9 sm:py-10 lg:px-10 lg:py-11">
               <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
                 Featured Campaign
               </p>
@@ -234,23 +238,28 @@ export function CampaignsPageView() {
                     style={{ width: `${featuredPct}%` }}
                   />
                 </div>
-                <div className="mt-2.5 grid grid-cols-3 items-center text-[12.5px]">
-                  <span className="font-semibold text-[var(--forest)]">
-                    {formatInr(featured.raised)} Raised
+                <div className="mt-2.5 grid grid-cols-3 items-center gap-1 text-[10.5px] sm:text-[12.5px]">
+                  <span className="font-semibold leading-snug text-[var(--forest)]">
+                    {formatInr(featured.raised)}
+                    <span className="block font-medium text-[#6B6B6B] sm:inline sm:text-inherit">
+                      {" "}
+                      Raised
+                    </span>
                   </span>
-                  <span className="text-center text-[14px] font-bold text-[var(--forest)]">
+                  <span className="text-center text-[13px] font-bold text-[var(--forest)] sm:text-[14px]">
                     {featuredPct}%
                   </span>
-                  <span className="text-right text-[#6B6B6B]">
-                    {formatInr(featured.target)} Target
+                  <span className="text-right leading-snug text-[#6B6B6B]">
+                    {formatInr(featured.target)}
+                    <span className="block sm:inline"> Target</span>
                   </span>
                 </div>
               </div>
 
-              <div className="mt-7 flex justify-end">
+              <div className="mt-7 flex justify-stretch sm:justify-end">
                 <Link
                   href="/get-involved"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-b from-[#E8952A] to-[#C46A08] px-6 py-3.5 text-[13px] font-bold uppercase tracking-[0.04em] text-white shadow-[0_10px_24px_rgba(196,106,8,0.4)] transition-[filter,transform] hover:brightness-105 hover:shadow-[0_12px_28px_rgba(196,106,8,0.45)] active:translate-y-px"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-b from-[#E8952A] to-[#C46A08] px-5 py-3.5 text-[12.5px] font-bold uppercase tracking-[0.04em] text-white shadow-[0_10px_24px_rgba(196,106,8,0.4)] transition-[filter,transform] hover:brightness-105 hover:shadow-[0_12px_28px_rgba(196,106,8,0.45)] active:translate-y-px sm:w-auto sm:px-6 sm:text-[13px]"
                 >
                   Support This Campaign
                   <UtilityIcon name="arrow" className="h-4 w-4" />

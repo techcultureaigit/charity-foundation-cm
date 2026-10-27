@@ -203,13 +203,13 @@ export function SiteFooter({
             </div>
 
             {/* Slogan — white script + gold brush underline (reference) */}
-            <div className="mt-7 max-w-[16rem] -rotate-[3deg]">
-              <p className="script text-[1.65rem] leading-[1.2] text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)] sm:text-[1.85rem]">
+            <div className="mt-6 max-w-[15rem] -rotate-[2deg] sm:mt-7 sm:max-w-[16rem] sm:-rotate-[3deg]">
+              <p className="script text-[1.45rem] leading-[1.2] text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)] sm:text-[1.85rem]">
                 {tagline.includes("Tomorrow") ? (
                   <>
                     Together for
                     <br />
-                    <span className="pl-4">a Brighter Tomorrow</span>
+                    <span className="pl-3 sm:pl-4">a Brighter Tomorrow</span>
                   </>
                 ) : (
                   tagline
@@ -217,7 +217,7 @@ export function SiteFooter({
               </p>
               <svg
                 viewBox="0 0 220 14"
-                className="mt-1 ml-3 h-3 w-[11rem] text-[var(--gold)] sm:w-[12.5rem]"
+                className="mt-1 ml-2 h-2.5 w-[9.5rem] text-[var(--gold)] sm:ml-3 sm:h-3 sm:w-[12.5rem]"
                 aria-hidden
               >
                 <path

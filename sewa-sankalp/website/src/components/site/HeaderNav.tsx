@@ -126,7 +126,7 @@ export function HeaderNav() {
 
       <button
         type="button"
-        className="nav-bar ml-auto flex h-11 items-center gap-2 rounded-full bg-[var(--orange)] px-4 text-[12px] font-extrabold uppercase tracking-[0.08em] text-black lg:hidden"
+        className="nav-bar ml-auto flex h-9 shrink-0 items-center gap-1.5 rounded-full bg-[var(--orange)] px-3 text-[11px] font-extrabold uppercase tracking-[0.08em] text-black sm:h-11 sm:gap-2 sm:px-4 sm:text-[12px] lg:hidden"
         onClick={() => setOpen((value) => !value)}
         aria-expanded={open}
         aria-label="Toggle menu"
@@ -134,12 +134,12 @@ export function HeaderNav() {
         Menu
         <UtilityIcon
           name="chevron-down"
-          className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`}
+          className={`h-3 w-3 transition-transform sm:h-3.5 sm:w-3.5 ${open ? "rotate-180" : ""}`}
         />
       </button>
 
       {open ? (
-        <div className="nav-bar absolute inset-x-0 top-full z-50 border-t border-black/10 bg-[var(--orange)] px-5 py-3 shadow-lg lg:hidden">
+        <div className="nav-bar absolute inset-x-0 top-full z-50 max-h-[min(70vh,520px)] overflow-y-auto border-t border-black/10 bg-[var(--orange)] px-4 py-3 shadow-lg sm:px-5 lg:hidden">
           <div className="flex flex-col">
             {links.flatMap((link) => [
               <Link

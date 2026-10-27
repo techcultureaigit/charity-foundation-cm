@@ -69,15 +69,17 @@ export function BrandMark({
     : "/uploads/logo-header.png?v=1";
 
   return (
-    <span className={`inline-flex items-center ${className}`}>
+    <span
+      className={`inline-flex max-w-full items-center ${className}`}
+    >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}
         alt="Sewa Sankalp Foundation"
         className={
           light
-            ? "h-12 w-auto max-w-[240px] object-contain object-left sm:h-14 sm:max-w-[280px]"
-            : "h-11 w-auto max-w-[220px] object-contain object-left sm:h-12 sm:max-w-[250px] lg:h-[3.25rem] lg:max-w-[280px]"
+            ? "h-9 w-auto max-w-[min(200px,62vw)] object-contain object-left sm:h-11 sm:max-w-[240px] md:h-[3.25rem] md:max-w-[280px]"
+            : "h-8 w-auto max-w-[min(148px,46vw)] object-contain object-left sm:h-10 sm:max-w-[190px] md:h-11 md:max-w-[230px] lg:h-[3.15rem] lg:max-w-[270px]"
         }
       />
     </span>

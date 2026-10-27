@@ -117,27 +117,27 @@ function StatIcon({ index }: { index: number }) {
 function StatsBar({ stats }: { stats: ImpactHighlight[] }) {
   return (
     <div className="mx-auto w-full max-w-[840px]">
-      <div className="relative overflow-hidden rounded-[1.75rem] bg-white px-3 py-4 shadow-[0_18px_44px_rgba(0,51,43,0.16)] sm:px-5 sm:py-5">
+      <div className="relative overflow-hidden rounded-[1.25rem] bg-white px-2.5 py-3 shadow-[0_18px_44px_rgba(0,51,43,0.16)] sm:rounded-[1.75rem] sm:px-5 sm:py-5">
         <svg
           aria-hidden
           viewBox="0 0 90 90"
-          className="pointer-events-none absolute -left-1 top-1/2 h-16 w-16 -translate-y-1/2 text-[#e8d6b0] opacity-75"
+          className="pointer-events-none absolute -left-1 top-1/2 hidden h-16 w-16 -translate-y-1/2 text-[#e8d6b0] opacity-75 sm:block"
         >
           <path d="M16 78C22 40 44 16 78 8c-8 36-26 56-62 70Z" fill="currentColor" />
         </svg>
         <svg
           aria-hidden
           viewBox="0 0 90 90"
-          className="pointer-events-none absolute -right-1 top-1/2 h-16 w-16 -translate-y-1/2 -scale-x-100 text-[#e8d6b0] opacity-75"
+          className="pointer-events-none absolute -right-1 top-1/2 hidden h-16 w-16 -translate-y-1/2 -scale-x-100 text-[#e8d6b0] opacity-75 sm:block"
         >
           <path d="M16 78C22 40 44 16 78 8c-8 36-26 56-62 70Z" fill="currentColor" />
         </svg>
 
-        <div className="relative grid sm:grid-cols-3">
+        <div className="relative grid grid-cols-3 gap-1 sm:gap-0">
           {stats.map((item, index) => (
             <div
               key={item.id}
-              className="relative flex items-center justify-center gap-3 px-2 py-1 sm:px-3"
+              className="relative flex flex-col items-center justify-center gap-1.5 px-1 py-1 text-center sm:flex-row sm:gap-3 sm:px-3 sm:text-left"
             >
               {index > 0 ? (
                 <span
@@ -145,15 +145,14 @@ function StatsBar({ stats }: { stats: ImpactHighlight[] }) {
                   className="absolute left-0 top-1/2 hidden h-11 w-px -translate-y-1/2 bg-[#ddd8ce] sm:block"
                 />
               ) : null}
-              {/* Solid orange circle + white icon — PDF style */}
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[var(--orange)] text-white shadow-[0_6px_14px_rgba(230,138,0,0.3)]">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--orange)] text-white shadow-[0_6px_14px_rgba(230,138,0,0.3)] sm:h-12 sm:w-12">
                 <StatIcon index={index} />
               </span>
               <span className="min-w-0 leading-none">
-                <span className="nav-bar block text-[1.85rem] font-extrabold tracking-tight text-[var(--orange)] sm:text-[2.05rem]">
+                <span className="nav-bar block text-[1.15rem] font-extrabold tracking-tight text-[var(--orange)] sm:text-[1.85rem] md:text-[2.05rem]">
                   {item.value}
                 </span>
-                <span className="nav-bar mt-1 block text-[11px] font-bold uppercase tracking-[0.1em] text-[#3a3a3a]">
+                <span className="nav-bar mt-0.5 block text-[8.5px] font-bold uppercase tracking-[0.06em] text-[#3a3a3a] sm:mt-1 sm:text-[11px] sm:tracking-[0.1em]">
                   {item.label}
                 </span>
               </span>
@@ -209,7 +208,7 @@ export function HeroSection({
 
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[var(--ivory)] from-[0%] via-[var(--ivory)]/93 via-[34%] to-transparent to-[64%]"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[var(--ivory)] from-[0%] via-[var(--ivory)]/96 via-[48%] to-transparent to-[78%] sm:via-[var(--ivory)]/90 sm:via-[32%] sm:to-[60%] lg:via-[28%] lg:to-[55%]"
         />
 
         <HeroCornerFlowers />
@@ -217,12 +216,12 @@ export function HeroSection({
         <LeafCorner corner="br" className="opacity-55" />
         <HeroWave />
 
-        <div className="page-shell relative z-10 flex min-h-[500px] flex-col pt-10 sm:min-h-[540px] lg:min-h-[580px] lg:pt-12">
-          <div className="max-w-[32rem] flex-1 pb-36 pt-2 sm:pb-40 lg:pb-44">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[var(--gold-deep)] sm:text-xs">
+        <div className="page-shell relative z-10 flex min-h-[420px] flex-col pt-7 sm:min-h-[500px] sm:pt-10 lg:min-h-[580px] lg:pt-12">
+          <div className="max-w-[32rem] flex-1 pb-40 pt-1 sm:pb-40 sm:pt-2 lg:pb-44">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--gold-deep)] sm:text-[11px] sm:tracking-[0.28em] md:text-xs">
               Sewa Sankalp Foundation
             </p>
-            <h1 className="display mt-3 text-[clamp(2.6rem,5.2vw,4.6rem)] font-bold leading-[0.98] text-[var(--forest)]">
+            <h1 className="display mt-2.5 text-[clamp(2.05rem,8vw,4.6rem)] font-bold leading-[1.02] text-[var(--forest)] sm:mt-3 sm:leading-[0.98]">
               <AccentText
                 text={page.headline}
                 accent={page.heroAccentWords}
@@ -270,7 +269,7 @@ function HeroPhoto({ image }: { image?: MediaItem }) {
     <img
       src={src}
       alt={alt}
-      className="absolute inset-0 h-full w-full object-cover object-[58%_28%]"
+      className="absolute inset-0 h-full w-full object-cover object-[82%_28%] sm:object-[65%_28%] lg:object-[58%_28%]"
     />
   );
 }

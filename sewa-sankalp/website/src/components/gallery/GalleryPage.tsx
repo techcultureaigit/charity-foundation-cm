@@ -37,22 +37,26 @@ export function GalleryPageView({
           src={heroImageUrl}
           alt=""
           aria-hidden
-          className="m-0 block h-[200px] w-full max-w-none object-cover object-right sm:h-[230px] lg:h-[260px]"
+          className="m-0 block h-[240px] w-full max-w-none object-cover object-[85%_center] sm:h-[230px] sm:object-right lg:h-[260px]"
         />
-        <div className="pointer-events-none absolute inset-0 z-[1] flex items-center">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-[#FDF8EE] from-[0%] via-[#FDF8EE] via-[48%] to-transparent to-[78%] sm:from-[#FDF8EE]/70 sm:via-[#FDF8EE]/30 sm:to-transparent"
+        />
+        <div className="pointer-events-none absolute inset-0 z-[2] flex items-center">
           <div className="page-shell pointer-events-auto flex w-full justify-start">
-            <div className="w-full max-w-[34rem] py-4 sm:pl-[4%] lg:pl-[8%]">
+            <div className="w-full max-w-[34rem] py-3 sm:py-4 sm:pl-[4%] lg:pl-[8%]">
               <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
                 Our Journey in Pictures
               </p>
-              <h1 className="display mt-2 text-[clamp(2.15rem,4vw,3.25rem)] font-bold leading-[1.05] text-[#0A2E26]">
+              <h1 className="display mt-1.5 text-[clamp(1.7rem,7vw,3.25rem)] font-bold leading-[1.05] text-[#0A2E26] sm:mt-2">
                 <AccentText
                   text="Photo Gallery"
                   accent="Gallery"
                   accentClass="text-[#D68C23]"
                 />
               </h1>
-              <p className="mt-2.5 max-w-[28rem] text-[12.5px] leading-[1.7] text-[#4A4A4A] sm:text-[13.5px]">
+              <p className="mt-2 max-w-[28rem] line-clamp-3 text-[12px] leading-[1.65] text-[#4A4A4A] sm:mt-2.5 sm:line-clamp-none sm:text-[13.5px] sm:leading-[1.7]">
                 Moments of service, smiles and solidarity — explore albums from
                 our drives, education programmes, health camps and community
                 work across Uttarakhand.
