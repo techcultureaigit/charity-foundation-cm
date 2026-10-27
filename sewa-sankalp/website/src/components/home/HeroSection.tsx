@@ -1,26 +1,20 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import type { ImpactHighlight, MediaItem, PageContent } from "@/lib/types";
 import { AccentText, CornerSweep, LeafCorner } from "./shared";
 
 const HERO_SLIDE_MS = 5000;
-const HERO_FALLBACK_SLIDES = [
+const HERO_SLIDES = [
   {
     src: "/uploads/hero-home.jpg",
     alt: "Sewa Sankalp Foundation community work",
-  },
-  {
-    src: "/uploads/hero-home-kids.jpg",
-    alt: "Children smiling in a mountain village",
-  },
-  {
-    src: "/uploads/hero-home-plant.jpg",
-    alt: "Hand planting a sapling",
+    position: "object-[82%_28%] sm:object-[65%_28%] lg:object-[58%_28%]",
   },
   {
     src: "/uploads/hero-home-2.png",
     alt: "Women planting saplings in the mountains",
+    position: "object-[70%_40%] sm:object-[62%_38%] lg:object-[55%_35%]",
   },
 ] as const;
 
@@ -229,20 +223,19 @@ export function HeroSection({
           <HeroPhoto image={image} />
         </div>
 
-        {/* Soft blur under text zone — keeps copy clear on every slide */}
+        {/* Left blur under copy — soft frosted fade into the photo */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 left-0 z-[1] w-[62%] backdrop-blur-[10px] sm:w-[52%] lg:w-[46%] [mask-image:linear-gradient(to_right,black_58%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_right,black_58%,transparent_100%)]"
+          className="pointer-events-none absolute inset-y-0 left-0 z-[1] w-[58%] backdrop-blur-[8px] sm:w-[48%] lg:w-[44%] [mask-image:linear-gradient(to_right,black_55%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_right,black_55%,transparent_100%)]"
         />
-
-        {/* Solid cream wash → soft fade into photo (same as first-slide look) */}
+        {/* Solid ivory on far left + soft fade so text stays sharp */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-r from-[var(--ivory)] from-[0%] via-[var(--ivory)] via-[36%] to-transparent to-[68%] sm:via-[40%] sm:to-[62%] lg:from-[8%] lg:via-[34%] lg:to-[58%]"
+          className="pointer-events-none absolute inset-y-0 left-0 z-[2] w-[38%] bg-[var(--ivory)] sm:w-[32%] lg:w-[28%] [mask-image:linear-gradient(to_right,black_72%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_right,black_72%,transparent_100%)]"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 left-0 z-[2] w-[42%] bg-[var(--ivory)] sm:w-[34%] lg:w-[30%] [mask-image:linear-gradient(to_right,black_70%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_right,black_70%,transparent_100%)]"
+          className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-r from-[var(--ivory)] from-[0%] via-[var(--ivory)]/92 via-[38%] to-transparent to-[68%] sm:via-[32%] sm:to-[58%] lg:via-[28%] lg:to-[54%]"
         />
 
         <HeroCornerFlowers />
@@ -295,40 +288,32 @@ export function HeroSection({
   );
 }
 
-function HeroPhoto({ image }: { image?: MediaItem }) {
-  const slides = useMemo(() => {
-    const cms = image?.url
-      ? [{ src: image.url, alt: image.alt || "Sewa Sankalp Foundation" }]
-      : [];
-    const extras = HERO_FALLBACK_SLIDES.filter(
-      (slide) => !cms.some((item) => item.src === slide.src),
-    );
-    return [...cms, ...extras];
-  }, [image?.url, image?.alt]);
-
+function HeroPhoto({ image: _image }: { image?: MediaItem }) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    if (slides.length < 2) return;
     const id = window.setInterval(() => {
-      setIndex((current) => (current + 1) % slides.length);
+      setIndex((current) => (current + 1) % HERO_SLIDES.length);
     }, HERO_SLIDE_MS);
     return () => window.clearInterval(id);
-  }, [slides.length]);
+  }, []);
 
   return (
-    <div className="absolute inset-0" aria-live="polite">
-      {slides.map((slide, i) => (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          key={slide.src}
-          src={slide.src}
-          alt={slide.alt}
-          className={`absolute inset-0 h-full w-full object-cover object-[82%_28%] transition-opacity duration-[1200ms] ease-in-out sm:object-[65%_28%] lg:object-[58%_28%] ${
-            i === index ? "opacity-100" : "opacity-0"
-          }`}
-        />
-      ))}
+    <div className="absolute inset-0 overflow-hidden">
+      {HERO_SLIDES.map((slide, i) => {
+        const active = i === index;
+        return (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            key={slide.src}
+            src={slide.src}
+            alt={slide.alt}
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ease-in-out ${slide.position} ${
+              active ? "z-[1] opacity-100" : "z-0 opacity-0"
+            }`}
+          />
+        );
+      })}
     </div>
   );
 }
