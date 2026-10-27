@@ -186,7 +186,10 @@ function isUsefulTitle(title: string) {
 
 /** One card per album (cover = first photo). */
 export function buildAlbumCards(photos: GalleryPhoto[]): AlbumCard[] {
-  return GALLERY_ALBUMS.filter((a) => a.id !== "all").map((album) => {
+  return GALLERY_ALBUMS.filter(
+    (a): a is GalleryAlbumDef & { id: Exclude<GalleryAlbumId, "all"> } =>
+      a.id !== "all",
+  ).map((album) => {
     const items = photos.filter((p) => p.albumId === album.id);
     const fallback = GALLERY_FALLBACK_PHOTOS.find((p) => p.albumId === album.id);
     const named = items.find((p) => isUsefulTitle(p.title));
