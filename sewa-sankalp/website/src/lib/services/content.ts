@@ -13,6 +13,7 @@ import {
   fallbackEvents,
   fallbackImpact,
   fallbackInvolvement,
+  fallbackMediaByCategory,
   fallbackPages,
   fallbackWorkAreas,
 } from "@/lib/content/fallback";
@@ -228,6 +229,11 @@ export async function getContactSettings(): Promise<ContactSettings> {
   }
 }
 
+function mediaFallback(category?: MediaCategory): MediaItem[] {
+  if (!category) return [];
+  return fallbackMediaByCategory[category] ?? [];
+}
+
 export async function getPublishedMedia(
   category?: MediaCategory,
 ): Promise<MediaItem[]> {
@@ -240,6 +246,7 @@ export async function getPublishedMedia(
     };
     if (category) filter.category = category;
     const docs = await MediaModel.find(filter).sort({ createdAt: -1 }).lean();
+    if (docs.length === 0) return mediaFallback(category);
     return docs.map((doc) => ({
       id: String(doc._id),
       title: doc.title ?? "",
@@ -248,6 +255,6 @@ export async function getPublishedMedia(
       category: (doc.category ?? "general") as MediaCategory,
     }));
   } catch {
-    return [];
+    return mediaFallback(category);
   }
 }

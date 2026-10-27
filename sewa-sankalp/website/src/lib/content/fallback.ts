@@ -4,6 +4,8 @@ import type {
   EventItem,
   ImpactHighlight,
   InvolvementCard,
+  MediaCategory,
+  MediaItem,
   PageContent,
   PageSlug,
   WorkArea,
@@ -263,4 +265,46 @@ export const fallbackContact: ContactSettings = {
   website: "https://sewasanklapfoundation.org/",
   socialLinks: {},
   footerTagline: "Together for a Brighter Tomorrow",
+};
+
+/** Static media when MongoDB is unavailable (e.g. Vercel without Atlas). */
+export const fallbackMediaByCategory: Partial<
+  Record<MediaCategory, MediaItem[]>
+> = {
+  hero: [
+    {
+      id: "fallback-hero",
+      title: "Hero",
+      alt: "Sewa Sankalp Foundation",
+      url: "/uploads/hero-home.jpg",
+      category: "hero",
+    },
+  ],
+  about: [
+    {
+      id: "fallback-about",
+      title: "About",
+      alt: "Sewa Sankalp Foundation community work",
+      url: "/uploads/1793021222636-x82thu.jpg",
+      category: "about",
+    },
+  ],
+  cta: [
+    {
+      id: "fallback-cta",
+      title: "CTA",
+      alt: "Join our mission",
+      url: "/uploads/cta-corner.png",
+      category: "cta",
+    },
+  ],
+  contact: [
+    {
+      id: "fallback-contact-hero",
+      title: "Contact hero",
+      alt: "",
+      url: "/uploads/contact-hero.png",
+      category: "contact",
+    },
+  ],
 };

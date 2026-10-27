@@ -41,8 +41,8 @@ export function AboutSection({
           {/* Photo + soft wave quote banner — PDF style */}
           <div className="relative overflow-hidden rounded-[1.35rem] shadow-[0_14px_34px_rgba(0,51,43,0.1)]">
             <SmartImage
-              src={image?.url}
-              alt={image?.alt}
+              src={image?.url || "/uploads/1793021222636-x82thu.jpg"}
+              alt={image?.alt || "Sewa Sankalp Foundation community work"}
               hint="About photo: Admin → Media → category “about”"
               tint="from-[#d6e4d0] to-[#f0e2c2]"
               className="h-[270px] w-full sm:h-[330px] lg:h-[390px]"
