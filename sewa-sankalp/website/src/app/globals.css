@@ -1,0 +1,204 @@
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+:root {
+  --forest: #00332b;
+  --forest-deep: #002820;
+  --forest-soft: #0b4a3f;
+  --orange: #e68a00;
+  --orange-deep: #c97700;
+  --gold: #c5a059;
+  --gold-deep: #a8843f;
+  --ivory: #fffbf2;
+  --cream: #fdfbf7;
+  --charcoal: #252925;
+  --muted: #5b655f;
+  --border: rgba(0, 51, 43, 0.12);
+  --background: #ffffff;
+  --foreground: var(--charcoal);
+  /* Shared layout — every section uses the same gutters */
+  --page-max: 1320px;
+  --page-gutter: 1rem;
+  --section-y: 3.5rem;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --page-gutter: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --page-gutter: 1.5rem;
+    --section-y: 5rem;
+  }
+}
+
+/* Same horizontal margins site-wide */
+.page-shell {
+  width: 100%;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--page-gutter);
+}
+
+/* Same vertical padding for content sections */
+.section-y {
+  padding-block: var(--section-y);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-poppins);
+  --font-display: var(--font-playfair);
+  --font-nav: var(--font-montserrat);
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-poppins), system-ui, sans-serif;
+}
+
+.display {
+  font-family: var(--font-playfair), Georgia, "Times New Roman", serif;
+  letter-spacing: -0.01em;
+}
+
+.script {
+  font-family: var(--font-script), cursive;
+  letter-spacing: 0.01em;
+}
+
+/* Orange header nav — Montserrat bold caps like the PDF */
+.nav-bar {
+  font-family: var(--font-montserrat), var(--font-poppins), system-ui, sans-serif;
+}
+
+/* ---------- Buttons ---------- */
+.btn-gold,
+.btn-forest,
+.btn-orange,
+.btn-outline,
+.btn-outline-light {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.75rem 1.4rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.btn-gold {
+  background: var(--gold);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(197, 160, 89, 0.28);
+}
+.btn-gold:hover {
+  background: var(--gold-deep);
+  transform: translateY(-2px);
+}
+
+.btn-forest {
+  background: var(--forest);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(0, 51, 43, 0.22);
+}
+.btn-forest:hover {
+  background: var(--forest-soft);
+  transform: translateY(-2px);
+}
+
+.btn-orange {
+  background: var(--orange);
+  color: #fff;
+}
+.btn-orange:hover {
+  background: var(--orange-deep);
+}
+
+.btn-outline {
+  border: 1.5px solid var(--gold);
+  color: var(--forest);
+  background: transparent;
+}
+.btn-outline:hover {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.btn-outline-light {
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+  color: #fff;
+}
+.btn-outline-light:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ---------- Card hover (CTA / interaction containers) ---------- */
+.hover-lift {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 44px rgba(0, 51, 43, 0.14);
+}
+
+/* ---------- Image fades used in mockup (photo melts into cream) ---------- */
+.mask-fade-left {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 34%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 34%);
+}
+.mask-fade-left-soft {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 45%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 45%);
+}
+
+.leaf-pattern {
+  background-image:
+    radial-gradient(circle at 12% 20%, rgba(197, 160, 89, 0.12), transparent 22%),
+    radial-gradient(circle at 88% 30%, rgba(255, 255, 255, 0.06), transparent 20%),
+    radial-gradient(circle at 70% 80%, rgba(197, 160, 89, 0.1), transparent 25%);
+}
+
+/* ---------- Header dropdown ---------- */
+.nav-item:hover > .nav-dropdown,
+.nav-item:focus-within > .nav-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.nav-dropdown {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    visibility 0.2s;
+}

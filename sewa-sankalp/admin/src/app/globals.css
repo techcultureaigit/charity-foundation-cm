@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+.admin-theme {
+  --admin-forest: #173b31;
+  --admin-forest-deep: #102821;
+  --admin-ivory: #f7f4ed;
+  --admin-gold: #c5a46d;
+  --admin-charcoal: #252925;
+  --admin-muted: #5f6761;
+  --admin-border: rgba(23, 59, 49, 0.12);
+  --admin-card-shadow: 0 10px 30px rgba(23, 59, 49, 0.05);
+  min-height: 100%;
+  color: var(--admin-charcoal);
+  background: var(--admin-ivory);
+}
+
+.admin-theme code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.9em;
+}
+
+.admin-main {
+  background:
+    radial-gradient(circle at top right, rgba(197, 164, 109, 0.12), transparent 28%),
+    radial-gradient(circle at 10% 20%, rgba(23, 59, 49, 0.05), transparent 26%),
+    var(--admin-ivory);
+}
+
+.admin-card {
+  border: 1px solid var(--admin-border);
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(23, 59, 49, 0.045);
+}
+

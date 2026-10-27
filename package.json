@@ -1,0 +1,20 @@
+{
+  "name": "sewa-sankalp-foundation",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "sewa-sankalp/admin",
+    "sewa-sankalp/website"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w sewa-sankalp-website",
+    "dev:admin": "npm run dev -w sewa-sankalp-admin",
+    "dev:website": "npm run dev -w sewa-sankalp-website",
+    "build": "npm run build -w sewa-sankalp-website",
+    "build:admin": "npm run build -w sewa-sankalp-admin",
+    "build:website": "npm run build -w sewa-sankalp-website",
+    "start": "npm run start -w sewa-sankalp-website",
+    "start:admin": "npm run start -w sewa-sankalp-admin",
+    "lint": "npm run lint -w sewa-sankalp-website"
+  }
+}
