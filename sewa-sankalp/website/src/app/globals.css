@@ -159,7 +159,8 @@ html[lang="hi"] .hero-home-body {
   -webkit-box-orient: unset !important;
   overflow: visible !important;
   margin-top: 1.15rem !important;
-  max-width: 28rem !important;
+  margin-left: 0 !important;
+  max-width: 38rem !important;
   /* Devanagari first so line-boxes match glyph metrics (not Poppins Latin) */
   font-family: "Noto Sans Devanagari", var(--font-poppins), system-ui, sans-serif !important;
   font-size: 15px !important;

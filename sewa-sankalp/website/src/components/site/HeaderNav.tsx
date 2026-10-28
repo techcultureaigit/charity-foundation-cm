@@ -57,7 +57,7 @@ export function HeaderNav() {
               ) : null}
               <Link
                 href={link.href}
-                className={`relative flex h-full w-full items-center justify-center px-1 text-[10.5px] font-extrabold capitalize tracking-normal xl:px-1.5 xl:text-[12px] ${
+                className={`relative flex h-full w-full items-center justify-center px-1 text-[14px] font-extrabold capitalize tracking-normal xl:px-1.5 ${
                   active ? "text-white" : "text-[#01332b]"
                 }`}
               >
@@ -101,7 +101,7 @@ export function HeaderNav() {
                 key={link.label}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className={`rounded-lg px-3 py-2.5 text-[13px] font-extrabold capitalize tracking-[0.04em] ${
+                className={`rounded-lg px-3 py-2.5 text-[14px] font-extrabold capitalize tracking-[0.04em] ${
                   isActivePath(pathname, link.href)
                     ? "text-white underline decoration-[3px] underline-offset-4"
                     : "text-[#01332b]"

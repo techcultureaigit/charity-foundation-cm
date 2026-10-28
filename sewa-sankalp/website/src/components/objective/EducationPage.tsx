@@ -119,7 +119,7 @@ export function EducationPageView() {
       </PageBannerHero>
 
       {/* Key Focus Areas */}
-      <section className="relative bg-white">
+      <section className="relative bg-white pt-10 sm:pt-12">
         <div className="page-shell relative">
           <h2 className="display text-center text-[clamp(1.7rem,2.6vw,2.25rem)] font-bold text-[var(--forest)]">
             Key Focus Areas
@@ -152,7 +152,7 @@ export function EducationPageView() {
       </section>
 
       {/* How We Create Impact — icon left + text right, orange arrows between */}
-      <section className="relative overflow-hidden bg-white">
+      <section className="relative overflow-hidden bg-white pt-10 sm:pt-12">
         <div className="page-shell">
           <h2 className="display text-center text-[clamp(1.7rem,2.6vw,2.25rem)] font-bold text-[var(--forest)]">
             How We Create Impact

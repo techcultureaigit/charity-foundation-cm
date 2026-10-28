@@ -244,7 +244,7 @@ export function HeroSection({
         <HeroWave />
 
         <div className="hero-home-shell page-shell relative z-10 flex h-[420px] flex-col pt-7 sm:h-[500px] sm:pt-10 lg:h-[580px] lg:pt-12">
-          <div className="hero-home-copy max-w-[32rem] flex-1 overflow-hidden pb-40 pt-1 sm:pb-40 sm:pt-2 lg:pb-44">
+          <div className="hero-home-copy max-w-[40rem] flex-1 overflow-hidden pb-40 pt-1 sm:pb-40 sm:pt-2 lg:pb-44">
             <style>{`
               .hero-hi-l1::before { content: "बेहतर सहायता"; }
               .hero-hi-l2::before { content: "का समय आ गया है।"; }
@@ -291,7 +291,7 @@ export function HeroSection({
                 strokeLinecap="round"
               />
             </svg>
-            <p className="hero-home-body mt-4 max-w-[28rem] text-[14px] leading-[1.75] text-[var(--forest)]/85 sm:text-[14.5px] sm:leading-[1.8]">
+            <p className="hero-home-body mt-4 max-w-[36rem] text-[14px] leading-[1.75] text-[var(--forest)]/85 sm:max-w-[38rem] sm:text-[14.5px] sm:leading-[1.8]">
               {page.body}
             </p>
           </div>
