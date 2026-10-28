@@ -148,15 +148,35 @@ html[lang="hi"] .hero-home-title {
   line-height: 1.12 !important;
   letter-spacing: 0 !important;
 }
-html.lang-hi .hero-home-copy > p.mt-4,
-html[lang="hi"] .hero-home-copy > p.mt-4 {
-  margin-top: 0.85rem;
-  font-size: 13.5px;
-  line-height: 1.55;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  overflow: hidden;
+/* Hindi body: match English neat paragraph spacing (no clamp / loose Devanagari leading) */
+html.lang-hi .hero-home-copy > p,
+html[lang="hi"] .hero-home-copy > p,
+html.lang-hi .hero-home-body,
+html[lang="hi"] .hero-home-body {
+  display: block !important;
+  -webkit-line-clamp: unset !important;
+  line-clamp: unset !important;
+  -webkit-box-orient: unset !important;
+  overflow: visible !important;
+  margin-top: 1.15rem !important;
+  max-width: 28rem !important;
+  /* Devanagari first so line-boxes match glyph metrics (not Poppins Latin) */
+  font-family: "Noto Sans Devanagari", var(--font-poppins), system-ui, sans-serif !important;
+  font-size: 15px !important;
+  line-height: 2.2 !important;
+  letter-spacing: 0.02em;
+  word-spacing: 0.06em;
+}
+html.lang-hi .hero-home-body font,
+html[lang="hi"] .hero-home-body font,
+html.lang-hi .hero-home-body span,
+html[lang="hi"] .hero-home-body span,
+html.lang-hi .hero-home-copy > p font,
+html[lang="hi"] .hero-home-copy > p font {
+  font-family: inherit !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+  letter-spacing: inherit !important;
 }
 
 @media (min-width: 640px) {
@@ -199,6 +219,22 @@ h4.text-white {
 /* Orange header nav — Montserrat bold caps like the PDF */
 .nav-bar {
   font-family: var(--font-montserrat), var(--font-poppins), system-ui, sans-serif;
+}
+
+/* Hindi: tighter item padding so Devanagari labels don’t look sparse */
+html.lang-hi .nav-bar a,
+html[lang="hi"] .nav-bar a {
+  padding-left: 0.4rem !important;
+  padding-right: 0.4rem !important;
+  letter-spacing: 0 !important;
+  font-family: "Noto Sans Devanagari", var(--font-montserrat), system-ui, sans-serif !important;
+}
+@media (min-width: 1280px) {
+  html.lang-hi .nav-bar a,
+  html[lang="hi"] .nav-bar a {
+    padding-left: 0.55rem !important;
+    padding-right: 0.55rem !important;
+  }
 }
 
 /* ---------- Buttons ---------- */

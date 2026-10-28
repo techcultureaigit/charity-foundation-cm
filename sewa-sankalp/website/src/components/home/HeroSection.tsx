@@ -291,7 +291,7 @@ export function HeroSection({
                 strokeLinecap="round"
               />
             </svg>
-            <p className="mt-4 max-w-[28rem] text-[14px] leading-[1.7] text-[var(--forest)]/85 sm:text-[14.5px]">
+            <p className="hero-home-body mt-4 max-w-[28rem] text-[14px] leading-[1.75] text-[var(--forest)]/85 sm:text-[14.5px] sm:leading-[1.8]">
               {page.body}
             </p>
           </div>

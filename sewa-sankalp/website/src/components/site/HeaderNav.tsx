@@ -35,10 +35,10 @@ export function HeaderNav() {
 
   return (
     <>
-      {/* Orange strip — max 4xl, flush to right edge, round left only */}
+      {/* Orange strip — fills beside logo (~+20% left), flush right, round left only */}
       <nav
         aria-label="Primary"
-        className="nav-bar ml-auto hidden h-[50px] w-full max-w-5xl min-w-0 items-stretch overflow-visible rounded-l-full rounded-r-none bg-[var(--orange)] lg:flex"
+        className="nav-bar ml-auto hidden h-[50px] w-full min-w-0 flex-1 items-stretch overflow-visible rounded-l-full rounded-r-none bg-[var(--orange)] pl-3 lg:flex lg:max-w-[min(100%,50rem)]"
       >
         {links.map((link, index) => {
           const active = index === activeIndex;
@@ -52,12 +52,12 @@ export function HeaderNav() {
               {index > 0 ? (
                 <span
                   aria-hidden
-                  className="absolute left-0 top-1/2 z-[1] h-4 w-px -translate-y-1/2 bg-black/25"
+                  className="absolute left-0 top-1/2 z-[1] h-3.5 w-px -translate-y-1/2 bg-black/25"
                 />
               ) : null}
               <Link
                 href={link.href}
-                className={`relative flex h-full w-full items-center justify-center px-1.5 text-[11px] font-extrabold capitalize tracking-[0.04em] xl:px-2.5 xl:text-[12.5px] ${
+                className={`relative flex h-full w-full items-center justify-center px-1 text-[10.5px] font-extrabold capitalize tracking-normal xl:px-1.5 xl:text-[12px] ${
                   active ? "text-white" : "text-[#01332b]"
                 }`}
               >
