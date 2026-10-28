@@ -1,9 +1,18 @@
 "use client";
 
-import { useMemo, useState, type ComponentType } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+  type ComponentType,
+} from "react";
 import { FaBookOpen, FaHeartbeat, FaLeaf, FaUsers } from "react-icons/fa";
 import { MdImage, MdOutlineCalendarMonth } from "react-icons/md";
-import { HiChevronRight } from "react-icons/hi2";
+import {
+  HiChevronLeft,
+  HiChevronRight,
+  HiXMark,
+} from "react-icons/hi2";
 import { AccentText, LeafCorner } from "@/components/home/shared";
 import { PageBannerHero } from "@/components/site/PageBannerHero";
 import { UtilityIcon } from "@/components/site/icons";
@@ -35,6 +44,7 @@ export function GalleryPageView({
   heroImageUrl: string;
 }) {
   const [active, setActive] = useState<GalleryAlbumId>("all");
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const albums = useMemo(() => buildAlbumCards(photos), [photos]);
 
   const filteredPhotos = useMemo(
@@ -44,6 +54,42 @@ export function GalleryPageView({
   );
 
   const showAlbumCards = active === "all";
+  const lightboxPhoto =
+    lightboxIndex !== null ? filteredPhotos[lightboxIndex] : null;
+
+  useEffect(() => {
+    setLightboxIndex(null);
+  }, [active]);
+
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightboxIndex(null);
+      if (e.key === "ArrowLeft") {
+        setLightboxIndex((i) =>
+          i === null || filteredPhotos.length === 0
+            ? i
+            : (i - 1 + filteredPhotos.length) % filteredPhotos.length,
+        );
+      }
+      if (e.key === "ArrowRight") {
+        setLightboxIndex((i) =>
+          i === null || filteredPhotos.length === 0
+            ? i
+            : (i + 1) % filteredPhotos.length,
+        );
+      }
+    };
+
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [lightboxIndex, filteredPhotos.length]);
 
   return (
     <div className="bg-[var(--cream)]">
@@ -78,7 +124,7 @@ export function GalleryPageView({
             {/* Sidebar — starts with image grid (below tabs on desktop) */}
             <aside className="order-2 flex w-full flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-[0_8px_24px_rgba(0,51,43,0.07)] lg:order-1 lg:mt-[2.75rem]">
               <div className="shrink-0 border-b border-[var(--border)] px-4 py-3.5">
-                <h2 className="display text-[1.2rem] font-bold text-[var(--forest)]">
+                <h2 className="text-[1.2rem] font-bold text-[var(--forest)]">
                   Gallery Albums
                 </h2>
               </div>
@@ -178,24 +224,28 @@ export function GalleryPageView({
                 </div>
               ) : (
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3 lg:gap-3.5">
-                  {filteredPhotos.map((photo) => (
-                    <figure
+                  {filteredPhotos.map((photo, index) => (
+                    <button
                       key={photo.id}
-                      className="overflow-hidden rounded-lg border border-[var(--border)] bg-white shadow-[0_4px_14px_rgba(0,51,43,0.04)]"
+                      type="button"
+                      onClick={() => setLightboxIndex(index)}
+                      className="group overflow-hidden rounded-lg border border-[var(--border)] bg-white text-left shadow-[0_4px_14px_rgba(0,51,43,0.04)] transition-shadow hover:shadow-[0_8px_20px_rgba(0,51,43,0.09)]"
                     >
-                      <div className="relative aspect-[16/10] bg-[#e8e2d6]">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={photo.url}
-                          alt={photo.alt}
-                          loading="lazy"
-                          className="h-full w-full object-cover"
-                        />
-                      </div>
-                      <figcaption className="px-2 py-1.5 text-[11.5px] font-bold text-[var(--forest)]">
-                        {photo.title}
-                      </figcaption>
-                    </figure>
+                      <figure>
+                        <div className="relative aspect-[16/10] overflow-hidden bg-[#e8e2d6]">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={photo.url}
+                            alt={photo.alt}
+                            loading="lazy"
+                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                        </div>
+                        <figcaption className="px-2 py-1.5 text-[11.5px] font-bold text-[var(--forest)] group-hover:text-[var(--orange-deep)]">
+                          {photo.title}
+                        </figcaption>
+                      </figure>
+                    </button>
                   ))}
                 </div>
               )}
@@ -203,6 +253,77 @@ export function GalleryPageView({
           </div>
         </div>
       </section>
+
+      {lightboxPhoto && lightboxIndex !== null ? (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 p-4 sm:p-6"
+          role="dialog"
+          aria-modal="true"
+          aria-label={lightboxPhoto.title}
+          onClick={() => setLightboxIndex(null)}
+        >
+          <button
+            type="button"
+            aria-label="Close"
+            onClick={() => setLightboxIndex(null)}
+            className="absolute right-3 top-3 z-[2] flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white transition hover:bg-white/25 sm:right-5 sm:top-5"
+          >
+            <HiXMark className="h-6 w-6" />
+          </button>
+
+          {filteredPhotos.length > 1 ? (
+            <>
+              <button
+                type="button"
+                aria-label="Previous photo"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setLightboxIndex(
+                    (lightboxIndex - 1 + filteredPhotos.length) %
+                      filteredPhotos.length,
+                  );
+                }}
+                className="absolute left-2 z-[2] flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white transition hover:bg-white/25 sm:left-5 sm:h-11 sm:w-11"
+              >
+                <HiChevronLeft className="h-6 w-6" />
+              </button>
+              <button
+                type="button"
+                aria-label="Next photo"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setLightboxIndex(
+                    (lightboxIndex + 1) % filteredPhotos.length,
+                  );
+                }}
+                className="absolute right-2 z-[2] flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white transition hover:bg-white/25 sm:right-5 sm:h-11 sm:w-11 md:right-16"
+              >
+                <HiChevronRight className="h-6 w-6" />
+              </button>
+            </>
+          ) : null}
+
+          <div
+            className="relative flex max-h-[min(90vh,900px)] w-full max-w-4xl flex-col items-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={lightboxPhoto.url}
+              alt={lightboxPhoto.alt}
+              className="max-h-[min(78vh,820px)] w-auto max-w-full rounded-lg object-contain shadow-2xl"
+            />
+            <p className="mt-3 text-center text-[14px] font-semibold text-white">
+              {lightboxPhoto.title}
+            </p>
+            {filteredPhotos.length > 1 ? (
+              <p className="mt-1 text-[12px] text-white/70">
+                {lightboxIndex + 1} / {filteredPhotos.length}
+              </p>
+            ) : null}
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

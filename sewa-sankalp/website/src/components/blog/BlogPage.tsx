@@ -104,7 +104,7 @@ export function BlogPageView({ heroImageUrl }: { heroImageUrl: string }) {
                 />
               </label>
               <div className="px-4 pb-2 pt-2">
-                <h2 className="display text-[1.2rem] font-bold text-[var(--forest)]">
+                <h2 className="text-[1.2rem] font-bold text-[var(--forest)]">
                   Categories
                 </h2>
               </div>
@@ -253,7 +253,7 @@ export function BlogPageView({ heroImageUrl }: { heroImageUrl: string }) {
                         <p className="text-[10.5px] text-[var(--muted)]">
                           {post.date}
                         </p>
-                        <h3 className="display mt-1 text-[0.92rem] font-bold leading-snug text-[var(--forest)] group-hover:text-[#D97706]">
+                        <h3 className="mt-1 text-[0.92rem] font-bold leading-snug text-[var(--forest)] group-hover:text-[#D97706]">
                           {post.title}
                         </h3>
                         <p className="mt-1.5 line-clamp-2 text-[11.5px] leading-snug text-[var(--muted)]">

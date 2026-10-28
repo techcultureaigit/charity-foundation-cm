@@ -353,7 +353,7 @@ export function BlogPostPageView({
                 />
               </label>
               <div className="px-4 pb-2 pt-2">
-                <h3 className="display text-[1.2rem] font-bold text-[var(--forest)]">
+                <h3 className="text-[1.2rem] font-bold text-[var(--forest)]">
                   Categories
                 </h3>
               </div>
