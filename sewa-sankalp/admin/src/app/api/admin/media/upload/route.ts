@@ -1,9 +1,8 @@
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { isAdminAuthenticated } from "@/lib/auth";
-import { createMediaItem } from "@/lib/services/cms";
+import { adminUpload } from "@/lib/api/backend";
 import type { MediaCategory } from "@/lib/types";
-import { saveUploadedFile } from "@/lib/uploads";
 
 const mediaCategories = [
   "hero",
@@ -25,15 +24,6 @@ function oneOfCategory(value: string): MediaCategory {
     : "general";
 }
 
-function revalidateSiteContent() {
-  revalidatePath("/admin");
-  revalidatePath("/admin/media");
-  revalidatePath("/admin/work-areas");
-  revalidatePath("/admin/involvement");
-  revalidatePath("/admin/causes");
-  revalidatePath("/admin/events");
-}
-
 export async function POST(request: Request) {
   if (!(await isAdminAuthenticated())) {
     return NextResponse.json(
@@ -42,60 +32,20 @@ export async function POST(request: Request) {
     );
   }
 
-  let formData: FormData;
   try {
-    formData = await request.formData();
-  } catch {
-    return NextResponse.json(
-      { ok: false, error: "Could not read upload (file may be too large)" },
-      { status: 413 },
-    );
-  }
-
-  const file = formData.get("file");
-  const mode = String(formData.get("mode") ?? "full");
-  const category = oneOfCategory(String(formData.get("category") ?? "general"));
-
-  if (!(file instanceof File) || file.size === 0) {
-    return NextResponse.json(
-      { ok: false, error: "Please choose an image file" },
-      { status: 400 },
-    );
-  }
-
-  if (file.size > 10 * 1024 * 1024) {
-    return NextResponse.json(
-      { ok: false, error: "Image must be under 10 MB" },
-      { status: 413 },
-    );
-  }
-
-  try {
-    if (mode === "quick") {
-      const baseName = (file.name || "photo")
-        .replace(/\.[^.]+$/, "")
-        .replace(/[_-]+/g, " ")
-        .trim()
-        .slice(0, 80);
-      const title = baseName || "Photo";
-      const saved = await saveUploadedFile(file);
-      const item = await createMediaItem({
-        title,
-        alt: title,
-        url: saved.url,
-        category,
-        consentConfirmed: true,
-      });
-      revalidateSiteContent();
-      return NextResponse.json({ ok: true, url: saved.url, item });
-    }
-
+    const formData = await request.formData();
+    const file = formData.get("file");
     const title = String(formData.get("title") ?? "").trim();
     const alt = String(formData.get("alt") ?? "").trim();
-    const consentConfirmed =
-      formData.get("consentConfirmed") === "on" ||
-      formData.get("consentConfirmed") === "true";
+    const category = oneOfCategory(String(formData.get("category") ?? "general"));
+    const consentConfirmed = formData.get("consentConfirmed") === "on";
 
+    if (!(file instanceof File) || file.size === 0) {
+      return NextResponse.json(
+        { ok: false, error: "Please choose an image file" },
+        { status: 400 },
+      );
+    }
     if (!title || !alt) {
       return NextResponse.json(
         { ok: false, error: "Title and alt text are required" },
@@ -109,20 +59,39 @@ export async function POST(request: Request) {
       );
     }
 
-    const saved = await saveUploadedFile(file);
-    const item = await createMediaItem({
-      title,
-      alt,
-      url: saved.url,
-      category,
-      consentConfirmed,
+    const payload = new FormData();
+    payload.set("file", file);
+    payload.set("title", title);
+    payload.set("alt", alt);
+    payload.set("category", category);
+    payload.set("consentConfirmed", "true");
+    payload.set("isPublished", "true");
+
+    const uploaded = await adminUpload<{ id: string; url: string }>(
+      "/admin/media/upload",
+      payload,
+    );
+    if (!uploaded.ok) {
+      return NextResponse.json(
+        { ok: false, error: uploaded.error },
+        { status: 502 },
+      );
+    }
+
+    revalidatePath("/admin");
+    revalidatePath("/admin/media");
+
+    return NextResponse.json({
+      ok: true,
+      url: uploaded.data.url,
+      item: uploaded.data,
     });
-    revalidateSiteContent();
-    return NextResponse.json({ ok: true, url: saved.url, item });
   } catch (error) {
-    console.error("Media upload failed:", error);
     return NextResponse.json(
-      { ok: false, error: "Upload failed — try a smaller image" },
+      {
+        ok: false,
+        error: error instanceof Error ? error.message : "Upload failed",
+      },
       { status: 500 },
     );
   }

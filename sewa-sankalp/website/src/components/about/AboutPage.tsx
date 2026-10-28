@@ -196,8 +196,9 @@ export function AboutPageView({
       </section>
 
       {/* Who We Are — same card size as Campaigns Featured (lg:min-h-[400px]) */}
-      <section className="page-shell relative bg-[#FBF6EE] pt-5 pb-10 sm:pt-6 sm:pb-12 lg:pb-14">
-        <div className="overflow-hidden rounded-[1.5rem] bg-[#F7F1E6] shadow-[0_14px_40px_rgba(0,51,43,0.08)] lg:grid lg:grid-cols-[0.95fr_1.05fr] lg:min-h-[400px]">
+      <section className="relative bg-white pt-5 pb-5 sm:pt-6 sm:pb-6 lg:pb-7">
+        <div className="page-shell">
+        <div className="overflow-hidden rounded-[1.5rem] border border-[#EFE6D8] bg-white shadow-[0_14px_40px_rgba(0,51,43,0.06)] lg:grid lg:grid-cols-[0.95fr_1.05fr] lg:min-h-[400px]">
           <div className="relative min-h-[260px] sm:min-h-[320px] lg:min-h-full">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -239,19 +240,13 @@ export function AboutPageView({
             </p>
           </div>
         </div>
+        </div>
       </section>
 
-      {/* Mission / Vision / Values — Key Focus style */}
-      <section className="relative bg-white pt-7 pb-10 sm:pt-8 sm:pb-12 lg:pt-9 lg:pb-14">
+      {/* Mission / Vision / Values cards */}
+      <section className="relative bg-white pt-0 pb-10 sm:pb-12 lg:pb-14">
         <div className="page-shell relative">
-          <h2 className="display text-center text-[clamp(1.7rem,2.6vw,2.25rem)] font-bold text-[var(--forest)]">
-            Mission, Vision & Values
-          </h2>
-          <p className="mx-auto mt-2 max-w-2xl text-center text-[13.5px] leading-relaxed text-[#6B6B6B]">
-            The principles that guide every programme, partnership, and act of
-            service.
-          </p>
-          <div className="mt-7 grid gap-5 sm:grid-cols-3 sm:gap-6">
+          <div className="grid gap-5 sm:grid-cols-3 sm:gap-6">
             {pillars.map((item) => (
               <div
                 key={item.title}

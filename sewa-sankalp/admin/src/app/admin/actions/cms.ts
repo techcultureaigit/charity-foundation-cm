@@ -6,7 +6,6 @@ import {
   createCause,
   createEvent,
   createInvolvementCard,
-  createMediaItem,
   deleteCause,
   deleteEvent,
   deleteInvolvementCard,
@@ -22,7 +21,7 @@ import {
   updateVolunteerStatus,
   updateWorkArea,
 } from "@/lib/services/cms";
-import { saveUploadedFile } from "@/lib/uploads";
+import { adminUpload } from "@/lib/api/backend";
 import type {
   EnquiryStatus,
   EventTheme,
@@ -311,16 +310,23 @@ export async function uploadMediaAction(formData: FormData) {
     };
   }
 
-  const saved = await saveUploadedFile(file);
-  const item = await createMediaItem({
-    title,
-    alt,
-    url: saved.url,
-    category,
-    consentConfirmed,
-  });
+  const payload = new FormData();
+  payload.set("file", file);
+  payload.set("title", title);
+  payload.set("alt", alt);
+  payload.set("category", category);
+  payload.set("consentConfirmed", "true");
+  payload.set("isPublished", "true");
+
+  const uploaded = await adminUpload<{ id: string; url: string }>(
+    "/admin/media/upload",
+    payload,
+  );
+  if (!uploaded.ok) {
+    return { ok: false as const, error: uploaded.error };
+  }
   revalidateSiteContent();
-  return { ok: true as const, item };
+  return { ok: true as const, item: uploaded.data };
 }
 
 /** Inline upload from Image fields — saves file, adds to Media library, returns relative URL. */
@@ -343,16 +349,28 @@ export async function uploadImageQuickAction(formData: FormData) {
     .trim()
     .slice(0, 80);
   const title = baseName || "Photo";
-  const saved = await saveUploadedFile(file);
-  const item = await createMediaItem({
-    title,
-    alt: title,
-    url: saved.url,
-    category,
-    consentConfirmed: true,
-  });
+
+  const payload = new FormData();
+  payload.set("file", file);
+  payload.set("title", title);
+  payload.set("alt", title);
+  payload.set("category", category);
+  payload.set("consentConfirmed", "true");
+  payload.set("isPublished", "true");
+
+  const uploaded = await adminUpload<{ id: string; url: string }>(
+    "/admin/media/upload",
+    payload,
+  );
+  if (!uploaded.ok) {
+    return { ok: false as const, error: uploaded.error };
+  }
   revalidateSiteContent();
-  return { ok: true as const, url: saved.url, item };
+  return {
+    ok: true as const,
+    url: uploaded.data.url,
+    item: uploaded.data,
+  };
 }
 
 export async function saveMediaMetaAction(formData: FormData) {

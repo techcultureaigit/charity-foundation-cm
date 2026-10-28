@@ -1,14 +1,8 @@
 "use server";
 
-import { connection } from "next/server";
-import { connectMongo } from "@/lib/db/mongodb";
-import { EnquiryModel } from "@/lib/models/Enquiry";
-import { VolunteerModel } from "@/lib/models/Volunteer";
+import { apiPost } from "@/lib/api/backend";
 
 export async function submitEnquiryAction(formData: FormData) {
-  await connection();
-  await connectMongo();
-
   const name = String(formData.get("name") ?? "").trim();
   const email = String(formData.get("email") ?? "").trim();
   const mobile = String(formData.get("mobile") ?? "").trim();
@@ -19,22 +13,21 @@ export async function submitEnquiryAction(formData: FormData) {
     return { ok: false as const, error: "Name, email, and message are required." };
   }
 
-  await EnquiryModel.create({
+  const result = await apiPost("/enquiries", {
     name,
     email,
     mobile: mobile || undefined,
     subject: subject || undefined,
     message,
-    status: "new",
   });
 
+  if (!result.ok) {
+    return { ok: false as const, error: result.error };
+  }
   return { ok: true as const };
 }
 
 export async function submitVolunteerAction(formData: FormData) {
-  await connection();
-  await connectMongo();
-
   const name = String(formData.get("name") ?? "").trim();
   const email = String(formData.get("email") ?? "").trim();
   const mobile = String(formData.get("mobile") ?? "").trim();
@@ -48,14 +41,16 @@ export async function submitVolunteerAction(formData: FormData) {
     };
   }
 
-  await VolunteerModel.create({
+  const result = await apiPost("/volunteers", {
     name,
     email,
     mobile: mobile || undefined,
     interest,
     message: message || undefined,
-    status: "new",
   });
 
+  if (!result.ok) {
+    return { ok: false as const, error: result.error };
+  }
   return { ok: true as const };
 }
