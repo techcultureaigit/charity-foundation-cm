@@ -9,6 +9,7 @@ import {
   FaUsers,
 } from "react-icons/fa";
 import { AccentText } from "@/components/home/shared";
+import { PageBannerHero } from "@/components/site/PageBannerHero";
 import { UtilityIcon } from "@/components/site/icons";
 import {
   CAMPAIGN_FILTERS,
@@ -128,40 +129,22 @@ export function CampaignsPageView() {
 
   return (
     <div className="bg-[#FBF6EE]">
-      {/* Hero — same compact banner pattern as Blog / Contact */}
-      <section className="relative w-full overflow-hidden bg-[#FDF8EE] leading-none">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/uploads/contact-hero.png"
-          alt=""
-          aria-hidden
-          className="m-0 block h-[240px] w-full max-w-none object-cover object-[85%_center] sm:h-[230px] sm:object-right lg:h-[260px]"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-[#FDF8EE] from-[0%] via-[#FDF8EE] via-[48%] to-transparent to-[78%] sm:from-[#FDF8EE]/70 sm:via-[#FDF8EE]/30 sm:to-transparent"
-        />
-        <div className="pointer-events-none absolute inset-0 z-[2] flex items-start pt-4 sm:pt-6 lg:pt-7">
-          <div className="page-shell pointer-events-auto flex w-full justify-start">
-            <div className="w-full max-w-[36rem]">
-              <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
-                Our Campaigns
-              </p>
-              <h1 className="display mt-1.5 text-[clamp(1.55rem,7vw,3rem)] font-bold leading-[1.08] text-[var(--forest)]">
-                <span className="block">Every Campaign.</span>
-                <span className="block whitespace-nowrap text-[#D68C23]">
-                  A Brighter Tomorrow.
-                </span>
-              </h1>
-              <p className="mt-2 max-w-[30rem] line-clamp-3 text-[12px] leading-[1.65] text-[#4A4A4A] sm:mt-2.5 sm:line-clamp-none sm:text-[13.5px] sm:leading-[1.7]">
-                Together, we can create real change. Our campaigns focus on
-                supporting children, empowering women, improving health and
-                strengthening communities for a better tomorrow.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageBannerHero>
+        <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
+          Our Campaigns
+        </p>
+        <h1 className="display mt-1.5 text-[clamp(1.55rem,7vw,3rem)] font-bold leading-[1.08] text-[var(--forest)]">
+          <span className="block">Every Campaign.</span>
+          <span className="block whitespace-nowrap text-[#D68C23]">
+            A Brighter Tomorrow.
+          </span>
+        </h1>
+        <p className="mt-2 max-w-[30rem] line-clamp-3 text-[12px] leading-[1.65] text-[#4A4A4A] sm:mt-2.5 sm:line-clamp-none sm:text-[13.5px] sm:leading-[1.7]">
+          Together, we can create real change. Our campaigns focus on supporting
+          children, empowering women, improving health and strengthening
+          communities for a better tomorrow.
+        </p>
+      </PageBannerHero>
 
       {/* Filters */}
       <section className="relative bg-white">

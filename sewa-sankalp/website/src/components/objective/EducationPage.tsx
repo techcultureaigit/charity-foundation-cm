@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import Link from "next/link";
-import { AccentText, LeafCorner, LeafShape } from "@/components/home/shared";
+import { AccentText, LeafCorner } from "@/components/home/shared";
+import { PageBannerHero } from "@/components/site/PageBannerHero";
 import { UtilityIcon } from "@/components/site/icons";
 
 const focusAreas = [
@@ -82,74 +83,6 @@ const campaigns = [
   },
 ];
 
-/** Hand-drawn squiggle accent — sits in the middle between copy & hero image. */
-function HeroSquiggle({ className = "" }: { className?: string }) {
-  return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src="/uploads/education-squiggle.png"
-      alt=""
-      aria-hidden
-      className={className}
-    />
-  );
-}
-
-/**
- * Hero photo — soft left wave; object-contain so the full photo shows
- * (no cover crop cutting faces / shoulders).
- */
-function HeroPhotoFrame({
-  src,
-  alt,
-  clipId = "education-hero-wave",
-}: {
-  src: string;
-  alt: string;
-  clipId?: string;
-}) {
-  return (
-    <div className="relative h-full w-full">
-      <svg width="0" height="0" aria-hidden className="absolute">
-        <defs>
-          <clipPath id={clipId} clipPathUnits="objectBoundingBox">
-            {/* Gentle left curve — keeps more of the photo visible */}
-            <path d="M0.06,0 C0.02,0.12 0.0,0.28 0.02,0.45 C0.05,0.62 0.0,0.78 0.05,0.92 C0.08,0.98 0.14,1 0.22,1 L1,1 L1,0 Z" />
-          </clipPath>
-        </defs>
-      </svg>
-
-      <div
-  className="relative flex h-full min-h-[180px] w-full items-center justify-end overflow-hidden bg-[#FDF8EE] sm:min-h-[224px] lg:min-h-0"
-  style={{
-    clipPath: `url(#${clipId})`,
-  }}
->
-  <img
-    src={src}
-    alt={alt}
-    style={{
-      objectFit: "cover",
-      objectPosition: "right",
-      borderTopLeftRadius: "100px",
-      borderTopRightRadius: "1000px",
-      borderBottomRightRadius: "300%",
-      borderBottomLeftRadius: "300%",
-    }}
-  />
-</div>
-
-      <div
-        aria-hidden
-        className="pointer-events-none absolute bottom-2 right-3 z-[1] h-24 w-20 text-[#6F9B7A]/80 sm:bottom-3 sm:right-5 sm:h-32 sm:w-28"
-      >
-        <LeafShape className="absolute bottom-0 right-0 h-22 w-14 rotate-[16deg] sm:h-28 sm:w-16" />
-        <LeafShape className="absolute bottom-5 right-9 h-14 w-9 -rotate-[30deg] opacity-75 sm:bottom-7 sm:right-11 sm:h-18 sm:w-11" />
-      </div>
-    </div>
-  );
-}
-
 function ImpactArrow() {
   return (
     <span
@@ -164,79 +97,26 @@ function ImpactArrow() {
 export function EducationPageView() {
   return (
     <div className="bg-[#FBF6EE]">
-      {/* Hero — image flush top-right corner, no top gap */}
-      <section className="relative overflow-hidden bg-[#FDF8EE]">
-        <LeafCorner corner="tl" className="opacity-80" />
-        <LeafCorner corner="bl" className="opacity-55" />
+      {/* Hero — same banner image/bg as Campaigns; keep Education copy */}
+      <PageBannerHero contentClassName="w-full max-w-[40rem]">
+        <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
+          Our Objectives
+        </p>
 
-        <div className="relative z-[1] lg:min-h-[280px] xl:min-h-[322px]">
-          {/*
-            Same left inset as header logo via page-shell — content parallel with logo.
-            Top-aligned under header (not vertically centered under the logo).
-          */}
-          <div className="page-shell relative pt-2.5 pb-3.5 sm:pt-3 sm:pb-5 lg:flex lg:min-h-[280px] lg:items-start lg:pt-3 lg:pb-6 xl:min-h-[322px] xl:pt-3.5">
-            <div className="relative w-full max-w-xl lg:w-[40%] lg:max-w-none xl:w-[38%]">
-              <nav
-                aria-label="Breadcrumb"
-                className="flex flex-wrap items-center gap-1.5 text-[12.5px] text-[#6B6B6B]"
-              >
-                <Link
-                  href="/"
-                  className="transition-colors hover:text-[#D97706]"
-                >
-                  Home
-                </Link>
-                <span className="text-[#B0B0B0]">/</span>
-                <span>Objective</span>
-                <span className="text-[#B0B0B0]">/</span>
-                <span className="font-semibold text-[#D68C23]">Education</span>
-              </nav>
+        <h1 className="display mt-1.5 text-[clamp(1.45rem,5.5vw,2.65rem)] font-bold leading-[1.08] tracking-[-0.01em] text-[var(--forest)]">
+          <span className="block">Building a Better</span>
+          <span className="block whitespace-nowrap">
+            Future Through <span className="text-[#D68C23]">Education</span>
+          </span>
+        </h1>
 
-              <p className="nav-bar mt-3 text-[11px] font-bold uppercase tracking-[0.24em] text-[#D68C23]">
-                Our Objectives
-              </p>
-
-              <h1 className="display mt-1.5 text-[clamp(1.55rem,6.5vw,2.75rem)] font-bold leading-[1.12] tracking-[-0.01em] text-[var(--forest)]">
-                Building a Better
-                <br />
-                Future Through
-                <br />
-                <span className="text-[#D68C23]">Education</span>
-              </h1>
-
-              <div className="relative mt-3 max-w-[34rem]">
-                <p className="text-[13px] leading-[1.65] text-[#4A4A4A] sm:text-[14px] sm:leading-[1.7]">
-                  We believe education is the foundation of a stronger, more
-                  equitable society. Our initiatives focus on providing quality
-                  education, learning resources and opportunities for
-                  underprivileged children and youth.
-                </p>
-              </div>
-            </div>
-
-            {/* Mobile image (flows under copy) */}
-            <div className="relative mt-4 aspect-[5/2.45] w-full lg:hidden">
-              <HeroPhotoFrame
-                src="/uploads/education-mid.jpg"
-                alt="Student learning with teacher support in classroom"
-                clipId="education-hero-wave-mobile"
-              />
-            </div>
-          </div>
-
-          {/* Desktop image — wide panel + contain so full photo is visible */}
-          <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[58%] lg:block xl:w-[60%]">
-            <HeroPhotoFrame
-              src="/uploads/education-mid.jpg"
-              alt="Student learning with teacher support in classroom"
-              clipId="education-hero-wave-desktop"
-            />
-          </div>
-
-          {/* Middle squiggle — between text & image */}
-          <HeroSquiggle className="pointer-events-none absolute left-[38%] top-[48%] z-[3] hidden h-10 w-auto -translate-x-1/2 -translate-y-1/2 select-none sm:h-11 lg:block xl:left-[36%] xl:h-12" />
-        </div>
-      </section>
+        <p className="mt-2 max-w-[30rem] line-clamp-3 text-[12px] leading-[1.65] text-[#4A4A4A] sm:mt-2.5 sm:line-clamp-none sm:text-[13.5px] sm:leading-[1.7]">
+          We believe education is the foundation of a stronger, more equitable
+          society. Our initiatives focus on providing quality education,
+          learning resources and opportunities for underprivileged children and
+          youth.
+        </p>
+      </PageBannerHero>
 
       {/* Key Focus Areas */}
       <section className="relative bg-white">

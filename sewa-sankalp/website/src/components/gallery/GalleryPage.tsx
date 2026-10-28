@@ -5,6 +5,7 @@ import { FaBookOpen, FaHeartbeat, FaLeaf, FaUsers } from "react-icons/fa";
 import { MdImage, MdOutlineCalendarMonth } from "react-icons/md";
 import { HiChevronRight } from "react-icons/hi2";
 import { AccentText, LeafCorner } from "@/components/home/shared";
+import { PageBannerHero } from "@/components/site/PageBannerHero";
 import { UtilityIcon } from "@/components/site/icons";
 import {
   GALLERY_ALBUMS,
@@ -46,41 +47,23 @@ export function GalleryPageView({
 
   return (
     <div className="bg-[var(--cream)]">
-      {/* Hero */}
-      <section className="relative w-full overflow-hidden bg-[#FDF8EE] leading-none">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={heroImageUrl}
-          alt=""
-          aria-hidden
-          className="m-0 block h-[240px] w-full max-w-none object-cover object-[85%_center] sm:h-[230px] sm:object-right lg:h-[260px]"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-[#FDF8EE] from-[0%] via-[#FDF8EE] via-[48%] to-transparent to-[78%] sm:from-[#FDF8EE]/70 sm:via-[#FDF8EE]/30 sm:to-transparent"
-        />
-        <div className="pointer-events-none absolute inset-0 z-[2] flex items-center">
-          <div className="page-shell pointer-events-auto flex w-full justify-start">
-            <div className="w-full max-w-[34rem] py-3 sm:py-4">
-              <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
-                Our Journey in Pictures
-              </p>
-              <h1 className="display mt-1.5 text-[clamp(1.7rem,7vw,3.25rem)] font-bold leading-[1.05] text-[var(--forest)] sm:mt-2">
-                <AccentText
-                  text="Photo Gallery"
-                  accent="Gallery"
-                  accentClass="text-[#D68C23]"
-                />
-              </h1>
-              <p className="mt-2 max-w-[28rem] line-clamp-3 text-[12px] leading-[1.65] text-[#4A4A4A] sm:mt-2.5 sm:line-clamp-none sm:text-[13.5px] sm:leading-[1.7]">
-                Moments of service, smiles and solidarity — explore albums from
-                our drives, education programmes, health camps and community
-                work across Uttarakhand.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageBannerHero imageUrl={heroImageUrl} contentClassName="w-full max-w-[34rem]">
+        <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
+          Our Journey in Pictures
+        </p>
+        <h1 className="display mt-1.5 text-[clamp(1.7rem,7vw,3.25rem)] font-bold leading-[1.05] text-[var(--forest)] sm:mt-2">
+          <AccentText
+            text="Photo Gallery"
+            accent="Gallery"
+            accentClass="text-[#D68C23]"
+          />
+        </h1>
+        <p className="mt-2 max-w-[28rem] line-clamp-3 text-[12px] leading-[1.65] text-[#4A4A4A] sm:mt-2.5 sm:line-clamp-none sm:text-[13.5px] sm:leading-[1.7]">
+          Moments of service, smiles and solidarity — explore albums from our
+          drives, education programmes, health camps and community work across
+          Uttarakhand.
+        </p>
+      </PageBannerHero>
 
       {/*
         LEFT  ? Gallery Albums sidebar (parallel to right column)
@@ -108,10 +91,10 @@ export function GalleryPageView({
                       <button
                         type="button"
                         onClick={() => setActive(album.id)}
-                        className={`box-border flex h-12 w-full shrink-0 items-center gap-3 rounded-md px-3.5 text-left text-[13.5px] font-semibold transition-colors ${
+                        className={`box-border flex h-12 w-full shrink-0 items-center gap-3 rounded-md border-b-2 px-3.5 text-left text-[13.5px] font-semibold transition-colors ${
                           selected
-                            ? "bg-[#F8EBD7] text-[#D97706]"
-                            : "bg-transparent text-[#2C3A4A] hover:bg-[var(--ivory)]"
+                            ? "border-[#D97706] bg-[#F8EBD7] text-[#D97706]"
+                            : "border-transparent bg-transparent text-[#2C3A4A] hover:bg-[var(--ivory)]"
                         }`}
                       >
                         <Icon

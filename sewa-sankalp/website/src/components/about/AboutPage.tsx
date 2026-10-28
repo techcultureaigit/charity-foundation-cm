@@ -1,54 +1,8 @@
 import Link from "next/link";
-import { AccentText, LeafCorner, LeafShape } from "@/components/home/shared";
+import { AccentText, LeafCorner } from "@/components/home/shared";
+import { PageBannerHero } from "@/components/site/PageBannerHero";
 import { UtilityIcon } from "@/components/site/icons";
 import type { MediaItem, PageContent } from "@/lib/types";
-
-/**
- * About hero photo — flush top/right/bottom, wavy organic left edge
- * (matches reference: right side fully covered).
- */
-function AboutHeroPhoto({
-  src,
-  alt,
-  clipId = "about-hero-wave",
-}: {
-  src: string;
-  alt: string;
-  clipId?: string;
-}) {
-  return (
-    <div className="relative h-full w-full">
-      <svg width="0" height="0" aria-hidden className="absolute">
-        <defs>
-          <clipPath id={clipId} clipPathUnits="objectBoundingBox">
-            {/* Sharp top-right + bottom-right · soft S-curve on left */}
-            <path d="M0.22,0 C0.1,0.08 0.02,0.2 0.05,0.36 C0.1,0.52 0.0,0.68 0.08,0.84 C0.14,0.94 0.28,1 0.42,1 L1,1 L1,0 Z" />
-          </clipPath>
-        </defs>
-      </svg>
-
-      <div
-        className="relative h-full min-h-[240px] w-full overflow-hidden sm:min-h-[280px] lg:min-h-0"
-        style={{ clipPath: `url(#${clipId})` }}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={src}
-          alt={alt}
-          className="h-full w-full object-cover object-[62%_26%]"
-        />
-      </div>
-
-      <div
-        aria-hidden
-        className="pointer-events-none absolute bottom-1 right-2 z-[1] h-20 w-16 text-[#6F9B7A]/85 sm:bottom-2 sm:right-4 sm:h-28 sm:w-22"
-      >
-        <LeafShape className="absolute bottom-0 right-0 h-16 w-10 rotate-[16deg] sm:h-24 sm:w-14" />
-        <LeafShape className="absolute bottom-5 right-8 h-12 w-8 -rotate-[28deg] opacity-75 sm:bottom-7 sm:right-10 sm:h-16 sm:w-10" />
-      </div>
-    </div>
-  );
-}
 
 type MaterialIconName =
   | "target"
@@ -151,59 +105,25 @@ export function AboutPageView({
 
   return (
     <div className="bg-white">
-      {/* Hero — text left + image flush full right (wavy left edge) */}
-      <section className="relative overflow-hidden bg-[#FDF8EE]">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/uploads/about-hero-bg.jpg"
-          alt=""
-          aria-hidden
-          className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover object-center"
-        />
-        <LeafCorner corner="tl" className="opacity-70" />
-        <LeafCorner corner="bl" className="opacity-45" />
-
-        <div className="relative z-[1] lg:min-h-[300px] xl:min-h-[340px]">
-          <div className="page-shell relative pt-8 pb-[2px] sm:pt-10 lg:flex lg:min-h-[300px] lg:items-center lg:pt-10 lg:pb-[2px] xl:min-h-[340px]">
-            <div className="relative w-full max-w-xl lg:w-[48%] lg:max-w-none xl:w-[46%]">
-              <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
-                About Sewa Sankalp Foundation
-              </p>
-              <h1 className="display mt-2.5 text-[clamp(1.85rem,4vw,3.05rem)] font-bold leading-[1.08] text-[var(--forest)]">
-                <AccentText
-                  text="People. Purpose. A Brighter Tomorrow."
-                  accent="A Brighter Tomorrow."
-                  accentClass="text-[#D68C23]"
-                  breakBeforeAccent
-                />
-              </h1>
-              <p className="mt-3.5 max-w-[30rem] text-[13px] leading-[1.7] text-[#4A4A4A] sm:text-[14px] sm:leading-[1.75]">
-                Sewa Sankalp Foundation is a non-profit organization dedicated
-                to creating a more equitable, healthier and sustainable society
-                through education, healthcare, environment and community support.
-              </p>
-            </div>
-
-            {/* Mobile */}
-            <div className="relative mt-6 aspect-[5/3.4] w-full lg:hidden">
-              <AboutHeroPhoto
-                src="/uploads/about-hero-kids.png"
-                alt="Children supported by Sewa Sankalp Foundation"
-                clipId="about-hero-wave-mobile"
-              />
-            </div>
-          </div>
-
-          {/* Desktop — flush full right side */}
-          <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[50%] lg:block xl:w-[52%]">
-            <AboutHeroPhoto
-              src="/uploads/about-hero-kids.png"
-              alt="Children supported by Sewa Sankalp Foundation"
-              clipId="about-hero-wave-desktop"
-            />
-          </div>
-        </div>
-      </section>
+      {/* Hero — same banner image/bg as Campaigns; keep About copy */}
+      <PageBannerHero>
+        <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
+          About Sewa Sankalp Foundation
+        </p>
+        <h1 className="display mt-1.5 text-[clamp(1.55rem,7vw,3rem)] font-bold leading-[1.08] text-[var(--forest)] sm:mt-2">
+          <AccentText
+            text="People. Purpose. A Brighter Tomorrow."
+            accent="A Brighter Tomorrow."
+            accentClass="text-[#D68C23]"
+            breakBeforeAccent
+          />
+        </h1>
+        <p className="mt-2 max-w-[30rem] line-clamp-3 text-[12px] leading-[1.65] text-[#4A4A4A] sm:mt-2.5 sm:line-clamp-none sm:text-[13.5px] sm:leading-[1.7]">
+          Sewa Sankalp Foundation is a non-profit organization dedicated to
+          creating a more equitable, healthier and sustainable society through
+          education, healthcare, environment and community support.
+        </p>
+      </PageBannerHero>
 
       {/* Who We Are */}
       <section className="relative overflow-hidden bg-white pt-[2px] pb-[2px]">

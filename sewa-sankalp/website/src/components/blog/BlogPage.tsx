@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { HiChevronRight, HiOutlineMagnifyingGlass } from "react-icons/hi2";
 import { AccentText, LeafCorner } from "@/components/home/shared";
 import { BLOG_CATEGORY_ICONS } from "@/components/blog/categoryIcons";
+import { PageBannerHero } from "@/components/site/PageBannerHero";
 import { UtilityIcon } from "@/components/site/icons";
 import {
   BLOG_CATEGORIES,
@@ -64,40 +65,22 @@ export function BlogPageView({ heroImageUrl }: { heroImageUrl: string }) {
 
   return (
     <div className="bg-[var(--cream)]">
-      {/* Hero */}
-      <section className="relative w-full overflow-hidden bg-[#FDF8EE] leading-none">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={heroImageUrl}
-          alt=""
-          aria-hidden
-          className="m-0 block h-[240px] w-full max-w-none object-cover object-[85%_center] sm:h-[230px] sm:object-right lg:h-[260px]"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-[#FDF8EE] from-[0%] via-[#FDF8EE] via-[48%] to-transparent to-[78%] sm:from-[#FDF8EE]/70 sm:via-[#FDF8EE]/30 sm:to-transparent"
-        />
-        <div className="pointer-events-none absolute inset-0 z-[2] flex items-center">
-          <div className="page-shell pointer-events-auto flex w-full justify-start">
-            <div className="w-full max-w-[36rem] py-3 sm:py-4">
-              <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
-                Our Blog
-              </p>
-              <h1 className="display mt-1.5 text-[clamp(1.55rem,7vw,3rem)] font-bold leading-[1.08] text-[var(--forest)] sm:mt-2">
-                <AccentText
-                  text="Stories that Create Change."
-                  accent="Create Change."
-                  accentClass="text-[#D68C23]"
-                />
-              </h1>
-              <p className="mt-2 max-w-[30rem] line-clamp-3 text-[12px] leading-[1.65] text-[#4A4A4A] sm:mt-2.5 sm:line-clamp-none sm:text-[13.5px] sm:leading-[1.7]">
-                Real stories from classrooms, communities and campaigns — how
-                collective care creates lasting change.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageBannerHero imageUrl={heroImageUrl}>
+        <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
+          Our Blog
+        </p>
+        <h1 className="display mt-1.5 text-[clamp(1.55rem,7vw,3rem)] font-bold leading-[1.08] text-[var(--forest)] sm:mt-2">
+          <AccentText
+            text="Stories that Create Change."
+            accent="Create Change."
+            accentClass="text-[#D68C23]"
+          />
+        </h1>
+        <p className="mt-2 max-w-[30rem] line-clamp-3 text-[12px] leading-[1.65] text-[#4A4A4A] sm:mt-2.5 sm:line-clamp-none sm:text-[13.5px] sm:leading-[1.7]">
+          Real stories from classrooms, communities and campaigns — how
+          collective care creates lasting change.
+        </p>
+      </PageBannerHero>
 
       <section className="relative overflow-hidden bg-white py-8 sm:py-10 lg:py-12">
         <LeafCorner corner="bl" tone="forest" className="opacity-70" />

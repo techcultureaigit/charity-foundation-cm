@@ -1,6 +1,7 @@
 import { ContactForm } from "@/components/forms/ContactForm";
-import { UtilityIcon } from "@/components/site/icons";
 import { AccentText, LeafCorner } from "@/components/home/shared";
+import { PageBannerHero } from "@/components/site/PageBannerHero";
+import { UtilityIcon } from "@/components/site/icons";
 import type { ContactSettings, PageContent } from "@/lib/types";
 
 /** Defence Colony Sector-3 — coords keep pin correct without broken place panel. */
@@ -76,48 +77,24 @@ export function ContactPageView({
 
   return (
     <div className="bg-[var(--cream)]">
-      {/*
-        Compact wide hero — banner asset is full-bleed (kids frame baked in).
-        Text sits on the cream left; keep height short like the reference.
-      */}
-      <section className="relative w-full overflow-hidden bg-[#FDF8EE] leading-none">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={heroImageUrl}
-          alt=""
-          aria-hidden
-          className="m-0 block h-[240px] w-full max-w-none object-cover object-[85%_center] sm:h-[230px] sm:object-right lg:h-[260px]"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-[#FDF8EE] from-[0%] via-[#FDF8EE] via-[48%] to-transparent to-[78%] sm:from-[#FDF8EE]/70 sm:via-[#FDF8EE]/30 sm:to-transparent"
-        />
-
-        <div className="pointer-events-none absolute inset-0 z-[2] flex items-center">
-          {/*
-            Hero copy sits BELOW the header, in the cream area left of the kids.
-            Nudged slightly toward center — not into the orange nav, not over the photo.
-          */}
-          <div className="page-shell pointer-events-auto flex w-full justify-start">
-            <div className="w-full max-w-[32rem] py-3 sm:max-w-[34rem] sm:py-4">
-              {/* Reference: mustard overline · serif headline · grey body */}
-              <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
-                Get in Touch
-              </p>
-              <h1 className="display mt-1.5 text-[clamp(1.7rem,7vw,3.25rem)] font-bold leading-[1.05] text-[var(--forest)] sm:mt-2">
-                <AccentText
-                  text={page.headline || "Contact Us"}
-                  accent={accent}
-                  accentClass="text-[#D68C23]"
-                />
-              </h1>
-              <p className="mt-2 max-w-[28rem] line-clamp-3 text-[12px] leading-[1.65] text-[#4A4A4A] sm:mt-2.5 sm:line-clamp-none sm:text-[13.5px] sm:leading-[1.7]">
-                {page.body}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageBannerHero
+        imageUrl={heroImageUrl}
+        contentClassName="w-full max-w-[32rem] sm:max-w-[34rem]"
+      >
+        <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
+          Get in Touch
+        </p>
+        <h1 className="display mt-1.5 text-[clamp(1.7rem,7vw,3.25rem)] font-bold leading-[1.05] text-[var(--forest)] sm:mt-2">
+          <AccentText
+            text={page.headline || "Contact Us"}
+            accent={accent}
+            accentClass="text-[#D68C23]"
+          />
+        </h1>
+        <p className="mt-2 max-w-[28rem] line-clamp-3 text-[12px] leading-[1.65] text-[#4A4A4A] sm:mt-2.5 sm:line-clamp-none sm:text-[13.5px] sm:leading-[1.7]">
+          {page.body}
+        </p>
+      </PageBannerHero>
 
       {/* Form + info + map — leaf paati bottom corners both sides */}
       <section className="relative overflow-hidden bg-[var(--cream)] py-10 sm:py-12 lg:py-14">
