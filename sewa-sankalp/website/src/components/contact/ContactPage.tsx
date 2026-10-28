@@ -3,25 +3,15 @@ import { UtilityIcon } from "@/components/site/icons";
 import { AccentText, LeafCorner } from "@/components/home/shared";
 import type { ContactSettings, PageContent } from "@/lib/types";
 
-/** Defence Colony Sector-3 pin (Near Vidhan Sabha alone geocodes wrong). */
+/** Defence Colony Sector-3 — coords keep pin correct without broken place panel. */
 const OFFICE_MAP = {
   lat: 30.282411,
   lng: 78.051671,
-  query:
-    "C-97, Sector-3, Defence Colony, Near Vidhan Sabha, Dehradun 248002",
 };
 
-function mapEmbedUrl(address: string) {
-  const cleaned = (address || "").replace(/\s+/g, " ").trim();
-  const label =
-    cleaned && /defence\s*colony/i.test(cleaned)
-      ? cleaned
-      : OFFICE_MAP.query;
-  // Pin by coords so "Near Vidhan Sabha" doesn't land on Darshan Lal Chowk
-  const q = encodeURIComponent(
-    `${OFFICE_MAP.lat},${OFFICE_MAP.lng} (${label})`,
-  );
-  return `https://maps.google.com/maps?q=${q}&z=17&hl=en&output=embed`;
+function mapEmbedUrl(_address: string) {
+  // Plain lat,lng embed (no place-id / label) — avoids "Place info couldn't load"
+  return `https://maps.google.com/maps?q=${OFFICE_MAP.lat},${OFFICE_MAP.lng}&z=17&hl=en&output=embed`;
 }
 
 /** Force address into exactly 2 display lines (reference style). */
