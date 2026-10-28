@@ -108,7 +108,7 @@ export function GalleryPageView({
                       <button
                         type="button"
                         onClick={() => setActive(album.id)}
-                        className={`box-border flex h-12 w-full shrink-0 items-center gap-3 rounded-xl px-3.5 text-left text-[13.5px] font-semibold transition-colors ${
+                        className={`box-border flex h-12 w-full shrink-0 items-center gap-3 rounded-md px-3.5 text-left text-[13.5px] font-semibold transition-colors ${
                           selected
                             ? "bg-[#F8EBD7] text-[#D97706]"
                             : "bg-transparent text-[#2C3A4A] hover:bg-[var(--ivory)]"
