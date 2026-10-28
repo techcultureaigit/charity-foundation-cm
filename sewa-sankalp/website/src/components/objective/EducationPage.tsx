@@ -60,24 +60,24 @@ const campaigns = [
     title: "School Kit Drive 2026",
     text: "Bags, notebooks and stationery for children starting a new academic year.",
     image: "/uploads/event-02-education.jpg",
-    raised: "?1,85,000",
-    target: "?2,50,000",
+    raised: "₹1,85,000",
+    target: "₹2,50,000",
     pct: 74,
   },
   {
     title: "Girl Child Scholarship",
     text: "Annual scholarships keeping girls in secondary school across Dehradun.",
     image: "/uploads/education-mid.jpg",
-    raised: "?3,20,000",
-    target: "?5,00,000",
+    raised: "₹3,20,000",
+    target: "₹5,00,000",
     pct: 64,
   },
   {
     title: "Digital Learning Lab",
     text: "Tablets and after-school tutoring for first-generation learners.",
     image: "/uploads/cause-02-education.jpg",
-    raised: "?95,000",
-    target: "?2,00,000",
+    raised: "₹95,000",
+    target: "₹2,00,000",
     pct: 48,
   },
 ];
@@ -360,16 +360,25 @@ export function EducationPageView() {
           </div>
         </div>
 
-        {/* Stats — icon left + number/label right, vertical dividers */}
-        <div className="border-t border-[#E8DFD0] bg-[#F3EBD9]">
-          <div className="page-shell grid grid-cols-1 divide-y divide-[#E0D5C4] sm:grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-y-0">
-            {stats.map((stat) => (
+        {/* Stats — lighter orange; short centered dividers between all items */}
+        <div className="border-t border-[#F3E4D4] bg-[#FDF6EC]">
+          <div className="page-shell grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+            {stats.map((stat, index) => (
               <div
                 key={stat.label}
-                className="flex items-center justify-center gap-3.5 px-4 py-5 sm:py-6"
+                className="relative flex items-center justify-center gap-3.5 px-4 py-5 sm:py-6"
               >
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#D97706] text-white shadow-[0_4px_12px_rgba(217,119,6,0.28)]">
-                  <UtilityIcon name={stat.icon} className="h-5 w-5" />
+                {index > 0 ? (
+                  <span
+                    aria-hidden
+                    className="absolute left-0 top-1/2 hidden h-10 w-px -translate-y-1/2 bg-[#DCC9B0] lg:block"
+                  />
+                ) : null}
+                <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[#D97706] text-white shadow-[0_4px_12px_rgba(217,119,6,0.28)] sm:h-[4.25rem] sm:w-[4.25rem]">
+                  <UtilityIcon
+                    name={stat.icon}
+                    className="h-7 w-7 sm:h-8 sm:w-8"
+                  />
                 </span>
                 <div className="min-w-0 text-left">
                   <p className="text-[1.55rem] font-bold leading-none text-[#D97706] sm:text-[1.7rem]">
@@ -413,24 +422,40 @@ export function EducationPageView() {
                   </span>
                 </div>
                 <div className="px-5 py-5">
-                  <h3 className="display text-[1.15rem] font-bold text-[var(--forest)]">
+                  <h3 className="text-[1.15rem] font-bold text-[var(--forest)]">
                     {c.title}
                   </h3>
                   <p className="mt-2 text-[13px] leading-[1.6] text-[#6B6B6B]">
                     {c.text}
                   </p>
                   <div className="mt-5">
-                    <div className="h-2 overflow-hidden rounded-full bg-[#ebe4d8]">
+                    <div className="relative mb-1 h-4">
+                      <span
+                        className="absolute top-0 -translate-x-1/2 text-[11px] font-bold leading-none text-[var(--forest)]"
+                        style={{ left: `${c.pct}%` }}
+                      >
+                        {c.pct}%
+                      </span>
+                    </div>
+                    <div className="h-6 overflow-hidden rounded-full bg-[#ebe4d8]">
                       <div
                         className="h-full rounded-full bg-[var(--forest)]"
                         style={{ width: `${c.pct}%` }}
                       />
                     </div>
                     <div className="mt-2.5 flex justify-between text-[12px]">
-                      <span className="font-semibold text-[var(--forest)]">
-                        Raised {c.raised}
+                      <span className="flex flex-col items-start">
+                        <span className="font-semibold text-[var(--forest)]">
+                          {c.raised}
+                        </span>
+                        <span className="mt-0.5 text-[#6B6B6B]">Raised</span>
                       </span>
-                      <span className="text-[#6B6B6B]">Target {c.target}</span>
+                      <span className="flex flex-col items-end">
+                        <span className="font-semibold text-[var(--forest)]">
+                          {c.target}
+                        </span>
+                        <span className="mt-0.5 text-[#6B6B6B]">Target</span>
+                      </span>
                     </div>
                   </div>
                   <Link
@@ -461,12 +486,17 @@ export function EducationPageView() {
             </div>
             <div className="flex flex-1 flex-col justify-center gap-5 px-6 py-8 sm:px-9 lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:px-12">
               <div className="max-w-lg">
-                <h2 className="display text-[clamp(1.45rem,2.3vw,2rem)] font-bold leading-tight !text-white">
-                  Support Education, Empower Lives.
+                <p className="nav-bar text-[11px] font-bold uppercase tracking-[0.2em] text-[#D97706]">
+                  Be Part of the Change
+                </p>
+                <h2 className="display mt-2 text-[clamp(1.45rem,2.3vw,2rem)] font-bold leading-tight !text-white">
+                  Support Education,
+                  <br />
+                  Empower Lives.
                 </h2>
                 <p className="mt-2 text-[14px] leading-relaxed text-white/75">
-                  Your contribution helps a child stay in school and dream
-                  bigger.
+                  Your contribution helps us provide quality education and
+                  create brighter futures for children across communities.
                 </p>
               </div>
               <Link

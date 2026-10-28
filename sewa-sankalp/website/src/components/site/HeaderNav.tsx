@@ -26,8 +26,8 @@ const links: NavLink[] = [
     href: "/campaigns",
     children: [
       { label: "All Campaigns", href: "/campaigns" },
-      { label: "Our Work", href: "/our-work" },
-      { label: "Get Involved", href: "/get-involved" },
+      // { label: "Our Work", href: "/our-work" },
+      // { label: "Get Involved", href: "/get-involved" },
     ],
   },
   {

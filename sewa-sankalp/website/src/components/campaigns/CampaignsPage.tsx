@@ -1,7 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ComponentType } from "react";
+import {
+  FaHandHoldingHeart,
+  FaSeedling,
+  FaUser,
+  FaUsers,
+} from "react-icons/fa";
 import { AccentText } from "@/components/home/shared";
 import { UtilityIcon } from "@/components/site/icons";
 import {
@@ -94,11 +100,15 @@ function CampaignCard({ campaign }: { campaign: Campaign }) {
   );
 }
 
-const pageStats = [
-  { icon: "star" as const, value: "500+", label: "Campaigns" },
-  { icon: "people" as const, value: "1,000+", label: "People Helped" },
-  { icon: "user" as const, value: "50+", label: "Volunteers" },
-  { icon: "heart" as const, value: "100+", label: "Communities Reached" },
+const pageStats: {
+  Icon: ComponentType<{ className?: string }>;
+  value: string;
+  label: string;
+}[] = [
+  { Icon: FaUsers, value: "500+", label: "Campaigns" },
+  { Icon: FaHandHoldingHeart, value: "1,000+", label: "People Helped" },
+  { Icon: FaUser, value: "50+", label: "Volunteers" },
+  { Icon: FaSeedling, value: "100+", label: "Communities Reached" },
 ];
 
 export function CampaignsPageView() {
@@ -312,8 +322,8 @@ export function CampaignsPageView() {
       </section>
 
       {/* CTA + stats — match reference: planting fade + eyebrow + body + side CTA */}
-      <section className="relative overflow-hidden bg-white pt-8 pb-0 sm:pt-10 lg:pt-12">
-        <div className="page-shell relative pb-10 sm:pb-12">
+      <section className="relative overflow-hidden bg-white">
+        <div className="page-shell relative">
           <div className="relative overflow-hidden rounded-[1.25rem] bg-[#0B3B24] text-white shadow-[0_20px_48px_rgba(0,51,43,0.22)] sm:rounded-[1.5rem]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -363,26 +373,35 @@ export function CampaignsPageView() {
           </div>
         </div>
 
-        <div className="border-t border-[#E8DFD0] bg-[#F3EBD9]">
-          <div className="page-shell grid grid-cols-1 divide-y divide-[#E0D5C4] sm:grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-y-0">
-            {pageStats.map((stat) => (
-              <div
-                key={stat.label}
-                className="flex items-center justify-center gap-3.5 px-4 py-5 sm:py-6"
-              >
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#D97706] text-white shadow-[0_4px_12px_rgba(217,119,6,0.28)]">
-                  <UtilityIcon name={stat.icon} className="h-5 w-5" />
-                </span>
-                <div className="min-w-0 text-left">
-                  <p className="text-[1.55rem] font-bold leading-none text-[#D97706] sm:text-[1.7rem]">
-                    {stat.value}
-                  </p>
-                  <p className="mt-1 text-[12px] leading-snug text-[#6B6B6B]">
-                    {stat.label}
-                  </p>
+        <div className="bg-white">
+          <div className="page-shell grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+            {pageStats.map((stat, index) => {
+              const { Icon } = stat;
+              return (
+                <div
+                  key={stat.label}
+                  className="relative flex items-center justify-center gap-3.5 px-4 py-6 sm:py-7"
+                >
+                  {index > 0 ? (
+                    <span
+                      aria-hidden
+                      className="absolute left-0 top-1/2 hidden h-10 w-px -translate-y-1/2 bg-[#E5D9C8] lg:block"
+                    />
+                  ) : null}
+                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#F8E6D2] text-[#D97706] sm:h-16 sm:w-16">
+                    <Icon className="h-6 w-6 sm:h-7 sm:w-7" />
+                  </span>
+                  <div className="min-w-0 text-left">
+                    <p className="text-[1.55rem] font-bold leading-none text-[#D97706] sm:text-[1.7rem]">
+                      {stat.value}
+                    </p>
+                    <p className="mt-1 text-[12px] leading-snug text-[#6B7280]">
+                      {stat.label}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
