@@ -386,7 +386,7 @@ export function EducationPageView() {
       </section>
 
       {/* Related Campaigns */}
-      <section className="relative bg-white">
+      <section className="relative bg-white pt-[10px]">
         <div className="page-shell relative">
           <h2 className="display text-center text-[clamp(1.7rem,2.6vw,2.25rem)] font-bold text-[var(--forest)]">
             Related Campaigns
@@ -448,7 +448,7 @@ export function EducationPageView() {
       </section>
 
       {/* Bottom CTA */}
-      <section className="relative bg-white pb-14 sm:pb-16 lg:pb-[4.5rem]">
+      <section className="relative bg-white pb-14 pt-[10px] sm:pb-16 lg:pb-[4.5rem]">
         <div className="page-shell relative">
           <div className="overflow-hidden rounded-[1.5rem] bg-[var(--forest)] text-white shadow-[0_20px_48px_rgba(0,51,43,0.22)] lg:flex lg:min-h-[210px] lg:items-stretch">
             <div className="relative aspect-[16/10] shrink-0 sm:aspect-[2/1] lg:aspect-auto lg:w-[34%]">
