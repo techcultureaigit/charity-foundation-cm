@@ -202,41 +202,14 @@ export function SiteFooter({
               ))}
             </div>
 
-            {/* Slogan — white script + gold brush underline (reference) */}
-            <div className="mt-6 max-w-[15rem] -rotate-[2deg] sm:mt-7 sm:max-w-[16rem] sm:-rotate-[3deg]">
-              <p className="script text-[1.45rem] leading-[1.2] text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)] sm:text-[1.85rem]">
-                {tagline.includes("Tomorrow") ? (
-                  <>
-                    Together for
-                    <br />
-                    <span className="pl-3 sm:pl-4">a Brighter Tomorrow</span>
-                  </>
-                ) : (
-                  tagline
-                )}
-              </p>
-              <svg
-                viewBox="0 0 220 14"
-                className="mt-1 ml-2 h-2.5 w-[9.5rem] text-[var(--gold)] sm:ml-3 sm:h-3 sm:w-[12.5rem]"
-                aria-hidden
-              >
-                <path
-                  d="M4 5.5C50 2 120 2 216 6"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  opacity="0.95"
-                />
-                <path
-                  d="M8 9.5C55 6.5 125 6.5 210 9"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.2"
-                  strokeLinecap="round"
-                  opacity="0.7"
-                />
-              </svg>
+            {/* Slogan image */}
+            <div className="mt-6 max-w-[15rem] sm:mt-7 sm:max-w-[17rem]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/uploads/footer-slogan.png"
+                alt={tagline}
+                className="h-auto w-full mix-blend-screen"
+              />
             </div>
           </div>
 

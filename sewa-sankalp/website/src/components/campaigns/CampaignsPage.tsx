@@ -154,7 +154,7 @@ export function CampaignsPageView() {
       </section>
 
       {/* Filters */}
-      <section className="relative bg-[#FBF6EE]">
+      <section className="relative bg-white">
         <div className="page-shell flex flex-wrap items-center justify-center gap-2 pt-5 pb-2 sm:gap-2.5 sm:pt-6 sm:pb-3">
           {CAMPAIGN_FILTERS.map((filter) => {
             const on = active === filter.id;
@@ -178,14 +178,15 @@ export function CampaignsPageView() {
 
       {/* Featured */}
       {(active === "all" || active === featured.category) && (
-        <section className="page-shell relative pt-5 pb-10 sm:pt-6 sm:pb-12 lg:pb-14">
-          <div className="overflow-hidden rounded-[1.5rem] bg-[#F7F1E6] shadow-[0_14px_40px_rgba(0,51,43,0.08)] lg:grid lg:grid-cols-[0.95fr_1.05fr] lg:min-h-[400px]">
+        <section className="relative bg-white pt-5 pb-10 sm:pt-6 sm:pb-12 lg:pb-14">
+          <div className="page-shell">
+          <div className="overflow-hidden rounded-[1.5rem] bg-[#F3EBD9] shadow-[0_14px_40px_rgba(0,51,43,0.08)] lg:grid lg:grid-cols-[0.95fr_1.05fr] lg:min-h-[400px]">
             <div className="relative min-h-[260px] sm:min-h-[320px] lg:min-h-full">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/uploads/event-02-education.jpg"
+                src="/uploads/featured-campaign-education.jpg"
                 alt={featured.title}
-                className="absolute inset-0 h-full w-full object-cover object-[center_30%]"
+                className="absolute inset-0 h-full w-full object-cover object-[center_25%]"
               />
               <span className="absolute left-4 top-4 rounded-md bg-[#D97706] px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-white shadow-sm">
                 Featured Campaign
@@ -278,11 +279,12 @@ export function CampaignsPageView() {
               </div>
             </div>
           </div>
+          </div>
         </section>
       )}
 
       {/* Ongoing grid — 4 columns like reference */}
-      <section className="relative bg-[#F7F3EA] pt-5 pb-10 sm:pt-6 sm:pb-12 lg:pt-7 lg:pb-14">
+      <section className="relative bg-white pt-5 pb-10 sm:pt-6 sm:pb-12 lg:pt-7 lg:pb-14">
         <div className="page-shell">
           <p className="nav-bar text-center text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
             Our Campaigns
@@ -310,7 +312,7 @@ export function CampaignsPageView() {
       </section>
 
       {/* CTA + stats — match reference: planting fade + eyebrow + body + side CTA */}
-      <section className="relative overflow-hidden bg-[#FDF8EE] pt-8 pb-0 sm:pt-10 lg:pt-12">
+      <section className="relative overflow-hidden bg-white pt-8 pb-0 sm:pt-10 lg:pt-12">
         <div className="page-shell relative pb-10 sm:pb-12">
           <div className="relative overflow-hidden rounded-[1.25rem] bg-[#0B3B24] text-white shadow-[0_20px_48px_rgba(0,51,43,0.22)] sm:rounded-[1.5rem]">
             {/* eslint-disable-next-line @next/next/no-img-element */}

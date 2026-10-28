@@ -1,9 +1,5 @@
 import Link from "next/link";
-import {
-  AccentText,
-  LeafCorner,
-  LeafShape,
-} from "@/components/home/shared";
+import { AccentText, LeafCorner } from "@/components/home/shared";
 import { UtilityIcon } from "@/components/site/icons";
 import type { MediaItem, PageContent } from "@/lib/types";
 
@@ -60,82 +56,6 @@ const journey = [
   },
 ];
 
-/** Hand-drawn orange spiral — matches About mock flourish. */
-function OrangeSpiral({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden
-      viewBox="0 0 64 64"
-      className={className}
-      fill="none"
-    >
-      <path
-        d="M32 48c-10 0-18-7-18-16s8-16 18-16 16 6 16 14-6 12-12 12-10-4-10-9 3-8 7-8 6 2 6 5"
-        stroke="#D68C23"
-        strokeWidth="2.2"
-        strokeLinecap="round"
-      />
-      <path
-        d="M42 22c4-6 10-9 16-8"
-        stroke="#D68C23"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <path
-        d="M52 12l6 2-3 6"
-        stroke="#D68C23"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-/**
- * Hero photo — flush top-right corner, soft concave left wave (About mock).
- */
-function HeroPhotoFrame({
-  src,
-  alt,
-  clipId,
-}: {
-  src: string;
-  alt: string;
-  clipId: string;
-}) {
-  return (
-    <div className="relative h-full w-full">
-      <svg width="0" height="0" aria-hidden className="absolute">
-        <defs>
-          <clipPath id={clipId} clipPathUnits="objectBoundingBox">
-            {/* Sharp top-right · soft wave on left · round bottoms */}
-            <path d="M0.2,0 C0.08,0.1 0.0,0.22 0.04,0.38 C0.1,0.58 0.0,0.72 0.08,0.88 C0.14,0.96 0.24,1 0.36,1 L0.9,1 Q1,1 1,0.88 L1,0 Z" />
-          </clipPath>
-        </defs>
-      </svg>
-      <div
-        className="relative h-full w-full overflow-hidden"
-        style={{ clipPath: `url(#${clipId})` }}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={src}
-          alt={alt}
-          className="h-full w-full object-cover object-[62%_28%]"
-        />
-      </div>
-      <div
-        aria-hidden
-        className="pointer-events-none absolute bottom-2 right-3 z-[1] h-24 w-20 text-[#6F9B7A]/90 sm:bottom-3 sm:right-5 sm:h-32 sm:w-28"
-      >
-        <LeafShape className="absolute bottom-0 right-0 h-22 w-14 rotate-[16deg] sm:h-28 sm:w-16" />
-        <LeafShape className="absolute bottom-5 right-9 h-14 w-9 -rotate-[30deg] opacity-80 sm:bottom-7 sm:right-11 sm:h-18 sm:w-11" />
-      </div>
-    </div>
-  );
-}
-
 export function AboutPageView({
   page,
   photo,
@@ -148,26 +68,17 @@ export function AboutPageView({
 
   return (
     <div className="bg-[#FBF6EE]">
-      {/* Hero — same compact height as Campaigns (240 / 230 / 260) */}
+      {/* Hero — About Sewa Sankalp Foundation */}
       <section className="relative w-full overflow-hidden bg-[#FDF8EE] leading-none">
-        <LeafCorner corner="tl" className="opacity-80" tone="forest" />
-        <LeafCorner corner="bl" className="opacity-50" tone="forest" />
-
-        {/* Wave photo — fills hero height, flush right */}
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-[1] w-[58%] sm:w-[54%] lg:w-[52%]">
-          <HeroPhotoFrame
-            src="/uploads/about-hero-kids.jpg"
-            alt="Children smiling — hope for a brighter tomorrow"
-            clipId="about-hero-wave"
-          />
-        </div>
-
-        <div
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/aboutHerobg.png"
+          alt=""
           aria-hidden
-          className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-r from-[#FDF8EE] from-[0%] via-[#FDF8EE] via-[42%] to-transparent to-[72%] sm:via-[38%] sm:to-[65%] lg:via-[34%] lg:to-[60%]"
+          className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover object-right"
         />
 
-        <div className="relative z-[3] flex h-[240px] items-start pt-4 sm:h-[230px] sm:pt-5 lg:h-[260px] lg:pt-7">
+        <div className="relative z-[1] flex h-[240px] items-start pt-4 sm:h-[230px] sm:pt-5 lg:h-[260px] lg:pt-7">
           <div className="page-shell flex w-full justify-start">
             <div className="w-full max-w-[36rem]">
               <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
@@ -188,7 +99,6 @@ export function AboutPageView({
                   society through education, healthcare, environment and
                   community support.
                 </p>
-                <OrangeSpiral className="pointer-events-none absolute -right-1 top-0 hidden h-10 w-10 translate-x-full opacity-90 sm:block lg:-right-2" />
               </div>
             </div>
           </div>
