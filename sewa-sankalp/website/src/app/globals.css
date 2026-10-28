@@ -110,6 +110,70 @@ video {
   color: var(--forest); /* rgb(0, 51, 43) */
 }
 
+/* Home hero: locked Hindi 2-line title (GT cannot break layout) */
+.hero-home-eyebrow-hi,
+.hero-home-title-hi {
+  display: none !important;
+}
+.hero-hi-l1::before {
+  content: "बेहतर सहायता";
+}
+.hero-hi-l2::before {
+  content: "का समय आ गया है।";
+}
+html.lang-hi .hero-home-eyebrow-en,
+html[lang="hi"] .hero-home-eyebrow-en,
+html.lang-hi .hero-home-title-en,
+html[lang="hi"] .hero-home-title-en {
+  display: none !important;
+}
+html.lang-hi .hero-home-eyebrow-hi,
+html[lang="hi"] .hero-home-eyebrow-hi {
+  display: inline !important;
+}
+html.lang-hi .hero-home-title-hi,
+html[lang="hi"] .hero-home-title-hi {
+  display: block !important;
+}
+html.lang-hi .hero-home-eyebrow,
+html[lang="hi"] .hero-home-eyebrow {
+  letter-spacing: 0.06em;
+  text-transform: none;
+}
+html.lang-hi .hero-home-title,
+html[lang="hi"] .hero-home-title {
+  margin-top: 0.45rem !important;
+  font-family: var(--font-poppins), "Noto Sans Devanagari", system-ui, sans-serif !important;
+  font-size: clamp(1.9rem, 6.5vw, 3.4rem) !important;
+  line-height: 1.12 !important;
+  letter-spacing: 0 !important;
+}
+html.lang-hi .hero-home-copy > p.mt-4,
+html[lang="hi"] .hero-home-copy > p.mt-4 {
+  margin-top: 0.85rem;
+  font-size: 13.5px;
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  html.lang-hi .hero-home-title,
+  html[lang="hi"] .hero-home-title {
+    margin-top: 0.55rem !important;
+    font-size: clamp(2.2rem, 5vw, 3.55rem) !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  html.lang-hi .hero-home-title,
+  html[lang="hi"] .hero-home-title {
+    font-size: clamp(2.7rem, 3.8vw, 3.85rem) !important;
+  }
+}
+
 /* Section / page headers — brand green unless a utility overrides (e.g. text-white) */
 h1,
 h2,

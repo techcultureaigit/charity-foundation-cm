@@ -6,6 +6,7 @@ import {
   applyGoogleCombo,
   persistLang,
   readStoredLang,
+  syncHtmlLangClass,
   type Lang,
 } from "@/lib/i18n/lang";
 
@@ -87,6 +88,7 @@ export function LanguageSwitcher({
   useEffect(() => {
     const current = readStoredLang();
     setLang(current);
+    syncHtmlLangClass(current);
     if (current === "hi") persistLang("hi");
     if (mountWidget) ensureGoogleTranslate(current);
   }, [mountWidget]);

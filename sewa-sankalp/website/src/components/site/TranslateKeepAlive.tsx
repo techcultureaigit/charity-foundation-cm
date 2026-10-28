@@ -6,6 +6,7 @@ import {
   forceHindiTranslate,
   persistLang,
   readStoredLang,
+  syncHtmlLangClass,
 } from "@/lib/i18n/lang";
 
 /**
@@ -16,6 +17,11 @@ import {
  */
 export function TranslateKeepAlive() {
   const pathname = usePathname();
+
+  // Keep html.lang-hi in sync even before Google sets lang=
+  useEffect(() => {
+    syncHtmlLangClass(readStoredLang());
+  }, [pathname]);
 
   // Persist Hindi across in-site link clicks (full navigation)
   useEffect(() => {

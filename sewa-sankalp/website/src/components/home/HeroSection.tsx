@@ -243,18 +243,40 @@ export function HeroSection({
         <LeafCorner corner="br" className="opacity-55" />
         <HeroWave />
 
-        <div className="page-shell relative z-10 flex min-h-[420px] flex-col pt-7 sm:min-h-[500px] sm:pt-10 lg:min-h-[580px] lg:pt-12">
-          <div className="max-w-[32rem] flex-1 pb-40 pt-1 sm:pb-40 sm:pt-2 lg:pb-44">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--gold-deep)] sm:text-[11px] sm:tracking-[0.28em] md:text-xs">
-              Sewa Sankalp Foundation
+        <div className="hero-home-shell page-shell relative z-10 flex h-[420px] flex-col pt-7 sm:h-[500px] sm:pt-10 lg:h-[580px] lg:pt-12">
+          <div className="hero-home-copy max-w-[32rem] flex-1 overflow-hidden pb-40 pt-1 sm:pb-40 sm:pt-2 lg:pb-44">
+            <style>{`
+              .hero-hi-l1::before { content: "बेहतर सहायता"; }
+              .hero-hi-l2::before { content: "का समय आ गया है।"; }
+            `}</style>
+            <p className="hero-home-eyebrow text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--gold-deep)] sm:text-[11px] sm:tracking-[0.28em] md:text-xs">
+              <span className="hero-home-eyebrow-en">Sewa Sankalp Foundation</span>
+              <span
+                className="hero-home-eyebrow-hi notranslate"
+                translate="no"
+                lang="hi"
+              >
+                सेवा संकल्प फाउंडेशन
+              </span>
             </p>
-            <h1 className="display mt-2.5 text-[clamp(2.05rem,8vw,4.6rem)] font-bold leading-[1.02] text-[var(--forest)] sm:mt-3 sm:leading-[0.98]">
-              <AccentText
-                text={page.headline}
-                accent={page.heroAccentWords}
-                accentClass="text-[var(--orange)]"
-                breakBeforeAccent
-              />
+            <h1 className="hero-home-title display mt-2.5 text-[clamp(2.05rem,8vw,4.6rem)] font-bold leading-[1.02] text-[var(--forest)] sm:mt-3 sm:leading-[0.98]">
+              <span className="hero-home-title-en">
+                <AccentText
+                  text={page.headline}
+                  accent={page.heroAccentWords}
+                  accentClass="text-[var(--orange)]"
+                  breakBeforeAccent
+                />
+              </span>
+              <span
+                className="hero-home-title-hi notranslate"
+                translate="no"
+                lang="hi"
+                aria-label="बेहतर सहायता का समय आ गया है।"
+              >
+                <span className="hero-hi-l1 block text-[var(--orange)]" />
+                <span className="hero-hi-l2 block" />
+              </span>
             </h1>
             <svg
               viewBox="0 0 260 18"

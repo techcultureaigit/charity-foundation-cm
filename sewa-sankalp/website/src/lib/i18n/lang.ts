@@ -24,6 +24,13 @@ export function clearGoogtransCookies() {
   }
 }
 
+export function syncHtmlLangClass(lang: Lang) {
+  const root = document.documentElement;
+  root.classList.toggle("lang-hi", lang === "hi");
+  root.classList.toggle("lang-en", lang === "en");
+  if (lang === "hi") root.lang = "hi";
+}
+
 export function persistLang(lang: Lang) {
   clearGoogtransCookies();
   const value = lang === "hi" ? "/en/hi" : "/en/en";
@@ -38,6 +45,7 @@ export function persistLang(lang: Lang) {
   } catch {
     /* ignore */
   }
+  syncHtmlLangClass(lang);
 }
 
 export function applyGoogleCombo(lang: Lang): boolean {
