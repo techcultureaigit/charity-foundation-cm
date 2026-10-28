@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BrandMark } from "@/components/site/BrandMark";
 import { HeaderNav } from "@/components/site/HeaderNav";
+import { LanguageSwitcher } from "@/components/site/LanguageSwitcher";
 import { SocialIcon, UtilityIcon } from "@/components/site/icons";
 import type { ContactSettings } from "@/lib/types";
 
@@ -55,7 +56,8 @@ export function SiteHeader({ contact }: { contact: ContactSettings }) {
             </div>
           </div>
 
-          <div className="ml-auto flex min-w-0 max-w-[62%] items-center justify-end gap-x-2.5 sm:max-w-none sm:gap-x-6">
+          <div className="ml-auto flex min-w-0 max-w-[72%] items-center justify-end gap-x-2 sm:max-w-none sm:gap-x-5">
+            <LanguageSwitcher tone="light" mountWidget />
             <a
               href={`mailto:${contact.email}`}
               className="hidden min-w-0 items-center gap-1.5 font-normal text-white transition-colors hover:text-[var(--gold)] sm:flex sm:gap-2 md:max-w-none"

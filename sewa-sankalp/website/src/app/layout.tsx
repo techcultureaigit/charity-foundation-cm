@@ -11,6 +11,7 @@ import { HeaderFromDb } from "@/components/site/HeaderFromDb";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SmoothScroll } from "@/components/site/SmoothScroll";
+import { TranslateKeepAlive } from "@/components/site/TranslateKeepAlive";
 import { fallbackContact } from "@/lib/content/fallback";
 import "./globals.css";
 
@@ -76,9 +77,14 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0&icon_names=calendar_month,diamond,eco,groups,person,spa,star,target,trending_up,visibility,volunteer_activism"
         />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap"
+        />
       </head>
-      <body className="min-h-screen antialiased">
+      <body className="min-h-screen font-sans antialiased">
         <SmoothScroll>
+          <TranslateKeepAlive />
           <div className="flex min-h-screen flex-col bg-white">
             <Suspense fallback={<SiteHeader contact={fallbackContact} />}>
               <HeaderFromDb />

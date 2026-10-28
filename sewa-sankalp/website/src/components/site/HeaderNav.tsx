@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { LanguageSwitcher } from "@/components/site/LanguageSwitcher";
 import { UtilityIcon } from "@/components/site/icons";
 
 interface NavLink {
@@ -144,6 +145,9 @@ export function HeaderNav() {
 
       {open ? (
         <div className="nav-bar absolute inset-x-0 top-full z-50 max-h-[min(70vh,520px)] overflow-y-auto border-t border-black/10 bg-[var(--orange)] px-4 py-3 shadow-lg sm:px-5 lg:hidden">
+          <div className="mb-2 border-b border-black/10 pb-2">
+            <LanguageSwitcher tone="dark" />
+          </div>
           <div className="flex flex-col">
             {links.flatMap((link) => [
               <Link
