@@ -256,6 +256,11 @@ h4.text-white {
     visibility 0.22s;
 }
 
+/* Brand wordmark — CSS content so Google Translate cannot change it */
+.brand-wordmark__text::before {
+  content: "सेवा संकल्प फाउंडेशन";
+}
+
 /* ---------- Google Translate: keep design, hide Google chrome ---------- */
 #google_translate_element,
 .goog-te-banner-frame,

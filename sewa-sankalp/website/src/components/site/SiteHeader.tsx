@@ -92,8 +92,10 @@ export function SiteHeader({ contact }: { contact: ContactSettings }) {
         <div className="relative flex items-center gap-2 overflow-visible py-1.5 pl-[max(0.75rem,calc((100%-var(--page-max))/2+var(--page-gutter)))] pr-3 sm:gap-4 sm:py-2.5 sm:pr-0">
           <Link
             href="/"
-            aria-label="Sewa Sankalp Foundation home"
-            className="min-w-0 shrink"
+            aria-label="सेवा संकल्प फाउंडेशन home"
+            className="notranslate min-w-0 shrink"
+            translate="no"
+            lang="hi"
           >
             <BrandMark />
           </Link>
