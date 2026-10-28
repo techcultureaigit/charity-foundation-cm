@@ -82,35 +82,16 @@ const campaigns = [
   },
 ];
 
-/** Hand-drawn orange spiral doodle beside the hero copy. */
-function OrangeSpiral({ className = "" }: { className?: string }) {
+/** Hand-drawn squiggle accent — sits in the middle between copy & hero image. */
+function HeroSquiggle({ className = "" }: { className?: string }) {
   return (
-    <svg
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="/uploads/education-squiggle.png"
+      alt=""
       aria-hidden
-      viewBox="0 0 64 64"
       className={className}
-      fill="none"
-    >
-      <path
-        d="M32 48c-10 0-18-7-18-16s8-16 18-16 16 6 16 14-6 12-12 12-10-4-10-9 3-8 7-8 6 2 6 5"
-        stroke="#D68C23"
-        strokeWidth="2.2"
-        strokeLinecap="round"
-      />
-      <path
-        d="M42 22c4-6 10-9 16-8"
-        stroke="#D68C23"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <path
-        d="M52 12l6 2-3 6"
-        stroke="#D68C23"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+    />
   );
 }
 
@@ -139,16 +120,24 @@ function HeroPhotoFrame({
       </svg>
 
       <div
-        className="relative flex h-full min-h-[260px] w-full items-center justify-end overflow-hidden bg-[#FDF8EE] sm:min-h-[320px] lg:min-h-0"
-        style={{ clipPath: `url(#${clipId})` }}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={src}
-          alt={alt}
-          className="h-full w-full object-contain object-right"
-        />
-      </div>
+  className="relative flex h-full min-h-[180px] w-full items-center justify-end overflow-hidden bg-[#FDF8EE] sm:min-h-[224px] lg:min-h-0"
+  style={{
+    clipPath: `url(#${clipId})`,
+  }}
+>
+  <img
+    src={src}
+    alt={alt}
+    style={{
+      objectFit: "cover",
+      objectPosition: "right",
+      borderTopLeftRadius: "100px",
+      borderTopRightRadius: "1000px",
+      borderBottomRightRadius: "300%",
+      borderBottomLeftRadius: "300%",
+    }}
+  />
+</div>
 
       <div
         aria-hidden
@@ -180,12 +169,12 @@ export function EducationPageView() {
         <LeafCorner corner="tl" className="opacity-80" />
         <LeafCorner corner="bl" className="opacity-55" />
 
-        <div className="relative z-[1] lg:min-h-[400px] xl:min-h-[460px]">
+        <div className="relative z-[1] lg:min-h-[280px] xl:min-h-[322px]">
           {/*
             Same left inset as header logo via page-shell — content parallel with logo.
             Top-aligned under header (not vertically centered under the logo).
           */}
-          <div className="page-shell relative pt-3.5 pb-5 sm:pt-4 sm:pb-7 lg:flex lg:min-h-[400px] lg:items-start lg:pt-4 lg:pb-9 xl:min-h-[460px] xl:pt-5">
+          <div className="page-shell relative pt-2.5 pb-3.5 sm:pt-3 sm:pb-5 lg:flex lg:min-h-[280px] lg:items-start lg:pt-3 lg:pb-6 xl:min-h-[322px] xl:pt-3.5">
             <div className="relative w-full max-w-xl lg:w-[40%] lg:max-w-none xl:w-[38%]">
               <nav
                 aria-label="Breadcrumb"
@@ -222,12 +211,11 @@ export function EducationPageView() {
                   education, learning resources and opportunities for
                   underprivileged children and youth.
                 </p>
-                <OrangeSpiral className="pointer-events-none absolute -right-1 top-1/2 hidden h-12 w-12 -translate-y-1/2 translate-x-full opacity-90 sm:block lg:-right-2 xl:-right-6" />
               </div>
             </div>
 
             {/* Mobile image (flows under copy) */}
-            <div className="relative mt-5 aspect-[5/3.5] w-full lg:hidden">
+            <div className="relative mt-4 aspect-[5/2.45] w-full lg:hidden">
               <HeroPhotoFrame
                 src="/uploads/education-mid.jpg"
                 alt="Student learning with teacher support in classroom"
@@ -244,11 +232,14 @@ export function EducationPageView() {
               clipId="education-hero-wave-desktop"
             />
           </div>
+
+          {/* Middle squiggle — between text & image */}
+          <HeroSquiggle className="pointer-events-none absolute left-[38%] top-[48%] z-[3] hidden h-10 w-auto -translate-x-1/2 -translate-y-1/2 select-none sm:h-11 lg:block xl:left-[36%] xl:h-12" />
         </div>
       </section>
 
       {/* Key Focus Areas */}
-      <section className="relative bg-white pt-7 pb-5 sm:pt-8 sm:pb-6 lg:pt-9 lg:pb-7">
+      <section className="relative bg-white">
         <div className="page-shell relative">
           <h2 className="display text-center text-[clamp(1.7rem,2.6vw,2.25rem)] font-bold text-[var(--forest)]">
             Key Focus Areas
@@ -281,7 +272,7 @@ export function EducationPageView() {
       </section>
 
       {/* How We Create Impact — icon left + text right, orange arrows between */}
-      <section className="relative overflow-hidden bg-white pt-4 pb-12 sm:pt-5 sm:pb-14 lg:pt-6 lg:pb-16">
+      <section className="relative overflow-hidden bg-white">
         <div className="page-shell">
           <h2 className="display text-center text-[clamp(1.7rem,2.6vw,2.25rem)] font-bold text-[var(--forest)]">
             How We Create Impact
@@ -319,16 +310,16 @@ export function EducationPageView() {
       </section>
 
       {/* Mid CTA — education creates opportunities */}
-      <section className="relative overflow-hidden bg-[#FDF8EE] pt-8 pb-0 sm:pt-10 lg:pt-12">
+      <section className="relative overflow-hidden bg-white pt-8 pb-0 sm:pt-10 lg:pt-12">
         <LeafCorner corner="tl" className="opacity-70" />
-        <div className="page-shell relative z-[1] grid items-center gap-8 pb-10 sm:gap-10 sm:pb-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-12 lg:pb-14">
-          <div className="relative">
+        <div className="page-shell relative z-[1] grid items-center gap-8 pb-10 sm:gap-10 sm:pb-12 lg:grid-cols-[1.14fr_0.86fr] lg:gap-10 lg:pb-14">
+          <div className="relative mx-auto w-full lg:mx-0">
             <div className="relative overflow-hidden rounded-[1.75rem] shadow-[0_18px_44px_rgba(0,51,43,0.1)] sm:rounded-[2rem]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/uploads/education-kids.png"
                 alt="Children learning in classroom"
-                className="aspect-[5/4] w-full object-cover object-[center_20%]"
+                className="aspect-[16/9] w-full object-cover object-[center_20%]"
               />
             </div>
             <span className="absolute -bottom-3 -right-2 flex h-14 w-14 items-center justify-center rounded-full bg-[#D97706] text-white shadow-[0_8px_22px_rgba(217,119,6,0.35)] sm:-bottom-4 sm:right-4 sm:h-16 sm:w-16">
@@ -395,92 +386,97 @@ export function EducationPageView() {
       </section>
 
       {/* Related Campaigns */}
-      <section className="page-shell relative py-12 sm:py-14 lg:py-16">
-        <h2 className="display text-center text-[clamp(1.7rem,2.6vw,2.25rem)] font-bold text-[var(--forest)]">
-          Related Campaigns
-        </h2>
-        <p className="mx-auto mt-2 max-w-xl text-center text-[13.5px] leading-relaxed text-[#6B6B6B]">
-          Support our ongoing education campaigns and help us to create lasting
-          change.
-        </p>
-        <div className="mt-9 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {campaigns.map((c) => (
-            <article
-              key={c.title}
-              className="overflow-hidden rounded-[1.35rem] bg-white shadow-[0_10px_32px_rgba(0,51,43,0.07)]"
-            >
-              <div className="relative aspect-[16/10] overflow-hidden bg-[#e8e2d6]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={c.image}
-                  alt={c.title}
-                  className="h-full w-full object-cover"
-                />
-                <span className="absolute left-3 top-3 rounded-md bg-[#D97706] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
-                  Education
-                </span>
-              </div>
-              <div className="px-5 py-5">
-                <h3 className="display text-[1.15rem] font-bold text-[var(--forest)]">
-                  {c.title}
-                </h3>
-                <p className="mt-2 text-[13px] leading-[1.6] text-[#6B6B6B]">
-                  {c.text}
-                </p>
-                <div className="mt-5">
-                  <div className="h-2 overflow-hidden rounded-full bg-[#ebe4d8]">
-                    <div
-                      className="h-full rounded-full bg-[var(--forest)]"
-                      style={{ width: `${c.pct}%` }}
-                    />
-                  </div>
-                  <div className="mt-2.5 flex justify-between text-[12px]">
-                    <span className="font-semibold text-[var(--forest)]">
-                      Raised {c.raised}
-                    </span>
-                    <span className="text-[#6B6B6B]">Target {c.target}</span>
-                  </div>
+      <section className="relative bg-white">
+        <div className="page-shell relative">
+          <h2 className="display text-center text-[clamp(1.7rem,2.6vw,2.25rem)] font-bold text-[var(--forest)]">
+            Related Campaigns
+          </h2>
+          <p className="mx-auto mt-2 max-w-xl text-center text-[13.5px] leading-relaxed text-[#6B6B6B]">
+            Support our ongoing education campaigns and help us to create lasting
+            change.
+          </p>
+          <div className="mt-9 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {campaigns.map((c) => (
+              <article
+                key={c.title}
+                className="overflow-hidden rounded-[1.35rem] bg-white shadow-[0_10px_32px_rgba(0,51,43,0.07)]"
+              >
+                <div className="relative aspect-[16/10] overflow-hidden bg-[#e8e2d6]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={c.image}
+                    alt={c.title}
+                    className="h-full w-full object-cover"
+                  />
+                  <span className="absolute left-3 top-3 rounded-md bg-[#D97706] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
+                    Education
+                  </span>
                 </div>
-                <Link
-                  href="/get-involved"
-                  className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg border-2 border-[#D97706] bg-transparent px-4 py-2.5 text-[13px] font-semibold text-[#D97706] transition-colors hover:bg-[#D97706] hover:text-white"
-                >
-                  View Campaign
-                  <UtilityIcon name="arrow" className="h-3.5 w-3.5" />
-                </Link>
-              </div>
-            </article>
-          ))}
+                <div className="px-5 py-5">
+                  <h3 className="display text-[1.15rem] font-bold text-[var(--forest)]">
+                    {c.title}
+                  </h3>
+                  <p className="mt-2 text-[13px] leading-[1.6] text-[#6B6B6B]">
+                    {c.text}
+                  </p>
+                  <div className="mt-5">
+                    <div className="h-2 overflow-hidden rounded-full bg-[#ebe4d8]">
+                      <div
+                        className="h-full rounded-full bg-[var(--forest)]"
+                        style={{ width: `${c.pct}%` }}
+                      />
+                    </div>
+                    <div className="mt-2.5 flex justify-between text-[12px]">
+                      <span className="font-semibold text-[var(--forest)]">
+                        Raised {c.raised}
+                      </span>
+                      <span className="text-[#6B6B6B]">Target {c.target}</span>
+                    </div>
+                  </div>
+                  <Link
+                    href="/get-involved"
+                    className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg border-2 border-[#D97706] bg-transparent px-4 py-2.5 text-[13px] font-semibold text-[#D97706] transition-colors hover:bg-[#D97706] hover:text-white"
+                  >
+                    View Campaign
+                    <UtilityIcon name="arrow" className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Bottom CTA */}
-      <section className="page-shell relative pb-14 sm:pb-16 lg:pb-[4.5rem]">
-        <div className="overflow-hidden rounded-[1.5rem] bg-[var(--forest)] text-white shadow-[0_20px_48px_rgba(0,51,43,0.22)] lg:flex lg:min-h-[210px] lg:items-stretch">
-          <div className="relative aspect-[16/10] shrink-0 sm:aspect-[2/1] lg:aspect-auto lg:w-[34%]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/uploads/education-cta.png"
-              alt=""
-              className="absolute inset-0 h-full w-full object-cover object-[center_30%]"
-            />
-          </div>
-          <div className="flex flex-1 flex-col justify-center gap-5 px-6 py-8 sm:px-9 lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:px-12">
-            <div className="max-w-lg">
-              <h2 className="display text-[clamp(1.45rem,2.3vw,2rem)] font-bold leading-tight !text-white">
-                Support Education, Empower Lives.
-              </h2>
-              <p className="mt-2 text-[14px] leading-relaxed text-white/75">
-                Your contribution helps a child stay in school and dream bigger.
-              </p>
+      <section className="relative bg-white pb-14 sm:pb-16 lg:pb-[4.5rem]">
+        <div className="page-shell relative">
+          <div className="overflow-hidden rounded-[1.5rem] bg-[var(--forest)] text-white shadow-[0_20px_48px_rgba(0,51,43,0.22)] lg:flex lg:min-h-[210px] lg:items-stretch">
+            <div className="relative aspect-[16/10] shrink-0 sm:aspect-[2/1] lg:aspect-auto lg:w-[34%]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/uploads/education-cta.png"
+                alt=""
+                className="absolute inset-0 h-full w-full object-cover object-[center_30%]"
+              />
             </div>
-            <Link
-              href="/get-involved"
-              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#D97706] px-6 py-3.5 text-[13px] font-bold uppercase tracking-wide text-white shadow-[0_8px_20px_rgba(217,119,6,0.35)] transition-colors hover:bg-[#c46a08]"
-            >
-              Support This Objective
-              <UtilityIcon name="arrow" className="h-4 w-4" />
-            </Link>
+            <div className="flex flex-1 flex-col justify-center gap-5 px-6 py-8 sm:px-9 lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:px-12">
+              <div className="max-w-lg">
+                <h2 className="display text-[clamp(1.45rem,2.3vw,2rem)] font-bold leading-tight !text-white">
+                  Support Education, Empower Lives.
+                </h2>
+                <p className="mt-2 text-[14px] leading-relaxed text-white/75">
+                  Your contribution helps a child stay in school and dream
+                  bigger.
+                </p>
+              </div>
+              <Link
+                href="/get-involved"
+                className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#D97706] px-6 py-3.5 text-[13px] font-bold uppercase tracking-wide text-white shadow-[0_8px_20px_rgba(217,119,6,0.35)] transition-colors hover:bg-[#c46a08]"
+              >
+                Support This Objective
+                <UtilityIcon name="arrow" className="h-4 w-4" />
+              </Link>
+            </div>
           </div>
         </div>
       </section>
