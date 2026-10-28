@@ -130,7 +130,7 @@ export function ContactPageView({
           RIGHT ? Our Contact Information (Address | Call | Email)
                   + Find Us on Map
         */}
-        <div className="page-shell relative z-[1] grid gap-10 lg:grid-cols-[0.88fr_1.12fr] lg:gap-10 lg:items-start">
+        <div className="page-shell relative z-[1] grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:gap-8 lg:items-start">
           <ContactForm />
 
           <div className="space-y-1">
@@ -147,14 +147,16 @@ export function ContactPageView({
                 Address: exactly 2 lines (smaller font + nowrap).
                 Phone + email: single line each (nowrap + compact font).
               */}
-              <div className="mt-1 grid grid-cols-1 gap-4 min-[520px]:grid-cols-[minmax(0,1.4fr)_minmax(0,0.85fr)_minmax(0,1.15fr)] min-[520px]:gap-0">
+              {/* Call Us = max-content (shifts left); Email gets leftover width */}
+              <div className="mt-1 grid grid-cols-1 gap-4 min-[520px]:grid-cols-[minmax(0,1.15fr)_max-content_minmax(0,1.55fr)] min-[520px]:gap-0">
                 {info.map((item, index) => {
                   const isAddress = item.title === "Our Address";
+                  const isCall = item.title === "Call Us";
                   const isEmail = item.title === "Email Us";
                   const bodySize = isAddress
                     ? "text-[10px]"
                     : isEmail
-                      ? "text-[10px]"
+                      ? "text-[9.5px]"
                       : "text-[11px]";
                   const body = (
                     <>
@@ -164,7 +166,11 @@ export function ContactPageView({
                           className="h-5 w-5 text-[#D97706]"
                         />
                       </span>
-                      <span className="min-w-0 flex-1 overflow-hidden">
+                      <span
+                        className={`min-w-0 flex-1 ${
+                          isEmail ? "overflow-visible" : "overflow-hidden"
+                        }`}
+                      >
                         <span className="block text-[13px] font-semibold leading-none text-[#D97706]">
                           {item.title}
                         </span>
@@ -183,11 +189,20 @@ export function ContactPageView({
                       </span>
                     </>
                   );
-                  const className = `relative flex min-w-0 items-start gap-2.5 ${
+                  // Call Us: tight left pad (shift left); Address: less right pad → email space
+                  const className = `relative flex min-w-0 items-start gap-2 ${
                     index > 0
-                      ? "min-[520px]:pl-3.5 min-[520px]:before:absolute min-[520px]:before:left-0 min-[520px]:before:top-1/2 min-[520px]:before:h-[70%] min-[520px]:before:w-px min-[520px]:before:-translate-y-1/2 min-[520px]:before:bg-[#E5E0D8]"
+                      ? `min-[520px]:before:absolute min-[520px]:before:left-0 min-[520px]:before:top-1/2 min-[520px]:before:h-[70%] min-[520px]:before:w-px min-[520px]:before:-translate-y-1/2 min-[520px]:before:bg-[#E5E0D8] ${
+                          isCall ? "min-[520px]:pl-2.5" : "min-[520px]:pl-3"
+                        }`
                       : ""
-                  } ${index < info.length - 1 ? "min-[520px]:pr-3.5" : ""}`;
+                  } ${
+                    isAddress
+                      ? "min-[520px]:pr-2.5"
+                      : isCall
+                        ? "min-[520px]:pr-2.5"
+                        : ""
+                  }`;
                   return item.href ? (
                     <a
                       key={item.title}

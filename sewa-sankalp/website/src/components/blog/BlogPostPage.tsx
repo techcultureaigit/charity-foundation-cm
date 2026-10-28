@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { HiChevronRight, HiOutlineMagnifyingGlass } from "react-icons/hi2";
 import { AccentText, LeafCorner } from "@/components/home/shared";
+import { BLOG_CATEGORY_ICONS } from "@/components/blog/categoryIcons";
 import { SocialIcon, UtilityIcon } from "@/components/site/icons";
 import {
   BLOG_CATEGORIES,
@@ -127,7 +129,7 @@ export function BlogPostPageView({
         />
         <div className="pointer-events-none absolute inset-0 z-[2] flex items-center">
           <div className="page-shell pointer-events-auto flex w-full justify-start">
-            <div className="w-full max-w-[36rem] py-3 sm:py-4 sm:pl-[4%] lg:pl-[8%]">
+            <div className="w-full max-w-[36rem] py-3 sm:py-4">
               <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
                 Our Blog
               </p>
@@ -348,12 +350,9 @@ export function BlogPostPageView({
 
           {/* Sidebar — same top line as feature image */}
           <aside className="space-y-4 self-start lg:sticky lg:top-28">
-            <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-white shadow-[0_6px_18px_rgba(0,51,43,0.05)]">
-              <label className="relative block p-3">
-                <UtilityIcon
-                  name="search"
-                  className="pointer-events-none absolute left-5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[var(--muted)]"
-                />
+            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-[0_8px_24px_rgba(0,51,43,0.07)]">
+              <label className="relative block p-3 pb-1.5">
+                <HiOutlineMagnifyingGlass className="pointer-events-none absolute right-5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#9CA3AF]" />
                 <input
                   type="search"
                   value={query}
@@ -366,55 +365,61 @@ export function BlogPostPageView({
                         : "/blog";
                     }
                   }}
-                  placeholder="Search blogs..."
-                  className="w-full rounded-lg border border-[var(--border)] bg-[#f7f4ee] py-2 pl-9 pr-3 text-[12.5px] outline-none ring-[var(--forest)] focus:bg-white focus:ring-2"
+                  placeholder="Search articles..."
+                  className="w-full rounded-lg border border-[var(--border)] bg-white py-2.5 pl-4 pr-10 text-[12.5px] outline-none ring-[var(--forest)] transition focus:ring-2"
                 />
               </label>
-            </div>
-
-            <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-white shadow-[0_6px_18px_rgba(0,51,43,0.05)]">
-              <div className="border-b border-[var(--border)] px-3 py-2.5">
-                <h3 className="display text-[1rem] font-bold text-[var(--forest)]">
+              <div className="px-4 pb-2 pt-2">
+                <h3 className="display text-[1.2rem] font-bold text-[var(--forest)]">
                   Categories
                 </h3>
               </div>
-              <nav className="flex flex-col" aria-label="Blog categories">
+              <nav className="flex flex-col p-1.5" aria-label="Blog categories">
                 {BLOG_CATEGORIES.map((cat, index) => {
                   const selected = cat.id === post.category;
                   const count = counts[cat.id];
+                  const Icon = BLOG_CATEGORY_ICONS[cat.id];
                   return (
-                    <Link
-                      key={cat.id}
-                      href={
-                        cat.id === "all" ? "/blog" : `/blog?category=${cat.id}`
-                      }
-                      className={`flex w-full items-center gap-2 px-3 py-2.5 text-left text-[12px] font-semibold transition-colors ${
-                        index < BLOG_CATEGORIES.length - 1
-                          ? "border-b border-[var(--border)]"
-                          : ""
-                      } ${
-                        selected
-                          ? "bg-[#F8EBD7] text-[#D97706]"
-                          : "text-[var(--charcoal)] hover:bg-[var(--ivory)]"
-                      }`}
-                    >
-                      <UtilityIcon
-                        name={cat.icon}
-                        className={`h-3.5 w-3.5 shrink-0 ${
-                          selected ? "text-[#D97706]" : "text-[var(--muted)]"
-                        }`}
-                      />
-                      <span className="min-w-0 flex-1 leading-tight">
-                        {cat.label}
-                      </span>
-                      <span
-                        className={`text-[11px] ${
-                          selected ? "text-[#D97706]" : "text-[var(--muted)]"
+                    <div key={cat.id}>
+                      <Link
+                        href={
+                          cat.id === "all"
+                            ? "/blog"
+                            : `/blog?category=${cat.id}`
+                        }
+                        className={`box-border flex h-12 w-full shrink-0 items-center gap-3 rounded-xl px-3.5 text-left text-[13.5px] font-semibold transition-colors ${
+                          selected
+                            ? "bg-[#F8EBD7] text-[#D97706]"
+                            : "bg-transparent text-[#2C3A4A] hover:bg-[var(--ivory)]"
                         }`}
                       >
-                        {count}
-                      </span>
-                    </Link>
+                        <Icon
+                          className={`h-[18px] w-[18px] shrink-0 ${
+                            selected ? "text-[#D97706]" : "text-[#4A5568]"
+                          }`}
+                        />
+                        <span className="min-w-0 flex-1 leading-tight">
+                          {cat.label}
+                        </span>
+                        <span
+                          className={`text-[11px] tabular-nums ${
+                            selected ? "text-[#D97706]" : "text-[var(--muted)]"
+                          }`}
+                        >
+                          {count}
+                        </span>
+                        <HiChevronRight
+                          className={`h-4 w-4 shrink-0 ${
+                            selected
+                              ? "text-[#D97706] opacity-100"
+                              : "opacity-0"
+                          }`}
+                        />
+                      </Link>
+                      {index < BLOG_CATEGORIES.length - 1 ? (
+                        <div className="mx-3 h-px bg-[var(--border)]" />
+                      ) : null}
+                    </div>
                   );
                 })}
               </nav>

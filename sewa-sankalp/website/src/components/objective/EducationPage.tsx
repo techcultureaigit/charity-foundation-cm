@@ -115,8 +115,8 @@ function OrangeSpiral({ className = "" }: { className?: string }) {
 }
 
 /**
- * Hero photo — flush top-right corner (sharp), concave left edge,
- * rounded bottom corners (matches Education mock).
+ * Hero photo — soft left wave; object-contain so the full photo shows
+ * (no cover crop cutting faces / shoulders).
  */
 function HeroPhotoFrame({
   src,
@@ -132,21 +132,21 @@ function HeroPhotoFrame({
       <svg width="0" height="0" aria-hidden className="absolute">
         <defs>
           <clipPath id={clipId} clipPathUnits="objectBoundingBox">
-            {/* Sharp top-right (1,0) · curve on left · round bottoms */}
-            <path d="M0.2,0 C0.08,0.1 0.0,0.22 0.04,0.38 C0.1,0.58 0.0,0.72 0.08,0.88 C0.14,0.96 0.24,1 0.36,1 L0.9,1 Q1,1 1,0.88 L1,0 Z" />
+            {/* Gentle left curve — keeps more of the photo visible */}
+            <path d="M0.06,0 C0.02,0.12 0.0,0.28 0.02,0.45 C0.05,0.62 0.0,0.78 0.05,0.92 C0.08,0.98 0.14,1 0.22,1 L1,1 L1,0 Z" />
           </clipPath>
         </defs>
       </svg>
 
       <div
-        className="relative h-full min-h-[260px] w-full overflow-hidden sm:min-h-[320px] lg:min-h-0"
+        className="relative flex h-full min-h-[260px] w-full items-center justify-end overflow-hidden bg-[#FDF8EE] sm:min-h-[320px] lg:min-h-0"
         style={{ clipPath: `url(#${clipId})` }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={src}
           alt={alt}
-          className="h-full w-full object-cover object-[55%_28%]"
+          className="h-full w-full object-contain object-right"
         />
       </div>
 
@@ -180,13 +180,13 @@ export function EducationPageView() {
         <LeafCorner corner="tl" className="opacity-80" />
         <LeafCorner corner="bl" className="opacity-55" />
 
-        <div className="relative z-[1] lg:min-h-[322px] xl:min-h-[364px]">
+        <div className="relative z-[1] lg:min-h-[400px] xl:min-h-[460px]">
           {/*
             Same left inset as header logo via page-shell — content parallel with logo.
             Top-aligned under header (not vertically centered under the logo).
           */}
-          <div className="page-shell relative pt-3.5 pb-5 sm:pt-4 sm:pb-7 lg:flex lg:min-h-[322px] lg:items-start lg:pt-4 lg:pb-9 xl:min-h-[364px] xl:pt-5">
-            <div className="relative w-full max-w-xl lg:w-[44%] lg:max-w-none xl:w-[42%]">
+          <div className="page-shell relative pt-3.5 pb-5 sm:pt-4 sm:pb-7 lg:flex lg:min-h-[400px] lg:items-start lg:pt-4 lg:pb-9 xl:min-h-[460px] xl:pt-5">
+            <div className="relative w-full max-w-xl lg:w-[40%] lg:max-w-none xl:w-[38%]">
               <nav
                 aria-label="Breadcrumb"
                 className="flex flex-wrap items-center gap-1.5 text-[12.5px] text-[#6B6B6B]"
@@ -208,12 +208,11 @@ export function EducationPageView() {
               </p>
 
               <h1 className="display mt-1.5 text-[clamp(1.55rem,6.5vw,2.75rem)] font-bold leading-[1.12] tracking-[-0.01em] text-[var(--forest)]">
-                <AccentText
-                  text="Building a Better Future Through Education"
-                  accent="Education"
-                  accentClass="text-[#D68C23]"
-                  breakBeforeAccent
-                />
+                Building a Better
+                <br />
+                Future Through
+                <br />
+                <span className="text-[#D68C23]">Education</span>
               </h1>
 
               <div className="relative mt-3 max-w-[34rem]">
@@ -237,8 +236,8 @@ export function EducationPageView() {
             </div>
           </div>
 
-          {/* Desktop image — flush top-right corner */}
-          <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[52%] lg:block">
+          {/* Desktop image — wide panel + contain so full photo is visible */}
+          <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[58%] lg:block xl:w-[60%]">
             <HeroPhotoFrame
               src="/uploads/education-mid.jpg"
               alt="Student learning with teacher support in classroom"
