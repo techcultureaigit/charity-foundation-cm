@@ -82,7 +82,7 @@ export function HeaderNav() {
               <Link
                 href={link.href}
                 className={`relative flex h-full w-full items-center justify-center px-2 text-[12px] font-extrabold uppercase tracking-[0.08em] xl:px-3 xl:text-[13px] ${
-                  active ? "text-white" : "text-black"
+                  active ? "text-white" : "text-[#01332b]"
                 }`}
               >
                 <span className="relative inline-flex items-center gap-1 leading-none">
@@ -91,7 +91,7 @@ export function HeaderNav() {
                     <UtilityIcon
                       name="chevron-down"
                       className={`h-3 w-3 shrink-0 ${
-                        active ? "text-white" : "text-black"
+                        active ? "text-white" : "text-[#01332b]"
                       }`}
                     />
                   ) : null}
@@ -130,7 +130,7 @@ export function HeaderNav() {
 
       <button
         type="button"
-        className="nav-bar ml-auto flex h-9 shrink-0 items-center gap-1.5 rounded-full bg-[var(--orange)] px-3 text-[11px] font-extrabold uppercase tracking-[0.08em] text-black sm:h-11 sm:gap-2 sm:px-4 sm:text-[12px] lg:hidden"
+        className="nav-bar ml-auto flex h-9 shrink-0 items-center gap-1.5 rounded-full bg-[var(--orange)] px-3 text-[11px] font-extrabold uppercase tracking-[0.08em] text-[#01332b] sm:h-11 sm:gap-2 sm:px-4 sm:text-[12px] lg:hidden"
         onClick={() => setOpen((value) => !value)}
         aria-expanded={open}
         aria-label="Toggle menu"
@@ -153,7 +153,7 @@ export function HeaderNav() {
                 className={`rounded-lg px-3 py-2.5 text-[13px] font-extrabold uppercase tracking-[0.06em] ${
                   links.indexOf(link) === activeIndex
                     ? "text-white underline decoration-[3px] underline-offset-4"
-                    : "text-black"
+                    : "text-[#01332b]"
                 }`}
               >
                 {link.label}
@@ -163,7 +163,7 @@ export function HeaderNav() {
                   key={`${link.label}-${child.href}`}
                   href={child.href}
                   onClick={() => setOpen(false)}
-                  className="rounded-lg py-1.5 pl-8 pr-3 text-[12.5px] font-semibold text-black/80"
+                  className="rounded-lg py-1.5 pl-8 pr-3 text-[12.5px] font-semibold text-[#01332b]/80"
                 >
                   {child.label}
                 </Link>

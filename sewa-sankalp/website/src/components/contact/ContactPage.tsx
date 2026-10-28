@@ -3,9 +3,25 @@ import { UtilityIcon } from "@/components/site/icons";
 import { AccentText, LeafCorner } from "@/components/home/shared";
 import type { ContactSettings, PageContent } from "@/lib/types";
 
+/** Defence Colony Sector-3 pin (Near Vidhan Sabha alone geocodes wrong). */
+const OFFICE_MAP = {
+  lat: 30.282411,
+  lng: 78.051671,
+  query:
+    "C-97, Sector-3, Defence Colony, Near Vidhan Sabha, Dehradun 248002",
+};
+
 function mapEmbedUrl(address: string) {
-  const q = encodeURIComponent(address || "Dehradun, Uttarakhand, India");
-  return `https://maps.google.com/maps?q=${q}&z=15&output=embed`;
+  const cleaned = (address || "").replace(/\s+/g, " ").trim();
+  const label =
+    cleaned && /defence\s*colony/i.test(cleaned)
+      ? cleaned
+      : OFFICE_MAP.query;
+  // Pin by coords so "Near Vidhan Sabha" doesn't land on Darshan Lal Chowk
+  const q = encodeURIComponent(
+    `${OFFICE_MAP.lat},${OFFICE_MAP.lng} (${label})`,
+  );
+  return `https://maps.google.com/maps?q=${q}&z=17&hl=en&output=embed`;
 }
 
 /** Force address into exactly 2 display lines (reference style). */
@@ -93,7 +109,7 @@ export function ContactPageView({
             Nudged slightly toward center — not into the orange nav, not over the photo.
           */}
           <div className="page-shell pointer-events-auto flex w-full justify-start">
-            <div className="w-full max-w-[32rem] py-3 sm:max-w-[34rem] sm:py-4 sm:pl-[4%] lg:pl-[8%] xl:pl-[10%]">
+            <div className="w-full max-w-[32rem] py-3 sm:max-w-[34rem] sm:py-4">
               {/* Reference: mustard overline · serif headline · grey body */}
               <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
                 Get in Touch
@@ -124,54 +140,51 @@ export function ContactPageView({
           RIGHT ? Our Contact Information (Address | Call | Email)
                   + Find Us on Map
         */}
-        <div className="page-shell relative z-[1] grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:items-start">
+        <div className="page-shell relative z-[1] grid gap-10 lg:grid-cols-[0.88fr_1.12fr] lg:gap-10 lg:items-start">
           <ContactForm />
 
-          <div className="space-y-8">
+          <div className="space-y-1">
             <div>
-              <h2 className="display text-[clamp(1.65rem,2.4vw,2.1rem)] font-bold text-[var(--forest)]">
+              <h2 className="text-[clamp(1.65rem,2.4vw,1.1rem)] font-bold text-[var(--forest)]">
                 Our Contact Information
               </h2>
-              <p className="mt-1.5 text-[13.5px] leading-snug text-[var(--muted)]">
+              <p className="mt-1 text-[13.5px] leading-snug text-[var(--muted)]">
                 Feel free to reach out to us through any of the following
                 channels.
               </p>
 
               {/*
-                Address wider col + nowrap ? exactly 2 lines.
-                Email smaller font so it doesn't steal width.
+                Address: exactly 2 lines (smaller font + nowrap).
+                Phone + email: single line each (nowrap + compact font).
               */}
-              <div className="mt-6 grid grid-cols-1 gap-4 min-[520px]:grid-cols-[1.45fr_0.7fr_0.95fr] min-[520px]:gap-2.5 lg:gap-3">
-                {info.map((item) => {
+              <div className="mt-1 grid grid-cols-1 gap-4 min-[520px]:grid-cols-[minmax(0,1.4fr)_minmax(0,0.85fr)_minmax(0,1.15fr)] min-[520px]:gap-0">
+                {info.map((item, index) => {
                   const isAddress = item.title === "Our Address";
                   const isEmail = item.title === "Email Us";
+                  const bodySize = isAddress
+                    ? "text-[10px]"
+                    : isEmail
+                      ? "text-[10px]"
+                      : "text-[11px]";
                   const body = (
                     <>
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#F3E0C8]">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#F3E0C8]">
                         <UtilityIcon
                           name={item.icon}
-                          className="h-4 w-4 text-[#D97706]"
+                          className="h-5 w-5 text-[#D97706]"
                         />
                       </span>
-                      <span className="min-w-0">
+                      <span className="min-w-0 flex-1 overflow-hidden">
                         <span className="block text-[13px] font-semibold leading-none text-[#D97706]">
                           {item.title}
                         </span>
                         <span
-                          className={`mt-1.5 block leading-[1.4] text-[#4B5563] ${
-                            isEmail ? "text-[10.5px]" : "text-[11.5px]"
-                          }`}
+                          className={`mt-1.5 block leading-[1.45] text-[#4B5563] ${bodySize}`}
                         >
                           {item.lines.map((line) => (
                             <span
                               key={line}
-                              className={
-                                isAddress
-                                  ? "block break-words sm:whitespace-nowrap"
-                                  : isEmail
-                                    ? "block break-all"
-                                    : "block break-words sm:whitespace-nowrap"
-                              }
+                              className="block whitespace-nowrap"
                             >
                               {line}
                             </span>
@@ -180,7 +193,11 @@ export function ContactPageView({
                       </span>
                     </>
                   );
-                  const className = "flex min-w-0 items-start gap-2";
+                  const className = `relative flex min-w-0 items-start gap-2.5 ${
+                    index > 0
+                      ? "min-[520px]:pl-3.5 min-[520px]:before:absolute min-[520px]:before:left-0 min-[520px]:before:top-1/2 min-[520px]:before:h-[70%] min-[520px]:before:w-px min-[520px]:before:-translate-y-1/2 min-[520px]:before:bg-[#E5E0D8]"
+                      : ""
+                  } ${index < info.length - 1 ? "min-[520px]:pr-3.5" : ""}`;
                   return item.href ? (
                     <a
                       key={item.title}
@@ -198,14 +215,14 @@ export function ContactPageView({
               </div>
             </div>
 
-            <div>
-              <h3 className="display text-[clamp(1.45rem,2vw,1.85rem)] font-bold text-[var(--forest)]">
+            <div className="mt-4">
+              <h3 className="text-[clamp(1.45rem,2vw,1.85rem)] font-bold text-[var(--forest)]">
                 Find Us on Map
               </h3>
-              <p className="mt-1 text-[13px] text-[var(--muted)]">
+              <p className="mt-2 text-[13px] text-[var(--muted)]">
                 Visit our office location on Google Maps.
               </p>
-              <div className="mt-4 overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-[0_8px_24px_rgba(0,51,43,0.05)]">
+              <div className="mt-2 overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-[0_8px_24px_rgba(0,51,43,0.05)]">
                 <iframe
                   title="Sewa Sankalp Foundation location"
                   src={mapEmbedUrl(contact.address)}

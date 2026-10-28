@@ -18,9 +18,9 @@ export function ContactForm() {
   const [isPending, startTransition] = useTransition();
 
   const fieldClass =
-    "w-full rounded-xl border border-[var(--border)] bg-[#f7f4ee] px-3 py-2.5 pl-10 text-[13.5px] outline-none ring-[var(--forest)] transition focus:bg-white focus:ring-2";
+    "w-full rounded-xl border border-[var(--border)] bg-white px-3 py-2.5 pl-10 text-[13.5px] outline-none ring-[var(--forest)] transition focus:ring-2";
   const selectClass =
-    "w-full appearance-none rounded-xl border border-[var(--border)] bg-[#f7f4ee] px-3 py-2.5 pr-9 text-[13.5px] outline-none ring-[var(--forest)] transition focus:bg-white focus:ring-2";
+    "w-full appearance-none rounded-xl border border-[var(--border)] bg-white px-3 py-2.5 pr-9 text-[13.5px] outline-none ring-[var(--forest)] transition focus:ring-2";
 
   return (
     <form
@@ -43,7 +43,7 @@ export function ContactForm() {
       id="contact-form"
     >
       <div>
-        <h2 className="display text-[clamp(1.7rem,2.5vw,2.15rem)] font-bold text-[var(--forest)]">
+        <h2 className="text-[clamp(1.7rem,2.5vw,2.15rem)] font-bold text-[var(--forest)]">
           Send Us a Message
         </h2>
         <p className="mt-1.5 text-[13.5px] text-[var(--muted)]">
