@@ -9,61 +9,36 @@ import { UtilityIcon } from "@/components/site/icons";
 interface NavLink {
   label: string;
   href: string;
-  children?: { label: string; href: string }[];
 }
 
+/** Flat top-level menu — former submenu items are now headings. */
 const links: NavLink[] = [
   { label: "Home", href: "/" },
-  {
-    label: "Objective",
-    href: "/about",
-    children: [
-      { label: "About Us", href: "/about" },
-      { label: "Education", href: "/objective/education" },
-    ],
-  },
-  {
-    label: "Campaign",
-    href: "/campaigns",
-    children: [
-      { label: "All Campaigns", href: "/campaigns" },
-      // { label: "Our Work", href: "/our-work" },
-      // { label: "Get Involved", href: "/get-involved" },
-    ],
-  },
-  {
-    label: "Media",
-    href: "/gallery",
-    children: [
-      { label: "Photo Gallery", href: "/gallery" },
-      { label: "Blog", href: "/blog" },
-    ],
-  },
+  { label: "About Us", href: "/about" },
+  { label: "Education", href: "/objective/education" },
+  { label: "Campaigns", href: "/campaigns" },
+  { label: "Gallery", href: "/gallery" },
+  { label: "Blog", href: "/blog" },
   { label: "Contact Us", href: "/impact-contact" },
 ];
+
+function isActivePath(pathname: string, href: string) {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 export function HeaderNav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
-  const activeIndex = links.findIndex((link) =>
-    link.href === "/"
-      ? pathname === "/"
-      : pathname === link.href ||
-        pathname.startsWith(`${link.href}/`) ||
-        (link.children?.some((child) => {
-          const base = child.href.split("#")[0];
-          return pathname === base || pathname.startsWith(`${base}/`);
-        }) ??
-          false),
-  );
+  const activeIndex = links.findIndex((link) => isActivePath(pathname, link.href));
 
   return (
     <>
       {/* Orange strip — max 4xl, flush to right edge, round left only */}
       <nav
         aria-label="Primary"
-        className="nav-bar ml-auto hidden h-[50px] w-full max-w-4xl min-w-0 items-stretch overflow-visible rounded-l-full rounded-r-none bg-[var(--orange)] lg:flex"
+        className="nav-bar ml-auto hidden h-[50px] w-full max-w-5xl min-w-0 items-stretch overflow-visible rounded-l-full rounded-r-none bg-[var(--orange)] lg:flex"
       >
         {links.map((link, index) => {
           const active = index === activeIndex;
@@ -82,21 +57,12 @@ export function HeaderNav() {
               ) : null}
               <Link
                 href={link.href}
-                className={`relative flex h-full w-full items-center justify-center px-2 text-[12px] font-extrabold capitalize tracking-[0.04em] xl:px-3 xl:text-[13px] ${
+                className={`relative flex h-full w-full items-center justify-center px-1.5 text-[11px] font-extrabold capitalize tracking-[0.04em] xl:px-2.5 xl:text-[12.5px] ${
                   active ? "text-white" : "text-[#01332b]"
                 }`}
               >
-                <span className="relative inline-flex items-center gap-1 leading-none">
+                <span className="relative inline-flex items-center leading-none">
                   {link.label}
-                  {link.children ? (
-                    <UtilityIcon
-                      name="chevron-down"
-                      className={`h-3 w-3 shrink-0 ${
-                        active ? "text-white" : "text-[#01332b]"
-                      }`}
-                    />
-                  ) : null}
-                  {/* Absolute underline — doesn't shift text off vertical center */}
                   <span
                     aria-hidden
                     className={`absolute left-0 right-0 top-[calc(100%+5px)] h-[2.5px] rounded-full bg-white ${
@@ -105,25 +71,6 @@ export function HeaderNav() {
                   />
                 </span>
               </Link>
-              {link.children ? (
-                <div className="nav-dropdown absolute left-1/2 top-full z-[60] w-[10.75rem] -translate-x-1/2 pt-2">
-                  <div className="relative overflow-hidden rounded-xl border border-[#E8DFD0]/90 bg-[#FFFCF0] p-1 shadow-[0_4px_8px_rgba(0,51,43,0.04),0_14px_32px_rgba(0,51,43,0.14)] ring-1 ring-black/[0.03] before:absolute before:left-1/2 before:top-0 before:h-px before:w-8 before:-translate-x-1/2 before:bg-gradient-to-r before:from-transparent before:via-[#D97706]/55 before:to-transparent">
-                    {link.children.map((child) => (
-                      <Link
-                        key={`${link.label}-${child.href}`}
-                        href={child.href}
-                        className="group flex items-center justify-between gap-1.5 rounded-lg px-2.5 py-1.5 text-[12px] font-semibold normal-case tracking-[-0.01em] text-[var(--forest)] transition-[background-color,color] duration-200 hover:bg-[#FFF3E3] hover:text-[#C46A08]"
-                      >
-                        <span>{child.label}</span>
-                        <UtilityIcon
-                          name="chevron"
-                          className="h-3 w-3 shrink-0 text-[#C46A08] opacity-55 transition-[opacity,transform] duration-200 group-hover:translate-x-0.5 group-hover:opacity-100"
-                        />
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              ) : null}
             </div>
           );
         })}
@@ -149,30 +96,20 @@ export function HeaderNav() {
             <LanguageSwitcher tone="dark" />
           </div>
           <div className="flex flex-col">
-            {links.flatMap((link) => [
+            {links.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
                 onClick={() => setOpen(false)}
                 className={`rounded-lg px-3 py-2.5 text-[13px] font-extrabold capitalize tracking-[0.04em] ${
-                  links.indexOf(link) === activeIndex
+                  isActivePath(pathname, link.href)
                     ? "text-white underline decoration-[3px] underline-offset-4"
                     : "text-[#01332b]"
                 }`}
               >
                 {link.label}
-              </Link>,
-              ...(link.children ?? []).map((child) => (
-                <Link
-                  key={`${link.label}-${child.href}`}
-                  href={child.href}
-                  onClick={() => setOpen(false)}
-                  className="rounded-lg py-1.5 pl-8 pr-3 text-[12.5px] font-semibold text-[#01332b]/80"
-                >
-                  {child.label}
-                </Link>
-              )),
-            ])}
+              </Link>
+            ))}
           </div>
         </div>
       ) : null}
