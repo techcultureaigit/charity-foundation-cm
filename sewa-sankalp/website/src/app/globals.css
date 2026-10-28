@@ -81,6 +81,23 @@ body {
   overflow-x: clip;
 }
 
+/* Google Material Symbols — used on About Mission / Vision / Values */
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 26px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+  -webkit-font-smoothing: antialiased;
+}
+
 /* Avoid wide media blowing past the viewport (keep absolute/h-* images intact) */
 img,
 video {

@@ -71,6 +71,12 @@ export default function RootLayout({
       lang="en"
       className={`${poppins.variable} ${montserrat.variable} ${playfair.variable} ${greatVibes.variable}`}
     >
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0&icon_names=calendar_month,diamond,eco,groups,person,spa,star,target,trending_up,visibility,volunteer_activism"
+        />
+      </head>
       <body className="min-h-screen antialiased">
         <SmoothScroll>
           <div className="flex min-h-screen flex-col bg-white">
