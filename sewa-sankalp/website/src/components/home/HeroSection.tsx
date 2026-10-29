@@ -169,7 +169,7 @@ function StatsBar({ stats }: { stats: ImpactHighlight[] }) {
                 <span className="nav-bar block text-[1.15rem] font-extrabold tracking-tight text-[var(--orange)] sm:text-[1.85rem] md:text-[2.05rem]">
                   {item.value}
                 </span>
-                <span className="nav-bar mt-0.5 block text-[8.5px] font-bold uppercase tracking-[0.06em] text-[#3a3a3a] sm:mt-1 sm:text-[11px] sm:tracking-[0.1em]">
+                <span className="nav-bar mt-0.5 block break-words text-[8px] font-bold uppercase tracking-[0.04em] text-[#3a3a3a] max-[380px]:text-[7.5px] sm:mt-1 sm:text-[11px] sm:tracking-[0.1em]">
                   {item.label}
                 </span>
               </span>
@@ -243,8 +243,8 @@ export function HeroSection({
         <LeafCorner corner="br" className="opacity-55" />
         <HeroWave />
 
-        <div className="hero-home-shell page-shell relative z-10 flex h-[420px] flex-col pt-7 sm:h-[500px] sm:pt-10 lg:h-[580px] lg:pt-12">
-          <div className="hero-home-copy max-w-[40rem] flex-1 overflow-hidden pb-40 pt-1 sm:pb-40 sm:pt-2 lg:pb-44">
+        <div className="hero-home-shell page-shell relative z-10 flex h-[460px] flex-col pt-6 sm:h-[500px] sm:pt-10 lg:h-[580px] lg:pt-12">
+          <div className="hero-home-copy max-w-[40rem] min-w-0 flex-1 overflow-x-clip overflow-y-visible pb-36 pt-1 sm:pb-40 sm:pt-2 lg:pb-44">
             <style>{`
               .hero-hi-l1::before { content: "बेहतर सहायता"; }
               .hero-hi-l2::before { content: "का समय आ गया है।"; }
@@ -291,7 +291,7 @@ export function HeroSection({
                 strokeLinecap="round"
               />
             </svg>
-            <p className="hero-home-body mt-4 max-w-[36rem] text-[14px] leading-[1.75] text-[var(--forest)]/85 sm:max-w-[38rem] sm:text-[14.5px] sm:leading-[1.8]">
+            <p className="hero-home-body mt-4 max-w-[36rem] line-clamp-3 text-[14px] leading-[1.75] text-[var(--forest)]/85 sm:line-clamp-none sm:max-w-[38rem] sm:text-[14.5px] sm:leading-[1.8]">
               {page.body}
             </p>
           </div>

@@ -57,11 +57,11 @@ export function HeaderNav() {
               ) : null}
               <Link
                 href={link.href}
-                className={`relative flex h-full w-full items-center justify-center px-1 text-[14px] font-extrabold capitalize tracking-normal xl:px-1.5 ${
+                className={`relative flex h-full min-w-0 w-full items-center justify-center px-1 text-[13px] font-extrabold capitalize tracking-normal xl:px-1.5 xl:text-[14px] ${
                   active ? "text-white" : "text-[#01332b]"
                 }`}
               >
-                <span className="relative inline-flex items-center leading-none">
+                <span className="relative inline-flex max-w-full items-center truncate leading-none">
                   {link.label}
                   <span
                     aria-hidden

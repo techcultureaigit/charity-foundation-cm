@@ -87,7 +87,7 @@ function ImpactArrow() {
   return (
     <span
       aria-hidden
-      className="hidden shrink-0 items-center self-center text-[#D97706] sm:flex"
+      className="hidden shrink-0 items-center self-center text-[#D97706] lg:flex"
     >
       <UtilityIcon name="arrow" className="h-5 w-5" />
     </span>
@@ -105,7 +105,7 @@ export function EducationPageView() {
 
         <h1 className="display mt-1.5 text-[clamp(1.45rem,5.5vw,2.65rem)] font-bold leading-[1.08] tracking-[-0.01em] text-[var(--forest)]">
           <span className="block">Building a Better</span>
-          <span className="block whitespace-nowrap">
+          <span className="block max-sm:whitespace-normal sm:whitespace-nowrap">
             Future Through <span className="text-[#D68C23]">Education</span>
           </span>
         </h1>
@@ -161,7 +161,7 @@ export function EducationPageView() {
             A structured approach to ensure long-term and meaningful change.
           </p>
 
-          <div className="mt-8 flex flex-col gap-8 sm:mt-9 sm:flex-row sm:items-start sm:justify-between sm:gap-3 lg:gap-5">
+          <div className="mt-8 flex flex-col gap-8 sm:mt-9 lg:flex-row lg:items-start lg:justify-between lg:gap-5">
             {impactSteps.map((step, i) => (
               <Fragment key={step.title}>
                 <div className="flex flex-1 items-start gap-3.5">
@@ -202,7 +202,7 @@ export function EducationPageView() {
                 className="aspect-[16/9] w-full object-cover object-[center_20%]"
               />
             </div>
-            <span className="absolute -bottom-3 -right-2 flex h-14 w-14 items-center justify-center rounded-full bg-[#D97706] text-white shadow-[0_8px_22px_rgba(217,119,6,0.35)] sm:-bottom-4 sm:right-4 sm:h-16 sm:w-16">
+            <span className="absolute -bottom-3 right-2 flex h-14 w-14 items-center justify-center rounded-full bg-[#D97706] text-white shadow-[0_8px_22px_rgba(217,119,6,0.35)] sm:-bottom-4 sm:right-4 sm:h-16 sm:w-16">
               <UtilityIcon name="book" className="h-6 w-6 sm:h-7 sm:w-7" />
             </span>
           </div>

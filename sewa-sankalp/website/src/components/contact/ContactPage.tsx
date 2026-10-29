@@ -112,7 +112,7 @@ export function ContactPageView({
 
           <div className="space-y-1">
             <div>
-              <h2 className="text-[clamp(1.65rem,2.4vw,1.1rem)] font-bold text-[var(--forest)]">
+              <h2 className="text-[clamp(1.1rem,2.4vw,1.65rem)] font-bold text-[var(--forest)]">
                 Our Contact Information
               </h2>
               <p className="mt-1 text-[13.5px] leading-snug text-[var(--muted)]">
@@ -125,7 +125,7 @@ export function ContactPageView({
                 Phone + email: single line each (nowrap + compact font).
               */}
               {/* Call Us = max-content (shifts left); Email gets leftover width */}
-              <div className="mt-1 grid grid-cols-1 gap-4 min-[520px]:grid-cols-[minmax(0,1.15fr)_max-content_minmax(0,1.55fr)] min-[520px]:gap-0">
+              <div className="mt-1 grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1.15fr)_max-content_minmax(0,1.55fr)] lg:gap-0">
                 {info.map((item, index) => {
                   const isAddress = item.title === "Our Address";
                   const isCall = item.title === "Call Us";
@@ -157,7 +157,7 @@ export function ContactPageView({
                           {item.lines.map((line) => (
                             <span
                               key={line}
-                              className="block whitespace-nowrap"
+                              className="block break-words sm:whitespace-nowrap"
                             >
                               {line}
                             </span>
@@ -169,15 +169,15 @@ export function ContactPageView({
                   // Call Us: tight left pad (shift left); Address: less right pad → email space
                   const className = `relative flex min-w-0 items-start gap-2 ${
                     index > 0
-                      ? `min-[520px]:before:absolute min-[520px]:before:left-0 min-[520px]:before:top-1/2 min-[520px]:before:h-[70%] min-[520px]:before:w-px min-[520px]:before:-translate-y-1/2 min-[520px]:before:bg-[#E5E0D8] ${
-                          isCall ? "min-[520px]:pl-2.5" : "min-[520px]:pl-3"
+                      ? `lg:before:absolute lg:before:left-0 lg:before:top-1/2 lg:before:h-[70%] lg:before:w-px lg:before:-translate-y-1/2 lg:before:bg-[#E5E0D8] ${
+                          isCall ? "lg:pl-2.5" : "lg:pl-3"
                         }`
                       : ""
                   } ${
                     isAddress
-                      ? "min-[520px]:pr-2.5"
+                      ? "lg:pr-2.5"
                       : isCall
-                        ? "min-[520px]:pr-2.5"
+                        ? "lg:pr-2.5"
                         : ""
                   }`;
                   return item.href ? (

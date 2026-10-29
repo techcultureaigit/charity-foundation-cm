@@ -22,34 +22,36 @@ export function CtaSection({
 
   return (
     /*
-      No green band above — cream banner starts clean.
-      Bottom green in the asset merges into the footer.
+      Banner asset is a wide strip (~1024×133). On mobile that scales to ~50px,
+      so absolute overlay text used to spill upward into Events. Mobile keeps
+      content in-flow (defines height); banner fills as cover. sm+ keeps overlay.
     */
     <section className="relative -mb-px bg-[var(--forest)]">
-      <div className="relative z-[1] w-full bg-[var(--ivory)] leading-none">
+      <div className="relative z-[1] w-full overflow-hidden bg-[var(--ivory)] leading-none">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={bannerUrl}
           alt=""
           aria-hidden
-          className="m-0 block h-auto w-full max-w-none p-0"
+          className="m-0 block h-auto w-full max-w-none p-0 max-sm:absolute max-sm:inset-0 max-sm:h-full max-sm:object-cover max-sm:object-[72%_center]"
         />
 
         {/*
-          Text + button only over cream center-left.
-          Right ~32% stays clear so kids photo corner of the asset shows.
+          Text + button over cream center-left.
+          Right stays clearer on sm+ so kids photo corner of the asset shows.
+          Mobile: in-flow + min-height so section can't collapse under content.
         */}
-        <div className="pointer-events-none absolute inset-0 z-[2] flex items-center">
-          <div className="page-shell pointer-events-auto flex w-full items-center">
-            <div className="flex w-full max-w-[68%] flex-wrap items-center gap-4 pb-[3%] sm:gap-5 lg:gap-7">
+        <div className="pointer-events-none relative z-[2] flex min-h-[11.75rem] items-center sm:absolute sm:inset-0 sm:min-h-0 sm:items-center">
+          <div className="page-shell pointer-events-auto flex w-full items-center py-5 sm:py-0">
+            <div className="flex w-full max-w-full flex-col items-start gap-3 sm:max-w-[68%] sm:flex-row sm:flex-wrap sm:items-center sm:gap-5 sm:pb-[3%] lg:gap-7">
               <div className="min-w-0 max-w-lg flex-1">
-                <h2 className="display text-[clamp(1.45rem,2.4vw,2.15rem)] font-bold leading-[1.08] text-[var(--forest)]">
+                <h2 className="display text-[clamp(1.35rem,5.2vw,2.15rem)] font-bold leading-[1.12] text-[var(--forest)] sm:text-[clamp(1.45rem,2.4vw,2.15rem)] sm:leading-[1.08]">
                   <AccentText
                     text={page.ctaHeadline}
                     accent={extras.ctaAccentWords}
                   />
                 </h2>
-                <p className="mt-1.5 max-w-md text-[12.5px] leading-[1.6] text-[var(--charcoal)]/80 sm:text-[13px]">
+                <p className="mt-1.5 max-w-md text-[12.5px] leading-[1.55] text-[var(--charcoal)]/80 sm:text-[13px] sm:leading-[1.6]">
                   {page.ctaBody}
                 </p>
               </div>

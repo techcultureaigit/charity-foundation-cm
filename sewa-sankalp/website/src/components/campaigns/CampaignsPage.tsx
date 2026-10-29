@@ -135,7 +135,7 @@ export function CampaignsPageView() {
         </p>
         <h1 className="display mt-1.5 text-[clamp(1.55rem,7vw,3rem)] font-bold leading-[1.08] text-[var(--forest)]">
           <span className="block">Every Campaign.</span>
-          <span className="block whitespace-nowrap text-[#D68C23]">
+          <span className="block text-[#D68C23] max-sm:whitespace-normal sm:whitespace-nowrap">
             A Brighter Tomorrow.
           </span>
         </h1>
@@ -229,8 +229,8 @@ export function CampaignsPageView() {
                 </div>
               ) : null}
 
-              <div className="mt-6 flex items-center gap-3 sm:gap-4">
-                <div className="min-w-0 w-[70%]">
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+                <div className="min-w-0 w-full sm:w-[70%]">
                   <div
                     className="h-3 overflow-hidden rounded-full bg-[#ebe4d8]"
                     role="progressbar"
@@ -264,7 +264,7 @@ export function CampaignsPageView() {
 
                 <Link
                   href="/get-involved"
-                  className="inline-flex w-[30%] shrink-0 items-center justify-center gap-1.5 rounded-xl bg-gradient-to-b from-[#E8952A] to-[#C46A08] px-2 py-3 text-center text-[10px] font-bold uppercase leading-tight tracking-[0.03em] text-white shadow-[0_10px_24px_rgba(196,106,8,0.4)] transition-[filter,transform] hover:brightness-105 hover:shadow-[0_12px_28px_rgba(196,106,8,0.45)] active:translate-y-px sm:gap-2 sm:px-3 sm:py-3.5 sm:text-[12px] sm:tracking-[0.04em]"
+                  className="inline-flex w-full shrink-0 items-center justify-center gap-1.5 rounded-xl bg-gradient-to-b from-[#E8952A] to-[#C46A08] px-2 py-3 text-center text-[10px] font-bold uppercase leading-tight tracking-[0.03em] text-white shadow-[0_10px_24px_rgba(196,106,8,0.4)] transition-[filter,transform] hover:brightness-105 hover:shadow-[0_12px_28px_rgba(196,106,8,0.45)] active:translate-y-px sm:w-[30%] sm:gap-2 sm:px-3 sm:py-3.5 sm:text-[12px] sm:tracking-[0.04em]"
                 >
                   <span className="min-w-0">Support This Campaign</span>
                   <UtilityIcon name="arrow" className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" />

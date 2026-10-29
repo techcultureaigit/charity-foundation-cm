@@ -170,7 +170,7 @@ export function GalleryPageView({
 
             <div className="order-1 min-w-0 space-y-3.5 sm:space-y-4 lg:order-2">
               {/* Tabs only above image column — not over Gallery Albums */}
-              <div className="flex w-full flex-wrap items-center justify-between gap-y-2">
+              <div className="flex w-full flex-wrap items-center justify-start gap-2 gap-y-2 sm:gap-2.5">
                 {GALLERY_ALBUMS.map((album) => {
                   const selected = active === album.id;
                   return (

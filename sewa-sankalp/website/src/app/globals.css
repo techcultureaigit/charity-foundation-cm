@@ -48,6 +48,7 @@
   max-width: var(--page-max);
   margin-inline: auto;
   padding-inline: var(--page-gutter);
+  min-width: 0;
 }
 
 /* Same vertical padding for content sections */
@@ -167,6 +168,20 @@ html[lang="hi"] .hero-home-body {
   line-height: 2.2 !important;
   letter-spacing: 0.02em;
   word-spacing: 0.06em;
+}
+/* Mobile: keep Devanagari body from colliding with floating stats */
+@media (max-width: 640px) {
+  html.lang-hi .hero-home-body,
+  html[lang="hi"] .hero-home-body {
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-line-clamp: 3 !important;
+    line-clamp: 3 !important;
+    overflow: hidden !important;
+    font-size: 13px !important;
+    line-height: 1.7 !important;
+    margin-top: 0.65rem !important;
+  }
 }
 html.lang-hi .hero-home-body font,
 html[lang="hi"] .hero-home-body font,

@@ -257,7 +257,7 @@ export function SiteFooter({
 
           {/* Gallery */}
           <div>
-            <div className="flex items-end justify-between gap-3">
+            <div className="flex flex-wrap items-end justify-between gap-2">
               <FooterHeading>Photo Gallery</FooterHeading>
               <Link
                 href="/gallery"

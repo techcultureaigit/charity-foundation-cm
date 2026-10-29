@@ -155,7 +155,7 @@ export function EventsSection({
       <CornerSweep side="left" />
       <CornerSweep side="right" />
 
-      <div className="page-shell relative z-[1] pb-5 sm:pb-6">
+      <div className="page-shell relative z-[1] pb-16 sm:pb-14 lg:pb-12">
         <div className="relative">
           <EyebrowTitle
             className="!mt-0"
@@ -201,7 +201,7 @@ export function EventsSection({
           ))}
         </div>
 
-        <div className="relative z-[2] mx-auto mt-6 grid max-w-[920px] gap-4 rounded-2xl bg-white/85 px-5 py-3.5 shadow-[0_8px_24px_rgba(0,51,43,0.05)] md:grid-cols-3 md:gap-0">
+        <div className="relative z-[2] mx-auto mt-6 mb-1 grid max-w-[920px] gap-4 rounded-2xl bg-white px-5 py-3.5 shadow-[0_8px_24px_rgba(0,51,43,0.08)] md:grid-cols-3 md:gap-0">
           {features.map((feature, index) => (
             <div
               key={index}

@@ -164,12 +164,12 @@ export function AboutPageView({
           </div>
 
           {/* Mission / Vision / Values — peach circles + dividers */}
-          <div className="mt-[2px] grid gap-8 rounded-2xl bg-white px-4 py-5 shadow-[0_8px_28px_rgba(0,51,43,0.1)] sm:mt-[2px] sm:grid-cols-3 sm:gap-0 sm:px-2 sm:py-5">
+          <div className="mt-[2px] grid gap-8 rounded-2xl bg-white px-4 py-5 shadow-[0_8px_28px_rgba(0,51,43,0.1)] sm:mt-[2px] md:grid-cols-3 md:gap-0 md:px-2 md:py-5">
             {pillars.map((item, index) => (
               <div
                 key={item.title}
-                className={`flex items-start gap-3.5 text-left sm:px-5 lg:gap-4 lg:px-6 ${
-                  index > 0 ? "sm:border-l sm:border-[#E5E0D8]" : "sm:pl-0"
+                className={`flex items-start gap-3.5 text-left md:px-5 lg:gap-4 lg:px-6 ${
+                  index > 0 ? "md:border-l md:border-[#E5E0D8]" : "md:pl-0"
                 }`}
               >
                 <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#FFF0E4] text-[#F08220] sm:h-[3.25rem] sm:w-[3.25rem]">
@@ -202,13 +202,13 @@ export function AboutPageView({
               Creating Lasting Change in Communities
             </h2>
           </div>
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-4 sm:gap-0">
+          <div className="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-0">
             {stats.map((stat, index) => (
               <div
                 key={stat.label}
-                className={`relative flex flex-col items-center px-2 text-center sm:px-4 ${
+                className={`relative flex flex-col items-center px-2 text-center md:px-4 ${
                   index > 0
-                    ? "sm:before:absolute sm:before:left-0 sm:before:top-1/2 sm:before:h-[55%] sm:before:w-px sm:before:-translate-y-1/2 sm:before:bg-white/35"
+                    ? "md:before:absolute md:before:left-0 md:before:top-1/2 md:before:h-[55%] md:before:w-px md:before:-translate-y-1/2 md:before:bg-white/35"
                     : ""
                 }`}
               >
@@ -282,15 +282,15 @@ export function AboutPageView({
       </section>
 
       {/* Bottom CTA — full-bleed; image sets height so full art is visible */}
-      <section className="relative mb-[7px] w-full overflow-hidden bg-[#0B3B24] text-white">
+      <section className="relative mb-[7px] w-full overflow-x-clip bg-[#0B3B24] text-white">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/uploads/about-cta-bg.png"
           alt=""
           aria-hidden
-          className="block h-auto w-full"
+          className="block h-auto min-h-[11rem] w-full object-cover object-center sm:min-h-0"
         />
-        <div className="page-shell absolute inset-0 z-[1] flex flex-col justify-center gap-5 py-6 sm:gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
+        <div className="page-shell absolute inset-0 z-[1] flex flex-col justify-center gap-5 overflow-y-auto py-6 sm:gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
           <div className="max-w-xl">
             <h2 className="display text-[clamp(1.5rem,2.5vw,2.1rem)] font-bold leading-[1.2] !text-white">
               <AccentText

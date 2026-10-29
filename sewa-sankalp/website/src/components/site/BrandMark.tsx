@@ -31,7 +31,7 @@ export function BrandMark({
 
   return (
     <span
-      className={`notranslate inline-flex max-w-full items-center gap-2 sm:gap-2.5 ${className}`}
+      className={`notranslate inline-flex min-w-0 max-w-full items-center gap-2 sm:gap-2.5 ${className}`}
       translate="no"
       lang="hi"
     >
@@ -51,7 +51,7 @@ export function BrandMark({
       />
       {/* Wordmark via CSS content so Google Translate cannot rewrite brand name */}
       <span
-        className={`brand-wordmark brand-wordmark__text min-w-0 whitespace-nowrap leading-none tracking-normal ${
+        className={`brand-wordmark brand-wordmark__text min-w-0 max-w-[calc(100vw-5.5rem)] truncate leading-none tracking-normal sm:max-w-none sm:overflow-visible sm:whitespace-nowrap sm:text-clip ${
           light
             ? "text-[13px] font-semibold text-[var(--gold)] sm:text-[15px] md:text-[16px]"
             : "text-[12px] font-semibold text-[var(--forest)] sm:text-[14px] md:text-[15px] lg:text-[16px]"
