@@ -1,8 +1,12 @@
 /**
  * Defaults for extra home-section copy (Page.extras). Mirrors
- * admin/src/lib/data/homeExtras.ts — edit values in Admin → Pages → Home.
+ * admin/src/lib/data/homeExtras.ts — edit values in Admin → Homepage.
  */
 export const homeExtraDefaults: Record<string, string> = {
+  // heroSlides JSON is optional — resolveHeroSlideUrls falls back to
+  // heroImageUrl / heroSlide2Url / built-in defaults when unset.
+  heroSlide2Url: "/uploads/hero-home-2.png",
+
   introTitle: "Introduction",
   introLabel: "Introduction",
 
@@ -13,6 +17,7 @@ export const homeExtraDefaults: Record<string, string> = {
   aboutQuoteAccent: "better",
   aboutButtonLabel: "Read More About Us",
   aboutButtonHref: "/about",
+  aboutImageUrl: "/uploads/1793021222636-x82thu.jpg",
 
   ctaAccentWords: "Exclusive Services?",
 

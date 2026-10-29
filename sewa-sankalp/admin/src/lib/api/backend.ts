@@ -1,8 +1,12 @@
+// Prefer 127.0.0.1 over localhost — on Windows, Node often resolves
+// localhost to ::1 while the API listens on IPv4 only ("fetch failed").
 const API_URL = (
   process.env.API_URL ||
   process.env.NEXT_PUBLIC_API_URL ||
-  "http://localhost:4000/api"
-).replace(/\/$/, "");
+  "http://127.0.0.1:4000/api"
+)
+  .replace(/\/\/localhost(?=[:/]|$)/i, "//127.0.0.1")
+  .replace(/\/$/, "");
 
 const ADMIN_KEY =
   process.env.ADMIN_API_KEY ||

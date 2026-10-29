@@ -12,8 +12,10 @@ const {
   LegalPage,
   Enquiry,
   Volunteer,
+  Campaign,
+  BlogPost,
 } = require("../models");
-const { uploadsDir } = require("../config/env");
+const { uploadsDir, storeUploadsInDb, publicApiUrl } = require("../config/env");
 const {
   mapPage,
   mapWorkArea,
@@ -26,11 +28,17 @@ const {
   mapLegal,
   mapEnquiry,
   mapVolunteer,
+  mapCampaign,
+  mapBlogPost,
 } = require("../utils/mappers");
 
 const PAGE_ORDER = [
   "home",
   "about",
+  "education",
+  "campaigns",
+  "gallery",
+  "blog",
   "our-work",
   "get-involved",
   "impact-contact",
@@ -219,20 +227,49 @@ async function uploadMedia(req, res, next) {
     if (!req.file) {
       return res.status(400).json({ ok: false, error: "No file uploaded" });
     }
-    await fs.mkdir(uploadsDir, { recursive: true });
+
     const ext = path.extname(req.file.originalname || "").toLowerCase() || ".jpg";
     const safeExt = [".jpg", ".jpeg", ".png", ".webp", ".gif"].includes(ext)
       ? ext
       : ".jpg";
     const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}${safeExt}`;
-    await fs.writeFile(path.join(uploadsDir, filename), req.file.buffer);
-    const url = `/uploads/${filename}`;
+    const mimeType = req.file.mimetype || "image/jpeg";
 
     const title = String(req.body?.title || filename).trim();
     const alt = String(req.body?.alt || title).trim();
     const category = String(req.body?.category || "general").trim();
     const consentConfirmed = req.body?.consentConfirmed === "true";
     const isPublished = req.body?.isPublished !== "false";
+
+    // On Vercel the filesystem is ephemeral — keep bytes in Mongo and serve via /api/files/:id
+    if (storeUploadsInDb) {
+      if (req.file.buffer.length > 4 * 1024 * 1024) {
+        return res.status(400).json({
+          ok: false,
+          error: "Image too large for live upload (max 4MB). Compress and try again.",
+        });
+      }
+      const doc = await Media.create({
+        title,
+        alt,
+        url: "pending",
+        dataBase64: req.file.buffer.toString("base64"),
+        mimeType,
+        category,
+        consentConfirmed,
+        isPublished,
+      });
+      const url = `${publicApiUrl}/api/files/${doc._id}`;
+      doc.url = url;
+      await doc.save();
+      return res
+        .status(201)
+        .json({ ok: true, url, data: mapMedia(doc.toObject()) });
+    }
+
+    await fs.mkdir(uploadsDir, { recursive: true });
+    await fs.writeFile(path.join(uploadsDir, filename), req.file.buffer);
+    const url = `/uploads/${filename}`;
 
     const doc = await Media.create({
       title,
@@ -280,4 +317,12 @@ module.exports = {
   updateEnquiryStatus,
   listVolunteers,
   updateVolunteerStatus,
+  listCampaigns: crudList(Campaign, mapCampaign),
+  createCampaign: crudCreate(Campaign, mapCampaign),
+  updateCampaign: crudUpdate(Campaign, mapCampaign),
+  deleteCampaign: crudDelete(Campaign),
+  listBlogPosts: crudList(BlogPost, mapBlogPost, { order: 1, createdAt: -1 }),
+  createBlogPost: crudCreate(BlogPost, mapBlogPost),
+  updateBlogPost: crudUpdate(BlogPost, mapBlogPost),
+  deleteBlogPost: crudDelete(BlogPost),
 };

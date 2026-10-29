@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { connection } from "next/server";
 import { AboutPageView } from "@/components/about/AboutPage";
-import { getPage, getPublishedMedia } from "@/lib/services/content";
+import {
+  getPage,
+  getPublishedImpact,
+  getPublishedMedia,
+} from "@/lib/services/content";
 
 export const instant = false;
 
@@ -16,10 +20,17 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function AboutPage() {
   await connection();
-  const [page, aboutMedia] = await Promise.all([
+  const [page, aboutMedia, impact] = await Promise.all([
     getPage("about"),
     getPublishedMedia("about"),
+    getPublishedImpact(),
   ]);
 
-  return <AboutPageView page={page} photo={aboutMedia[0]} />;
+  return (
+    <AboutPageView
+      page={page}
+      photo={aboutMedia[0]}
+      impact={impact}
+    />
+  );
 }

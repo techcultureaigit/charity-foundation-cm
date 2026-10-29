@@ -29,9 +29,11 @@ const socialOrder = [
 ] as const;
 
 const socialFallback: Record<string, string> = {
-  facebook: "https://facebook.com",
-  instagram: "https://instagram.com",
-  youtube: "https://youtube.com",
+  facebook:
+    "https://www.facebook.com/profile.php?id=61560728081587&mibextid=ZbWKwL",
+  instagram:
+    "https://www.instagram.com/sewasankalpfoundation?igsh=cTJiZmF5NTNieWM2",
+  youtube: "https://youtube.com/@sevasankalpfoundation?si=xjKxzxo4c0XPl7K4",
   linkedin: "https://linkedin.com",
   twitter: "https://twitter.com",
 };
@@ -42,6 +44,19 @@ const galleryFallbacks = [
   "/uploads/event-03-elderly.jpg",
   "/uploads/cause-03-welfare.jpg",
 ];
+
+function socialHref(key: string, fromContact?: string): string | undefined {
+  const raw = fromContact?.trim();
+  if (
+    raw &&
+    !/^https?:\/\/(www\.)?(facebook|instagram|youtube|linkedin|twitter|x)\.com\/?$/i.test(
+      raw,
+    )
+  ) {
+    return raw;
+  }
+  return socialFallback[key];
+}
 
 function FooterHeading({ children }: { children: string }) {
   return (
@@ -110,7 +125,7 @@ export function SiteFooter({
     .map(([key, label]) => ({
       key,
       label,
-      href: links[key] || socialFallback[key],
+      href: socialHref(key, links[key]),
     }))
     .filter((item) => Boolean(item.href));
 
@@ -127,7 +142,7 @@ export function SiteFooter({
     contact.footerTagline || "Together for a Brighter Tomorrow";
 
   return (
-    <footer className="relative -mt-px overflow-hidden bg-[var(--forest)] text-white">
+    <footer className="relative z-0 -mt-px overflow-hidden bg-[var(--forest)] text-white">
       <FooterLeaf side="left" />
       <FooterLeaf side="right" />
 

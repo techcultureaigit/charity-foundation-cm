@@ -1,6 +1,77 @@
 export type EnquiryStatus = "new" | "read" | "replied" | "archived";
 export type VolunteerStatus = "new" | "contacted" | "approved" | "declined";
-export type PageSlug = "home" | "about" | "our-work" | "get-involved" | "impact-contact";
+export type PageSlug =
+  | "home"
+  | "about"
+  | "our-work"
+  | "get-involved"
+  | "impact-contact"
+  | "education"
+  | "campaigns"
+  | "gallery"
+  | "blog";
+
+export type CampaignCategory =
+  | "education"
+  | "women"
+  | "health"
+  | "environment"
+  | "community";
+
+export interface CampaignItem {
+  id: string;
+  order: number;
+  slug: string;
+  title: string;
+  subtitle?: string;
+  description: string;
+  category: CampaignCategory;
+  imageUrl: string;
+  raised: number;
+  target: number;
+  status: "ongoing" | "featured";
+  highlights?: { icon: string; label: string }[];
+  href?: string;
+  isPublished: boolean;
+}
+
+export type BlogCategory =
+  | "education"
+  | "health"
+  | "environment"
+  | "women"
+  | "community"
+  | "events";
+
+export interface BlogPostItem {
+  id: string;
+  order: number;
+  slug: string;
+  title: string;
+  excerpt: string;
+  dateLabel: string;
+  category: BlogCategory;
+  imageUrl: string;
+  featureImageUrl: string;
+  author: string;
+  views: number;
+  intro: string;
+  challenge: { title: string; body: string; image: string };
+  initiative: {
+    title: string;
+    body: string;
+    items: { icon: string; label: string }[];
+  };
+  impact: {
+    title: string;
+    body: string;
+    quote: { text: string; author: string; role: string };
+  };
+  lookingAhead: { title: string; body: string };
+  tags: string[];
+  isPublished: boolean;
+  updatedAt?: string;
+}
 
 export interface AdminUser {
   name: string;

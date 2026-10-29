@@ -99,9 +99,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Avoid wide media blowing past the viewport (keep absolute/h-* images intact) */
-img,
-video {
+/* Avoid wide in-flow media blowing past the viewport.
+   Do not set height:auto — absolute hero/banner imgs need explicit h-full. */
+img:not([class*="absolute"]):not([class*="inset-0"]),
+video:not([class*="absolute"]) {
   max-width: 100%;
 }
 

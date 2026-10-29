@@ -1,5 +1,7 @@
 import { adminGet, adminSend, adminUpload } from "@/lib/api/backend";
 import type {
+  BlogPostItem,
+  CampaignItem,
   Cause,
   ContactSettings,
   Enquiry,
@@ -20,7 +22,13 @@ import type {
 
 async function mustGet<T>(path: string): Promise<T> {
   const result = await adminGet<T>(path);
-  if (!result.ok) throw new Error(result.error);
+  if (!result.ok) {
+    throw new Error(
+      result.error === "fetch failed"
+        ? "Backend unreachable. Start sewa-sankalp/backend on port 4000 (use API_URL=http://127.0.0.1:4000/api)."
+        : result.error,
+    );
+  }
   return result.data;
 }
 
@@ -90,6 +98,58 @@ export async function updateCause(id: string, data: CauseInput) {
 
 export async function deleteCause(id: string) {
   await adminSend(`/admin/causes/${id}`, "DELETE");
+  return true;
+}
+
+export type CampaignInput = Omit<CampaignItem, "id">;
+
+export async function getCampaigns(): Promise<CampaignItem[]> {
+  return mustGet<CampaignItem[]>("/admin/campaigns");
+}
+
+export async function createCampaign(data: CampaignInput) {
+  const result = await adminSend<CampaignItem>("/admin/campaigns", "POST", data);
+  if (!result.ok) throw new Error(result.error);
+  return result.data;
+}
+
+export async function updateCampaign(id: string, data: CampaignInput) {
+  const result = await adminSend<CampaignItem>(
+    `/admin/campaigns/${id}`,
+    "PUT",
+    data,
+  );
+  return result.ok ? result.data : null;
+}
+
+export async function deleteCampaign(id: string) {
+  await adminSend(`/admin/campaigns/${id}`, "DELETE");
+  return true;
+}
+
+export type BlogPostInput = Omit<BlogPostItem, "id" | "updatedAt">;
+
+export async function getBlogPosts(): Promise<BlogPostItem[]> {
+  return mustGet<BlogPostItem[]>("/admin/blog-posts");
+}
+
+export async function createBlogPost(data: BlogPostInput) {
+  const result = await adminSend<BlogPostItem>("/admin/blog-posts", "POST", data);
+  if (!result.ok) throw new Error(result.error);
+  return result.data;
+}
+
+export async function updateBlogPost(id: string, data: BlogPostInput) {
+  const result = await adminSend<BlogPostItem>(
+    `/admin/blog-posts/${id}`,
+    "PUT",
+    data,
+  );
+  return result.ok ? result.data : null;
+}
+
+export async function deleteBlogPost(id: string) {
+  await adminSend(`/admin/blog-posts/${id}`, "DELETE");
   return true;
 }
 

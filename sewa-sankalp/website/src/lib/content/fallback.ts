@@ -72,6 +72,70 @@ export const fallbackPages: Record<PageSlug, PageContent> = {
     seoDescription:
       "Contact Sewa Sankalp Foundation in Dehradun — address, phone, email and enquiry form.",
   },
+  education: {
+    slug: "education",
+    title: "Education",
+    headline: "Building a Better Future Through Education",
+    body: "We believe education is the foundation of a stronger, more equitable society. Our initiatives focus on providing quality education, learning resources and opportunities for underprivileged children and youth.",
+    heroImageUrl: "/uploads/contact-hero.png",
+    heroAccentWords: "Education",
+    seoTitle: "Education | Sewa Sankalp Foundation",
+    seoDescription:
+      "Education programmes supporting underprivileged children and youth across Uttarakhand.",
+    extras: {
+      pageHeroEyebrow: "Our Objectives",
+      heroLine1: "Building a Better",
+      heroLine2Before: "Future Through ",
+      heroAccent: "Education",
+    },
+  },
+  campaigns: {
+    slug: "campaigns",
+    title: "Campaigns",
+    headline: "Every Campaign. A Brighter Tomorrow.",
+    body: "Together, we can create real change. Our campaigns focus on supporting children, empowering women, improving health and strengthening communities for a better tomorrow.",
+    heroImageUrl: "/uploads/contact-hero.png",
+    seoTitle: "Campaigns | Every Campaign. A Brighter Tomorrow.",
+    seoDescription:
+      "Explore Sewa Sankalp Foundation campaigns — education, women empowerment, health, environment and community support.",
+    extras: {
+      pageHeroEyebrow: "Our Campaigns",
+      heroLine1: "Every Campaign.",
+      heroLine2: "A Brighter Tomorrow.",
+      ctaBgImageUrl: "/uploads/campaign-cta-bg.png",
+      featuredImageUrl: "/uploads/featured-campaign-education.jpg",
+    },
+  },
+  gallery: {
+    slug: "gallery",
+    title: "Gallery",
+    headline: "Moments of Hope & Impact",
+    body: "A visual journey through our programmes, community events and the lives we serve together.",
+    heroImageUrl: "/uploads/contact-hero.png",
+    seoTitle: "Photo Gallery",
+    seoDescription:
+      "Explore Sewa Sankalp Foundation photo albums — events, education, health, environment and community support.",
+    extras: {
+      pageHeroEyebrow: "Our Gallery",
+    },
+  },
+  blog: {
+    slug: "blog",
+    title: "Blog",
+    headline: "Stories that Create Change.",
+    body: "Real stories from classrooms, communities and campaigns — how collective care creates lasting change.",
+    heroImageUrl: "/uploads/contact-hero.png",
+    seoTitle: "Blog | Stories of Change",
+    seoDescription:
+      "Stories, updates and inspiration from Sewa Sankalp Foundation — education, health, environment and community work.",
+    extras: {
+      pageHeroEyebrow: "Our Blog",
+      heroHeadline: "Stories that Create Change.",
+      heroAccent: "Create Change.",
+      heroBody:
+        "Real stories from classrooms, communities and campaigns — how collective care creates lasting change.",
+    },
+  },
 };
 
 export const fallbackWorkAreas: WorkArea[] = [
@@ -263,7 +327,13 @@ export const fallbackContact: ContactSettings = {
   phone: "+91 94111 09464",
   email: "sewasankalpfoundation.uk@gmail.com",
   website: "https://sewasanklapfoundation.org/",
-  socialLinks: {},
+  socialLinks: {
+    facebook:
+      "https://www.facebook.com/profile.php?id=61560728081587&mibextid=ZbWKwL",
+    instagram:
+      "https://www.instagram.com/sewasankalpfoundation?igsh=cTJiZmF5NTNieWM2",
+    youtube: "https://youtube.com/@sevasankalpfoundation?si=xjKxzxo4c0XPl7K4",
+  },
   footerTagline: "Together for a Brighter Tomorrow",
 };
 
@@ -275,8 +345,15 @@ export const fallbackMediaByCategory: Partial<
     {
       id: "fallback-hero",
       title: "Hero",
-      alt: "Sewa Sankalp Foundation",
+      alt: "Sewa Sankalp Foundation community work",
       url: "/uploads/hero-home.jpg",
+      category: "hero",
+    },
+    {
+      id: "fallback-hero-2",
+      title: "Hero 2",
+      alt: "Women planting saplings in the mountains",
+      url: "/uploads/hero-home-2.png",
       category: "hero",
     },
   ],

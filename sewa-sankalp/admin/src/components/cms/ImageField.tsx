@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useTransition } from "react";
+import { resolveMediaUrl } from "@/lib/mediaUrl";
 
 const inputClass =
   "w-full rounded-xl border border-[var(--admin-border)] bg-[var(--admin-ivory)] px-3 py-2.5 outline-none ring-[var(--admin-forest)] focus:ring-2";
@@ -12,9 +13,7 @@ export interface MediaOption {
 }
 
 function previewSrc(url: string) {
-  if (!url) return "";
-  if (url.startsWith("http") || url.startsWith("blob:")) return url;
-  return url.startsWith("/") ? url : `/${url}`;
+  return resolveMediaUrl(url);
 }
 
 /** Image picker with direct upload, preview, and Media library suggestions. */

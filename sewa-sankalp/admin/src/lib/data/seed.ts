@@ -51,6 +51,7 @@ export const pagesSeed: PageContent[] = [
     ctaButtonLabel: "Contact Now",
     ctaButtonHref: "/impact-contact",
     ctaImageUrl: "/uploads/cta-corner.png",
+    heroImageUrl: "/uploads/hero-home.jpg",
     extras: homeExtraDefaults,
     seoTitle: "Sewa Sankalp Foundation | Home",
     seoDescription:
@@ -383,7 +384,13 @@ export const contactSettingsSeed: ContactSettings = {
   phone: "+91 94111 09464",
   email: "sewasankalpfoundation.uk@gmail.com",
   website: "https://sewasanklapfoundation.org/",
-  socialLinks: {},
+  socialLinks: {
+    facebook:
+      "https://www.facebook.com/profile.php?id=61560728081587&mibextid=ZbWKwL",
+    instagram:
+      "https://www.instagram.com/sewasankalpfoundation?igsh=cTJiZmF5NTNieWM2",
+    youtube: "https://youtube.com/@sevasankalpfoundation?si=xjKxzxo4c0XPl7K4",
+  },
   footerTagline: "Together for a Brighter Tomorrow",
 };
 

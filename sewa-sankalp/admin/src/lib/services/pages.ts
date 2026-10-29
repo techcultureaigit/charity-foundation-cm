@@ -24,7 +24,13 @@ export interface PageUpdateInput {
 
 export async function getPages(): Promise<PageContent[]> {
   const result = await adminGet<PageContent[]>("/admin/pages");
-  if (!result.ok) throw new Error(result.error);
+  if (!result.ok) {
+    throw new Error(
+      result.error === "fetch failed"
+        ? "Backend unreachable at API_URL. Start sewa-sankalp/backend (port 4000) and use http://127.0.0.1:4000/api in admin .env.local."
+        : result.error,
+    );
+  }
   return result.data;
 }
 
@@ -51,13 +57,25 @@ export async function updatePage(
     seoTitle: data.seoTitle,
     seoDescription: data.seoDescription,
   };
-  if (slug === "home" && data.extras) payload.extras = data.extras;
+  const extraSlugs: PageSlug[] = [
+    "home",
+    "about",
+    "education",
+    "campaigns",
+    "gallery",
+    "blog",
+  ];
+  if (extraSlugs.includes(slug) && data.extras) {
+    payload.extras = data.extras;
+  }
 
   const result = await adminSend<PageContent>(
     `/admin/pages/${slug}`,
     "PUT",
     payload,
   );
-  if (!result.ok) return null;
+  if (!result.ok) {
+    throw new Error(result.error || "Failed to save page");
+  }
   return result.data;
 }

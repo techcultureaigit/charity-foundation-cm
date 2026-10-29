@@ -1,21 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { ImpactHighlight, MediaItem, PageContent } from "@/lib/types";
+import { resolveHeroSlideUrls } from "@/lib/content/heroSlides";
+import type { ImpactHighlight, PageContent } from "@/lib/types";
 import { AccentText, CornerSweep, LeafCorner } from "./shared";
 
 const HERO_SLIDE_MS = 5000;
-const HERO_SLIDES = [
-  {
-    src: "/uploads/hero-home.jpg",
-    alt: "Sewa Sankalp Foundation community work",
-    position: "object-[82%_28%] sm:object-[65%_28%] lg:object-[58%_28%]",
-  },
-  {
-    src: "/uploads/hero-home-2.png",
-    alt: "Women planting saplings in the mountains",
-    position: "object-[70%_40%] sm:object-[62%_38%] lg:object-[55%_35%]",
-  },
+const HERO_POSITIONS = [
+  "object-[82%_28%] sm:object-[65%_28%] lg:object-[58%_28%]",
+  "object-[70%_40%] sm:object-[62%_38%] lg:object-[55%_35%]",
+  "object-[60%_32%] sm:object-[55%_30%] lg:object-[50%_28%]",
 ] as const;
 
 /**
@@ -208,11 +202,9 @@ function HeroWave() {
 export function HeroSection({
   page,
   impact,
-  image,
 }: {
   page: PageContent;
   impact: ImpactHighlight[];
-  image?: MediaItem;
 }) {
   const stats = impact.slice(0, 3);
 
@@ -220,7 +212,7 @@ export function HeroSection({
     <section className="relative bg-[var(--ivory)]">
       <div className="relative isolate overflow-hidden">
         <div className="absolute inset-0">
-          <HeroPhoto image={image} />
+          <HeroPhoto page={page} />
         </div>
 
         {/* Left blur under copy — soft frosted fade into the photo */}
@@ -310,24 +302,38 @@ export function HeroSection({
   );
 }
 
-function HeroPhoto({ image: _image }: { image?: MediaItem }) {
+function buildHeroSlides(page: PageContent) {
+  // Admin → Homepage · Hero slides (any count) drive the live slideshow.
+  return resolveHeroSlideUrls(page).map((src, i) => ({
+    src,
+    alt:
+      i === 0
+        ? "Sewa Sankalp Foundation community work"
+        : "Sewa Sankalp Foundation",
+    position: HERO_POSITIONS[i % HERO_POSITIONS.length],
+  }));
+}
+
+function HeroPhoto({ page }: { page: PageContent }) {
+  const slides = buildHeroSlides(page);
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
+    if (slides.length < 2) return;
     const id = window.setInterval(() => {
-      setIndex((current) => (current + 1) % HERO_SLIDES.length);
+      setIndex((current) => (current + 1) % slides.length);
     }, HERO_SLIDE_MS);
     return () => window.clearInterval(id);
-  }, []);
+  }, [slides.length]);
 
   return (
     <div className="absolute inset-0 overflow-hidden">
-      {HERO_SLIDES.map((slide, i) => {
+      {slides.map((slide, i) => {
         const active = i === index;
         return (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            key={slide.src}
+            key={`${slide.src}-${i}`}
             src={slide.src}
             alt={slide.alt}
             className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ease-in-out ${slide.position} ${

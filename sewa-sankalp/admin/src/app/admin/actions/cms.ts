@@ -3,13 +3,20 @@
 import { revalidatePath } from "next/cache";
 import { connection } from "next/server";
 import {
+  createBlogPost,
+  createCampaign,
   createCause,
   createEvent,
   createInvolvementCard,
+  deleteBlogPost,
+  deleteCampaign,
   deleteCause,
   deleteEvent,
   deleteInvolvementCard,
   deleteMediaItem,
+  getBlogPosts,
+  updateBlogPost,
+  updateCampaign,
   updateCause,
   updateEvent,
   updateInvolvementCard,
@@ -23,6 +30,8 @@ import {
 } from "@/lib/services/cms";
 import { adminUpload } from "@/lib/api/backend";
 import type {
+  BlogCategory,
+  CampaignCategory,
   EnquiryStatus,
   EventTheme,
   FocusTheme,
@@ -45,7 +54,69 @@ function revalidateSiteContent() {
   revalidatePath("/admin/settings/contact");
   revalidatePath("/admin/settings/seo");
   revalidatePath("/admin/settings/legal");
+  revalidatePath("/admin/campaigns");
+  revalidatePath("/admin/blog");
+  revalidatePath("/admin/blog-posts");
+  revalidatePath("/campaigns");
+  revalidatePath("/blog");
 }
+
+function revalidateCampaignsAndBlog() {
+  revalidatePath("/admin/campaigns");
+  revalidatePath("/admin/blog");
+  revalidatePath("/admin/blog-posts");
+  revalidatePath("/campaigns");
+  revalidatePath("/blog");
+}
+
+function slugifyTitle(title: string) {
+  const base = title
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80);
+  return base || `post-${Date.now()}`;
+}
+
+function parseJsonArray<T>(raw: string, fallback: T[] = []): T[] {
+  if (!raw.trim()) return fallback;
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    return Array.isArray(parsed) ? (parsed as T[]) : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function parseTags(raw: string): string[] {
+  const trimmed = raw.trim();
+  if (!trimmed) return [];
+  if (trimmed.startsWith("[")) {
+    return parseJsonArray<string>(trimmed).map((tag) => String(tag).trim()).filter(Boolean);
+  }
+  return trimmed.split(",").map((tag) => tag.trim()).filter(Boolean);
+}
+
+const campaignCategories = [
+  "education",
+  "women",
+  "health",
+  "environment",
+  "community",
+] as const;
+
+const campaignStatuses = ["ongoing", "featured"] as const;
+
+const blogCategories = [
+  "education",
+  "health",
+  "environment",
+  "women",
+  "community",
+  "events",
+] as const;
 
 function str(formData: FormData, name: string) {
   return String(formData.get(name) ?? "").trim();
@@ -178,6 +249,159 @@ export async function removeCauseAction(formData: FormData) {
   if (!id) return { ok: false as const, error: "Missing id" };
   await deleteCause(id);
   revalidateSiteContent();
+  return { ok: true as const };
+}
+
+export async function saveCampaignAction(formData: FormData) {
+  await connection();
+  const id = str(formData, "id");
+  const title = str(formData, "title");
+  const slug = str(formData, "slug");
+  const description = str(formData, "description");
+
+  if (!title || !slug || !description) {
+    return {
+      ok: false as const,
+      error: "Title, slug and description are required",
+    };
+  }
+
+  const highlights = parseJsonArray<{ icon: string; label: string }>(
+    str(formData, "highlights"),
+  ).map((row) => ({
+    icon: String(row.icon ?? "heart").trim() || "heart",
+    label: String(row.label ?? "").trim(),
+  }));
+
+  const data = {
+    order: num(formData, "order"),
+    slug,
+    title,
+    subtitle: str(formData, "subtitle"),
+    description,
+    category: oneOf<CampaignCategory>(
+      str(formData, "category"),
+      campaignCategories,
+      "education",
+    ),
+    imageUrl: str(formData, "imageUrl"),
+    raised: num(formData, "raised"),
+    target: num(formData, "target"),
+    status: oneOf<"ongoing" | "featured">(
+      str(formData, "status"),
+      campaignStatuses,
+      "ongoing",
+    ),
+    highlights,
+    href: str(formData, "href") || "/get-involved",
+    isPublished: formData.get("isPublished") === "on",
+  };
+
+  const item = id
+    ? await updateCampaign(id, data)
+    : await createCampaign(data);
+  if (!item) return { ok: false as const, error: "Campaign not found" };
+  revalidateSiteContent();
+  revalidateCampaignsAndBlog();
+  return { ok: true as const, item };
+}
+
+export async function removeCampaignAction(formData: FormData) {
+  await connection();
+  const id = str(formData, "id");
+  if (!id) return { ok: false as const, error: "Missing id" };
+  await deleteCampaign(id);
+  revalidateSiteContent();
+  revalidateCampaignsAndBlog();
+  return { ok: true as const };
+}
+
+export async function saveBlogPostAction(formData: FormData) {
+  await connection();
+  const id = str(formData, "id");
+  const title = str(formData, "title");
+  const existingSlug = str(formData, "slug");
+  const slug = existingSlug || slugifyTitle(title);
+  const excerpt = str(formData, "excerpt");
+  const category = oneOf<BlogCategory>(
+    str(formData, "category"),
+    blogCategories,
+    "education",
+  );
+  const imageUrl = str(formData, "imageUrl");
+  const intro = str(formData, "intro") || excerpt;
+
+  if (!title) {
+    return { ok: false as const, error: "Title is required" };
+  }
+
+  const emptyChallenge = { title: "", body: "", image: "" };
+  const emptyInitiative = { title: "", body: "", items: [] as { icon: string; label: string }[] };
+  const emptyImpact = {
+    title: "",
+    body: "",
+    quote: { text: "", author: "", role: "" },
+  };
+  const emptyLookingAhead = { title: "", body: "" };
+
+  // Keep any older rich sections if this post already has them (form no longer edits those).
+  let challenge = emptyChallenge;
+  let initiative = emptyInitiative;
+  let impact = emptyImpact;
+  let lookingAhead = emptyLookingAhead;
+  let author = "Sewa Sankalp Foundation";
+  let views = 0;
+  let tags = [category.charAt(0).toUpperCase() + category.slice(1)];
+
+  if (id) {
+    const existing = (await getBlogPosts()).find((post) => post.id === id);
+    if (existing) {
+      challenge = existing.challenge ?? emptyChallenge;
+      initiative = existing.initiative ?? emptyInitiative;
+      impact = existing.impact ?? emptyImpact;
+      lookingAhead = existing.lookingAhead ?? emptyLookingAhead;
+      author = existing.author || author;
+      views = existing.views ?? 0;
+      if (existing.tags?.length) tags = existing.tags;
+    }
+  }
+
+  const data = {
+    order: num(formData, "order"),
+    slug,
+    title,
+    excerpt,
+    dateLabel: str(formData, "dateLabel"),
+    category,
+    imageUrl,
+    featureImageUrl: imageUrl,
+    author,
+    views,
+    intro,
+    challenge,
+    initiative,
+    impact,
+    lookingAhead,
+    tags,
+    isPublished: formData.get("isPublished") === "on",
+  };
+
+  const item = id
+    ? await updateBlogPost(id, data)
+    : await createBlogPost(data);
+  if (!item) return { ok: false as const, error: "Blog post not found" };
+  revalidateSiteContent();
+  revalidateCampaignsAndBlog();
+  return { ok: true as const, item };
+}
+
+export async function removeBlogPostAction(formData: FormData) {
+  await connection();
+  const id = str(formData, "id");
+  if (!id) return { ok: false as const, error: "Missing id" };
+  await deleteBlogPost(id);
+  revalidateSiteContent();
+  revalidateCampaignsAndBlog();
   return { ok: true as const };
 }
 

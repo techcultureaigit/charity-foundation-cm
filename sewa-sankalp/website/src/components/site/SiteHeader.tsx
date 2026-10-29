@@ -14,11 +14,29 @@ const socialOrder = [
 ] as const;
 
 const socialFallback: Record<string, string> = {
-  facebook: "https://facebook.com",
-  instagram: "https://instagram.com",
-  youtube: "https://youtube.com",
+  facebook:
+    "https://www.facebook.com/profile.php?id=61560728081587&mibextid=ZbWKwL",
+  instagram:
+    "https://www.instagram.com/sewasankalpfoundation?igsh=cTJiZmF5NTNieWM2",
+  youtube: "https://youtube.com/@sevasankalpfoundation?si=xjKxzxo4c0XPl7K4",
   linkedin: "https://linkedin.com",
 };
+
+function socialHref(
+  key: string,
+  fromContact?: string,
+): string | undefined {
+  const raw = fromContact?.trim();
+  if (
+    raw &&
+    !/^https?:\/\/(www\.)?(facebook|instagram|youtube|linkedin)\.com\/?$/i.test(
+      raw,
+    )
+  ) {
+    return raw;
+  }
+  return socialFallback[key];
+}
 
 export function SiteHeader({ contact }: { contact: ContactSettings }) {
   const links = contact?.socialLinks ?? {};
@@ -26,7 +44,7 @@ export function SiteHeader({ contact }: { contact: ContactSettings }) {
     .map(([key, label]) => ({
       key,
       label,
-      href: links[key] || socialFallback[key],
+      href: socialHref(key, links[key]),
     }))
     .filter((item) => Boolean(item.href))
     .slice(0, 4);
@@ -89,7 +107,7 @@ export function SiteHeader({ contact }: { contact: ContactSettings }) {
 
       {/* Logo + orange nav — overflow visible so dropdowns show */}
       <div className="relative overflow-visible border-t border-white/0 bg-white">
-        <div className="relative flex min-w-0 items-center gap-2 overflow-x-clip overflow-y-visible py-1.5 pl-[max(0.75rem,calc((100%-var(--page-max))/2+var(--page-gutter)))] pr-3 sm:gap-4 sm:py-2.5 sm:pr-0">
+        <div className="relative flex min-w-0 items-center gap-2 overflow-visible py-1.5 pl-[max(0.75rem,calc((100%-var(--page-max))/2+var(--page-gutter)))] pr-3 sm:gap-4 sm:py-2.5 sm:pr-0">
           <Link
             href="/"
             aria-label="सेवा संकल्प फाउंडेशन home"

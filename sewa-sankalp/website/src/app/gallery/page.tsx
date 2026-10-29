@@ -2,23 +2,29 @@ import type { Metadata } from "next";
 import { connection } from "next/server";
 import { GalleryPageView } from "@/components/gallery/GalleryPage";
 import { buildGalleryPhotos } from "@/lib/content/galleryAlbums";
-import { getPublishedMedia } from "@/lib/services/content";
+import { getPage, getPublishedMedia } from "@/lib/services/content";
 
 export const instant = false;
 
-export const metadata: Metadata = {
-  title: "Photo Gallery",
-  description:
-    "Explore Sewa Sankalp Foundation photo albums — events, education, health, environment and community support.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  await connection();
+  const page = await getPage("gallery");
+  return {
+    title: page.seoTitle,
+    description: page.seoDescription,
+  };
+}
 
 export default async function GalleryPage() {
   await connection();
-  const media = await getPublishedMedia("gallery");
+  const [page, media] = await Promise.all([
+    getPage("gallery"),
+    getPublishedMedia("gallery"),
+  ]);
   const photos = buildGalleryPhotos(media);
 
-  // Prefer a gallery hero; fall back to contact banner kids frame
   const heroImageUrl =
+    page.heroImageUrl ||
     media.find((m) => /hero|banner/i.test(m.title || ""))?.url ||
     "/uploads/contact-hero.png";
 

@@ -3,7 +3,7 @@
 import { ReactLenis } from "lenis/react";
 import type { ReactNode } from "react";
 
-/** Buttery wheel/trackpad scrolling site-wide (respects reduced-motion via autoToggle). */
+/** Smooth wheel/trackpad scrolling on every page (off when user prefers reduced motion). */
 export function SmoothScroll({ children }: { children: ReactNode }) {
   return (
     <ReactLenis
@@ -12,9 +12,12 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
         autoRaf: true,
         autoToggle: true,
         anchors: true,
-        duration: 1.15,
+        duration: 1.2,
+        lerp: 0.08,
         smoothWheel: true,
-        touchMultiplier: 1.2,
+        wheelMultiplier: 1,
+        touchMultiplier: 1.35,
+        syncTouch: false,
       }}
     >
       {children}

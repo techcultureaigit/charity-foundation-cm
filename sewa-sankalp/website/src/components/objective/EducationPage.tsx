@@ -3,6 +3,7 @@ import Link from "next/link";
 import { AccentText, LeafCorner } from "@/components/home/shared";
 import { PageBannerHero } from "@/components/site/PageBannerHero";
 import { UtilityIcon } from "@/components/site/icons";
+import type { PageContent } from "@/lib/types";
 
 const focusAreas = [
   {
@@ -94,27 +95,40 @@ function ImpactArrow() {
   );
 }
 
-export function EducationPageView() {
+export function EducationPageView({ page }: { page?: PageContent } = {}) {
+  const heroEyebrow =
+    page?.extras?.pageHeroEyebrow?.trim() || "Our Objectives";
+  const heroLine1 =
+    page?.extras?.heroLine1?.trim() || "Building a Better";
+  const heroLine2Before =
+    page?.extras?.heroLine2Before?.trim() || "Future Through ";
+  const heroAccent =
+    page?.extras?.heroAccent?.trim() ||
+    page?.heroAccentWords?.trim() ||
+    "Education";
+  const heroBody =
+    page?.extras?.heroBody?.trim() ||
+    page?.body?.trim() ||
+    "We believe education is the foundation of a stronger, more equitable society. Our initiatives focus on providing quality education, learning resources and opportunities for underprivileged children and youth.";
+
   return (
     <div className="bg-[#FBF6EE]">
       {/* Hero — same banner image/bg as Campaigns; keep Education copy */}
       <PageBannerHero contentClassName="w-full max-w-[40rem]">
         <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
-          Our Objectives
+          {heroEyebrow}
         </p>
 
         <h1 className="display mt-1.5 text-[clamp(1.45rem,5.5vw,2.65rem)] font-bold leading-[1.08] tracking-[-0.01em] text-[var(--forest)]">
-          <span className="block">Building a Better</span>
+          <span className="block">{heroLine1}</span>
           <span className="block max-sm:whitespace-normal sm:whitespace-nowrap">
-            Future Through <span className="text-[#D68C23]">Education</span>
+            {heroLine2Before}
+            <span className="text-[#D68C23]">{heroAccent}</span>
           </span>
         </h1>
 
         <p className="mt-2 max-w-[30rem] line-clamp-3 text-[12px] leading-[1.65] text-[#4A4A4A] sm:mt-2.5 sm:line-clamp-none sm:text-[13.5px] sm:leading-[1.7]">
-          We believe education is the foundation of a stronger, more equitable
-          society. Our initiatives focus on providing quality education,
-          learning resources and opportunities for underprivileged children and
-          youth.
+          {heroBody}
         </p>
       </PageBannerHero>
 

@@ -109,10 +109,12 @@ export function OurWorkPageView({
   workMedia?: unknown;
 }) {
   const areas = [...workAreas].sort((a, b) => a.order - b.order).slice(0, 4);
+  const bannerUrl = page.heroImageUrl?.trim() || "/uploads/contact-hero.png";
+  const ctaUrl = page.ctaImageUrl?.trim() || "/uploads/education-cta.png";
 
   return (
     <div className="bg-[var(--cream)]">
-      <PageBannerHero>
+      <PageBannerHero imageUrl={bannerUrl}>
         <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
           Our Work
         </p>
@@ -172,7 +174,7 @@ export function OurWorkPageView({
             <div className="relative aspect-[16/10] shrink-0 sm:aspect-[2/1] lg:aspect-auto lg:w-[34%]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/uploads/education-cta.png"
+                src={ctaUrl}
                 alt=""
                 className="absolute inset-0 h-full w-full object-cover object-[center_30%]"
               />

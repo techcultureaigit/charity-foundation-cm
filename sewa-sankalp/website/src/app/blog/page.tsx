@@ -1,17 +1,28 @@
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import { Suspense } from "react";
 import { BlogPageView } from "@/components/blog/BlogPage";
+import { getBlogPosts, getPage } from "@/lib/services/content";
 
-export const metadata: Metadata = {
-  title: "Blog | Stories of Change",
-  description:
-    "Stories, updates and inspiration from Sewa Sankalp Foundation — education, health, environment and community work.",
-};
+export const instant = false;
 
-export default function BlogPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  await connection();
+  const page = await getPage("blog");
+  return {
+    title: page.seoTitle,
+    description: page.seoDescription,
+  };
+}
+
+export default async function BlogPage() {
+  await connection();
+  const [page, posts] = await Promise.all([getPage("blog"), getBlogPosts()]);
+  const heroImageUrl = page.heroImageUrl ?? "/uploads/contact-hero.png";
+
   return (
     <Suspense fallback={<div className="min-h-[50vh] bg-[var(--cream)]" />}>
-      <BlogPageView heroImageUrl="/uploads/contact-hero.png" />
+      <BlogPageView heroImageUrl={heroImageUrl} posts={posts} page={page} />
     </Suspense>
   );
 }

@@ -20,6 +20,7 @@ import {
   type Campaign,
   type CampaignCategoryId,
 } from "@/lib/content/campaigns";
+import type { PageContent } from "@/lib/types";
 
 function ProgressBlock({
   raised,
@@ -112,37 +113,73 @@ const pageStats: {
   { Icon: FaSeedling, value: "100+", label: "Communities Reached" },
 ];
 
-export function CampaignsPageView() {
+type CampaignsPageViewProps = {
+  page?: PageContent;
+  campaigns?: Campaign[];
+  featured?: Campaign;
+};
+
+export function CampaignsPageView({
+  page,
+  campaigns,
+  featured: featuredProp,
+}: CampaignsPageViewProps = {}) {
   const [active, setActive] = useState<CampaignCategoryId>("all");
+
+  const ongoingCampaigns = useMemo(() => {
+    const source = campaigns ?? CAMPAIGNS;
+    return source.filter((c) => c.status === "ongoing");
+  }, [campaigns]);
+
+  const featured = useMemo(() => {
+    if (featuredProp) return featuredProp;
+    const source = campaigns ?? [...CAMPAIGNS, FEATURED_CAMPAIGN];
+    return (
+      source.find((c) => c.status === "featured") ?? FEATURED_CAMPAIGN
+    );
+  }, [campaigns, featuredProp]);
+
+  const featuredImageUrl =
+    page?.extras?.featuredImageUrl?.trim() ||
+    "/uploads/featured-campaign-education.jpg";
+
+  /* Structured extras keep the designed two-line hero; flat headline is SEO-only. */
+  const heroEyebrow =
+    page?.extras?.pageHeroEyebrow?.trim() || "Our Campaigns";
+  const heroLine1 =
+    page?.extras?.heroLine1?.trim() || "Every Campaign.";
+  const heroLine2 =
+    page?.extras?.heroLine2?.trim() || "A Brighter Tomorrow.";
+  const heroBody =
+    page?.extras?.heroBody?.trim() ||
+    page?.body?.trim() ||
+    "Together, we can create real change. Our campaigns focus on supporting children, empowering women, improving health and strengthening communities for a better tomorrow.";
 
   const filtered = useMemo(() => {
     const list =
       active === "all"
-        ? CAMPAIGNS
-        : CAMPAIGNS.filter((c) => c.category === active);
+        ? ongoingCampaigns
+        : ongoingCampaigns.filter((c) => c.category === active);
     /* Reference shows a clean 4-up row on “All”; keep full list when filtering */
     return active === "all" ? list.slice(0, 4) : list;
-  }, [active]);
+  }, [active, ongoingCampaigns]);
 
-  const featured = FEATURED_CAMPAIGN;
   const featuredPct = campaignPct(featured.raised, featured.target);
 
   return (
     <div className="bg-[#FBF6EE]">
       <PageBannerHero>
         <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
-          Our Campaigns
+          {heroEyebrow}
         </p>
         <h1 className="display mt-1.5 text-[clamp(1.55rem,7vw,3rem)] font-bold leading-[1.08] text-[var(--forest)]">
-          <span className="block">Every Campaign.</span>
+          <span className="block">{heroLine1}</span>
           <span className="block text-[#D68C23] max-sm:whitespace-normal sm:whitespace-nowrap">
-            A Brighter Tomorrow.
+            {heroLine2}
           </span>
         </h1>
         <p className="mt-2 max-w-[30rem] line-clamp-3 text-[12px] leading-[1.65] text-[#4A4A4A] sm:mt-2.5 sm:line-clamp-none sm:text-[13.5px] sm:leading-[1.7]">
-          Together, we can create real change. Our campaigns focus on supporting
-          children, empowering women, improving health and strengthening
-          communities for a better tomorrow.
+          {heroBody}
         </p>
       </PageBannerHero>
 
@@ -177,7 +214,7 @@ export function CampaignsPageView() {
             <div className="relative min-h-[260px] sm:min-h-[320px] lg:min-h-full">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/uploads/featured-campaign-education.jpg"
+                src={featuredImageUrl}
                 alt={featured.title}
                 className="absolute inset-0 h-full w-full object-cover object-[center_25%]"
               />

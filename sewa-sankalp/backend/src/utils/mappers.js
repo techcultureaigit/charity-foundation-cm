@@ -168,6 +168,78 @@ function mapVolunteer(doc) {
   };
 }
 
+function mapCampaign(doc) {
+  return {
+    id: idOf(doc),
+    order: doc.order ?? 0,
+    slug: doc.slug,
+    title: doc.title,
+    subtitle: doc.subtitle || "",
+    description: doc.description,
+    category: doc.category,
+    imageUrl: doc.imageUrl || "",
+    raised: doc.raised ?? 0,
+    target: doc.target ?? 0,
+    status: doc.status || "ongoing",
+    highlights: Array.isArray(doc.highlights)
+      ? doc.highlights.map((item) => ({
+          icon: item.icon || "heart",
+          label: item.label || "",
+        }))
+      : [],
+    href: doc.href || "/get-involved",
+    isPublished: Boolean(doc.isPublished),
+  };
+}
+
+function mapBlogPost(doc) {
+  return {
+    id: idOf(doc),
+    order: doc.order ?? 0,
+    slug: doc.slug,
+    title: doc.title,
+    excerpt: doc.excerpt || "",
+    dateLabel: doc.dateLabel || "",
+    category: doc.category,
+    imageUrl: doc.imageUrl || "",
+    featureImageUrl: doc.featureImageUrl || doc.imageUrl || "",
+    author: doc.author || "Sewa Sankalp Foundation",
+    views: doc.views ?? 0,
+    intro: doc.intro || "",
+    challenge: {
+      title: doc.challenge?.title || "",
+      body: doc.challenge?.body || "",
+      image: doc.challenge?.image || "",
+    },
+    initiative: {
+      title: doc.initiative?.title || "",
+      body: doc.initiative?.body || "",
+      items: Array.isArray(doc.initiative?.items)
+        ? doc.initiative.items.map((item) => ({
+            icon: item.icon || "check",
+            label: item.label || "",
+          }))
+        : [],
+    },
+    impact: {
+      title: doc.impact?.title || "",
+      body: doc.impact?.body || "",
+      quote: {
+        text: doc.impact?.quote?.text || "",
+        author: doc.impact?.quote?.author || "",
+        role: doc.impact?.quote?.role || "",
+      },
+    },
+    lookingAhead: {
+      title: doc.lookingAhead?.title || "",
+      body: doc.lookingAhead?.body || "",
+    },
+    tags: Array.isArray(doc.tags) ? doc.tags : [],
+    isPublished: Boolean(doc.isPublished),
+    updatedAt: doc.updatedAt ? new Date(doc.updatedAt).toISOString() : undefined,
+  };
+}
+
 module.exports = {
   mapPage,
   mapWorkArea,
@@ -180,4 +252,6 @@ module.exports = {
   mapLegal,
   mapEnquiry,
   mapVolunteer,
+  mapCampaign,
+  mapBlogPost,
 };

@@ -52,4 +52,14 @@ router.patch("/enquiries/:id/status", adminController.updateEnquiryStatus);
 router.get("/volunteers", adminController.listVolunteers);
 router.patch("/volunteers/:id/status", adminController.updateVolunteerStatus);
 
+router.get("/campaigns", adminController.listCampaigns);
+router.post("/campaigns", adminController.createCampaign);
+router.put("/campaigns/:id", adminController.updateCampaign);
+router.delete("/campaigns/:id", adminController.deleteCampaign);
+
+router.get("/blog-posts", adminController.listBlogPosts);
+router.post("/blog-posts", adminController.createBlogPost);
+router.put("/blog-posts/:id", adminController.updateBlogPost);
+router.delete("/blog-posts/:id", adminController.deleteBlogPost);
+
 module.exports = router;

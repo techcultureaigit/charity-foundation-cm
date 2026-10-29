@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { HiChevronRight, HiOutlineMagnifyingGlass } from "react-icons/hi2";
 import { AccentText, LeafCorner } from "@/components/home/shared";
+import { BlogNewsletterStrip } from "@/components/blog/BlogNewsletterStrip";
 import { BLOG_CATEGORY_ICONS } from "@/components/blog/categoryIcons";
 import { PageBannerHero } from "@/components/site/PageBannerHero";
 import { UtilityIcon } from "@/components/site/icons";
@@ -16,6 +17,7 @@ import {
   type BlogCategoryId,
   type BlogPost,
 } from "@/lib/content/blogPosts";
+import type { PageContent } from "@/lib/types";
 
 const PAGE_SIZE = 9;
 
@@ -23,7 +25,27 @@ function isCategoryId(value: string | null): value is BlogCategoryId {
   return Boolean(value && BLOG_CATEGORIES.some((c) => c.id === value));
 }
 
-export function BlogPageView({ heroImageUrl }: { heroImageUrl: string }) {
+type BlogPageViewProps = {
+  heroImageUrl: string;
+  posts?: BlogPost[];
+  page?: PageContent;
+};
+
+export function BlogPageView({
+  heroImageUrl,
+  posts,
+  page,
+}: BlogPageViewProps) {
+  const allPosts = posts ?? BLOG_POSTS;
+  const heroEyebrow = page?.extras?.pageHeroEyebrow?.trim() || "Our Blog";
+  const heroHeadline =
+    page?.extras?.heroHeadline?.trim() ||
+    "Stories that Create Change.";
+  const heroAccent =
+    page?.extras?.heroAccent?.trim() || "Create Change.";
+  const heroBody =
+    page?.extras?.heroBody?.trim() ||
+    "Real stories from classrooms, communities and campaigns — how collective care creates lasting change.";
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category");
   const initialQuery = searchParams.get("q") ?? "";
@@ -32,11 +54,11 @@ export function BlogPageView({ heroImageUrl }: { heroImageUrl: string }) {
   );
   const [query, setQuery] = useState(initialQuery);
   const [sort, setSort] = useState<"latest" | "oldest">("latest");
-  const [page, setPage] = useState(1);
+  const [pageIndex, setPageIndex] = useState(1);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    let list: BlogPost[] = BLOG_POSTS.filter((post) => {
+    let list: BlogPost[] = allPosts.filter((post) => {
       if (active !== "all" && post.category !== active) return false;
       if (!q) return true;
       return (
@@ -48,37 +70,36 @@ export function BlogPageView({ heroImageUrl }: { heroImageUrl: string }) {
     // Posts are authored newest-first; reverse only when Oldest First
     if (sort === "oldest") list = [...list].reverse();
     return list;
-  }, [active, query, sort]);
+  }, [active, query, sort, allPosts]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
-  const currentPage = Math.min(page, totalPages);
+  const currentPage = Math.min(pageIndex, totalPages);
   const pagePosts = filtered.slice(
     (currentPage - 1) * PAGE_SIZE,
     currentPage * PAGE_SIZE,
   );
-  const recent = BLOG_POSTS.slice(0, 4);
+  const recent = allPosts.slice(0, 4);
 
   function selectCategory(id: BlogCategoryId) {
     setActive(id);
-    setPage(1);
+    setPageIndex(1);
   }
 
   return (
     <div className="bg-[var(--cream)]">
       <PageBannerHero imageUrl={heroImageUrl}>
         <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
-          Our Blog
+          {heroEyebrow}
         </p>
         <h1 className="display mt-1.5 text-[clamp(1.55rem,7vw,3rem)] font-bold leading-[1.08] text-[var(--forest)] sm:mt-2">
           <AccentText
-            text="Stories that Create Change."
-            accent="Create Change."
+            text={heroHeadline}
+            accent={heroAccent}
             accentClass="text-[#D68C23]"
           />
         </h1>
         <p className="mt-2 max-w-[30rem] line-clamp-3 text-[12px] leading-[1.65] text-[#4A4A4A] sm:mt-2.5 sm:line-clamp-none sm:text-[13.5px] sm:leading-[1.7]">
-          Real stories from classrooms, communities and campaigns — how
-          collective care creates lasting change.
+          {heroBody}
         </p>
       </PageBannerHero>
 
@@ -97,7 +118,7 @@ export function BlogPageView({ heroImageUrl }: { heroImageUrl: string }) {
                   value={query}
                   onChange={(e) => {
                     setQuery(e.target.value);
-                    setPage(1);
+                    setPageIndex(1);
                   }}
                   placeholder="Search articles..."
                   className="w-full rounded-lg border border-[var(--border)] bg-white py-2.5 pl-4 pr-10 text-[12.5px] outline-none ring-[var(--forest)] transition focus:ring-2"
@@ -275,7 +296,7 @@ export function BlogPageView({ heroImageUrl }: { heroImageUrl: string }) {
                 <button
                   type="button"
                   disabled={currentPage <= 1}
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  onClick={() => setPageIndex((p) => Math.max(1, p - 1))}
                   className="rounded-md border border-[var(--border)] bg-white px-2.5 py-1.5 text-[11px] font-semibold disabled:opacity-40"
                 >
                   Previous
@@ -285,7 +306,7 @@ export function BlogPageView({ heroImageUrl }: { heroImageUrl: string }) {
                     <button
                       key={n}
                       type="button"
-                      onClick={() => setPage(n)}
+                      onClick={() => setPageIndex(n)}
                       className={`h-8 w-8 rounded-md text-[11.5px] font-bold ${
                         n === currentPage
                           ? "bg-[var(--forest)] text-white"
@@ -299,7 +320,7 @@ export function BlogPageView({ heroImageUrl }: { heroImageUrl: string }) {
                 <button
                   type="button"
                   disabled={currentPage >= totalPages}
-                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                  onClick={() => setPageIndex((p) => Math.min(totalPages, p + 1))}
                   className="rounded-md border border-[var(--border)] bg-white px-2.5 py-1.5 text-[11px] font-semibold disabled:opacity-40"
                 >
                   Next
@@ -310,39 +331,7 @@ export function BlogPageView({ heroImageUrl }: { heroImageUrl: string }) {
         </div>
       </section>
 
-      {/* Newsletter strip */}
-      <section className="relative overflow-hidden bg-[var(--forest)] py-10 text-white sm:py-12">
-        <LeafCorner corner="bl" className="opacity-30" />
-        <LeafCorner corner="br" className="opacity-25" />
-        <div className="page-shell relative z-[1] flex flex-col items-start justify-between gap-5 md:flex-row md:items-center">
-          <div>
-            <h2 className="display text-[clamp(1.4rem,2.2vw,1.9rem)] font-bold text-white">
-              Get the Latest Stories & Updates
-            </h2>
-            <p className="mt-1.5 max-w-md text-[13px] text-white/75">
-              Subscribe for field stories, event invites and ways to get
-              involved.
-            </p>
-          </div>
-          <form
-            className="flex w-full max-w-md flex-col gap-2 sm:flex-row"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <input
-              type="email"
-              required
-              placeholder="Your email address"
-              className="min-w-0 flex-1 rounded-full border-0 bg-white px-4 py-2.5 text-[13px] text-[var(--charcoal)] outline-none"
-            />
-            <button
-              type="submit"
-              className="shrink-0 rounded-full bg-[#D97706] px-5 py-2.5 text-[12.5px] font-bold uppercase tracking-wide text-white hover:bg-[#c46a08]"
-            >
-              Subscribe
-            </button>
-          </form>
-        </div>
-      </section>
+      <BlogNewsletterStrip />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { HiChevronRight, HiOutlineMagnifyingGlass } from "react-icons/hi2";
 import { AccentText, LeafCorner } from "@/components/home/shared";
+import { BlogNewsletterStrip } from "@/components/blog/BlogNewsletterStrip";
 import { BLOG_CATEGORY_ICONS } from "@/components/blog/categoryIcons";
 import { PageBannerHero } from "@/components/site/PageBannerHero";
 import { SocialIcon, UtilityIcon } from "@/components/site/icons";
@@ -194,103 +195,142 @@ export function BlogPostPageView({
               </span>
             </div>
 
-            <p className="mt-5 text-[14.5px] leading-[1.8] text-[#4A4A4A]">
-              {post.intro}
-            </p>
+            {(post.intro?.trim() || post.excerpt?.trim()) ? (
+              <p className="mt-5 whitespace-pre-wrap text-[14.5px] leading-[1.8] text-[#4A4A4A]">
+                {post.intro?.trim() || post.excerpt}
+              </p>
+            ) : null}
 
-            {/* Challenge */}
-            <div className="mt-9 grid gap-5 sm:grid-cols-[1.15fr_0.85fr] sm:items-start">
-              <div>
-                <h3 className="display text-[1.35rem] font-bold text-[var(--forest)]">
-                  {post.challenge.title}
-                </h3>
-                <p className="mt-3 text-[14px] leading-[1.8] text-[#4A4A4A]">
-                  {post.challenge.body}
-                </p>
+            {/* Challenge — only if filled */}
+            {post.challenge?.title?.trim() || post.challenge?.body?.trim() ? (
+              <div className="mt-9 grid gap-5 sm:grid-cols-[1.15fr_0.85fr] sm:items-start">
+                <div>
+                  {post.challenge.title?.trim() ? (
+                    <h3 className="display text-[1.35rem] font-bold text-[var(--forest)]">
+                      {post.challenge.title}
+                    </h3>
+                  ) : null}
+                  {post.challenge.body?.trim() ? (
+                    <p className="mt-3 text-[14px] leading-[1.8] text-[#4A4A4A]">
+                      {post.challenge.body}
+                    </p>
+                  ) : null}
+                </div>
+                {post.challenge.image?.trim() ? (
+                  <div className="overflow-hidden rounded-xl bg-[#e8e2d6]">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={post.challenge.image}
+                      alt=""
+                      className="aspect-[4/3] w-full object-cover"
+                    />
+                  </div>
+                ) : null}
               </div>
-              <div className="overflow-hidden rounded-xl bg-[#e8e2d6]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={post.challenge.image}
-                  alt=""
-                  className="aspect-[4/3] w-full object-cover"
-                />
+            ) : null}
+
+            {/* Initiative — only if filled */}
+            {post.initiative?.title?.trim() ||
+            post.initiative?.body?.trim() ||
+            post.initiative?.items?.length ? (
+              <div className="mt-10">
+                {post.initiative.title?.trim() ? (
+                  <h3 className="display text-[1.35rem] font-bold text-[var(--forest)]">
+                    {post.initiative.title}
+                  </h3>
+                ) : null}
+                {post.initiative.body?.trim() ? (
+                  <p className="mt-3 text-[14px] leading-[1.8] text-[#4A4A4A]">
+                    {post.initiative.body}
+                  </p>
+                ) : null}
+                {post.initiative.items?.length ? (
+                  <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+                    {post.initiative.items.map((item) => (
+                      <li
+                        key={item.label}
+                        className="flex items-center gap-3 rounded-xl border border-[#E8DFD0] bg-white px-3.5 py-3 shadow-[0_4px_14px_rgba(0,51,43,0.04)]"
+                      >
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#F3E0C4] text-[#D97706]">
+                          <UtilityIcon name={item.icon} className="h-4 w-4" />
+                        </span>
+                        <span className="text-[13.5px] font-semibold text-[var(--forest)]">
+                          {item.label}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
               </div>
-            </div>
+            ) : null}
 
-            {/* Initiative */}
-            <div className="mt-10">
-              <h3 className="display text-[1.35rem] font-bold text-[var(--forest)]">
-                {post.initiative.title}
-              </h3>
-              <p className="mt-3 text-[14px] leading-[1.8] text-[#4A4A4A]">
-                {post.initiative.body}
-              </p>
-              <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-                {post.initiative.items.map((item) => (
-                  <li
-                    key={item.label}
-                    className="flex items-center gap-3 rounded-xl border border-[#E8DFD0] bg-white px-3.5 py-3 shadow-[0_4px_14px_rgba(0,51,43,0.04)]"
-                  >
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#F3E0C4] text-[#D97706]">
-                      <UtilityIcon name={item.icon} className="h-4 w-4" />
+            {/* Impact + quote — only if filled */}
+            {post.impact?.title?.trim() ||
+            post.impact?.body?.trim() ||
+            post.impact?.quote?.text?.trim() ? (
+              <div className="mt-10">
+                {post.impact.title?.trim() ? (
+                  <h3 className="display text-[1.35rem] font-bold text-[var(--forest)]">
+                    {post.impact.title}
+                  </h3>
+                ) : null}
+                {post.impact.body?.trim() ? (
+                  <p className="mt-3 text-[14px] leading-[1.8] text-[#4A4A4A]">
+                    {post.impact.body}
+                  </p>
+                ) : null}
+                {post.impact.quote?.text?.trim() ? (
+                  <blockquote className="relative mt-5 overflow-hidden rounded-2xl bg-[#F8EBD7] px-5 py-6 sm:px-7 sm:py-7">
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute left-4 top-3 font-serif text-[4.5rem] leading-none text-[#E8C98A]/90"
+                    >
+                      “
                     </span>
-                    <span className="text-[13.5px] font-semibold text-[var(--forest)]">
-                      {item.label}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+                    <p className="relative z-[1] pl-2 text-[15px] italic leading-relaxed text-[var(--forest)] sm:pl-4 sm:text-[16px]">
+                      {post.impact.quote.text}
+                    </p>
+                    <footer className="relative z-[1] mt-3 pl-2 text-[13px] font-semibold text-[#D97706] sm:pl-4">
+                      — {post.impact.quote.author}
+                      {post.impact.quote.role
+                        ? `, ${post.impact.quote.role}`
+                        : ""}
+                    </footer>
+                  </blockquote>
+                ) : null}
+              </div>
+            ) : null}
 
-            {/* Impact + quote */}
-            <div className="mt-10">
-              <h3 className="display text-[1.35rem] font-bold text-[var(--forest)]">
-                {post.impact.title}
-              </h3>
-              <p className="mt-3 text-[14px] leading-[1.8] text-[#4A4A4A]">
-                {post.impact.body}
-              </p>
-              <blockquote className="relative mt-5 overflow-hidden rounded-2xl bg-[#F8EBD7] px-5 py-6 sm:px-7 sm:py-7">
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute left-4 top-3 font-serif text-[4.5rem] leading-none text-[#E8C98A]/90"
-                >
-                  “
-                </span>
-                <p className="relative z-[1] pl-2 text-[15px] italic leading-relaxed text-[var(--forest)] sm:pl-4 sm:text-[16px]">
-                  {post.impact.quote.text}
-                </p>
-                <footer className="relative z-[1] mt-3 pl-2 text-[13px] font-semibold text-[#D97706] sm:pl-4">
-                  — {post.impact.quote.author}
-                  {post.impact.quote.role
-                    ? `, ${post.impact.quote.role}`
-                    : ""}
-                </footer>
-              </blockquote>
-            </div>
-
-            {/* Looking ahead */}
-            <div className="mt-10">
-              <h3 className="display text-[1.35rem] font-bold text-[var(--forest)]">
-                {post.lookingAhead.title}
-              </h3>
-              <p className="mt-3 text-[14px] leading-[1.8] text-[#4A4A4A]">
-                {post.lookingAhead.body}
-              </p>
-            </div>
+            {/* Looking ahead — only if filled */}
+            {post.lookingAhead?.title?.trim() ||
+            post.lookingAhead?.body?.trim() ? (
+              <div className="mt-10">
+                {post.lookingAhead.title?.trim() ? (
+                  <h3 className="display text-[1.35rem] font-bold text-[var(--forest)]">
+                    {post.lookingAhead.title}
+                  </h3>
+                ) : null}
+                {post.lookingAhead.body?.trim() ? (
+                  <p className="mt-3 text-[14px] leading-[1.8] text-[#4A4A4A]">
+                    {post.lookingAhead.body}
+                  </p>
+                ) : null}
+              </div>
+            ) : null}
 
             {/* Tags */}
-            <div className="mt-9 flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full border border-[#E0D5C4] bg-white px-3.5 py-1.5 text-[12px] font-semibold text-[var(--forest)]"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
+            {post.tags?.length ? (
+              <div className="mt-9 flex flex-wrap gap-2">
+                {post.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-[#E0D5C4] bg-white px-3.5 py-1.5 text-[12px] font-semibold text-[var(--forest)]"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            ) : null}
 
             {/* Share */}
             <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-[#E8DFD0] pt-6">
@@ -472,43 +512,7 @@ export function BlogPostPageView({
         </section>
       </div>
 
-      {/* Newsletter */}
-      <section className="relative overflow-hidden bg-[var(--forest)] py-10 text-white sm:py-12">
-        <LeafCorner corner="bl" className="opacity-30" />
-        <LeafCorner corner="br" className="opacity-25" />
-        <div className="page-shell relative z-[1] flex flex-col items-start justify-between gap-5 md:flex-row md:items-center">
-          <div>
-            <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.2em] text-[#E8C98A]">
-              Stay Updated
-            </p>
-            <h2 className="display mt-1.5 text-[clamp(1.4rem,2.2vw,1.9rem)] font-bold text-white">
-              Get the Latest Stories & Updates
-            </h2>
-            <p className="mt-1.5 max-w-md text-[13px] text-white/75">
-              Subscribe for field stories, event invites and ways to get
-              involved.
-            </p>
-          </div>
-          <form
-            className="flex w-full max-w-md flex-col gap-2 sm:flex-row"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <input
-              type="email"
-              required
-              placeholder="Your email address"
-              className="min-w-0 flex-1 rounded-full border-0 bg-white px-4 py-2.5 text-[13px] text-[var(--charcoal)] outline-none"
-            />
-            <button
-              type="submit"
-              className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full bg-[#D97706] px-5 py-2.5 text-[12.5px] font-bold uppercase tracking-wide text-white hover:bg-[#c46a08]"
-            >
-              Subscribe
-              <UtilityIcon name="arrow" className="h-3.5 w-3.5" />
-            </button>
-          </form>
-        </div>
-      </section>
+      <BlogNewsletterStrip />
     </div>
   );
 }

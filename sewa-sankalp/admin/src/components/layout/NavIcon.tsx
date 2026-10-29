@@ -94,6 +94,21 @@ export function NavIcon({ icon }: { icon: AdminNavItem["icon"] }) {
           <path d="M4 10h16M9 3v4M15 3v4" />
         </svg>
       );
-    default:      return null;
+    case "campaigns":
+      return (
+        <svg className={common} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+          <path d="M12 21c-4-2.5-7-5.5-7-10a4 4 0 0 1 7-3 4 4 0 0 1 7 3c0 4.5-3 7.5-7 10Z" />
+          <path d="M12 11v6M12 8h.01" />
+        </svg>
+      );
+    case "blog":
+      return (
+        <svg className={common} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+          <path d="M6 4h8l4 4v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z" />
+          <path d="M14 4v4h4M8 13h8M8 17h5" />
+        </svg>
+      );
+    default:
+      return null;
   }
 }

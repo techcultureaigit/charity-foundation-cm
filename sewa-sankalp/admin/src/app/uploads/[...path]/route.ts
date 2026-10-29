@@ -1,7 +1,7 @@
 import { readFile } from "fs/promises";
 import path from "path";
 import { NextResponse } from "next/server";
-import { getUploadsDir } from "@/lib/uploads";
+import { getUploadsDir, getSiteUrl } from "@/lib/uploads";
 
 const MIME: Record<string, string> = {
   ".jpg": "image/jpeg",
@@ -38,6 +38,28 @@ export async function GET(
       },
     });
   } catch {
-    return new NextResponse("Not found", { status: 404 });
+    // On Vercel the website hosts /uploads — proxy so admin previews still work.
+    const site = getSiteUrl().replace(/\/$/, "");
+    try {
+      const upstream = await fetch(`${site}/uploads/${filename}`, {
+        cache: "force-cache",
+      });
+      if (!upstream.ok) {
+        return new NextResponse("Not found", { status: 404 });
+      }
+      const buf = Buffer.from(await upstream.arrayBuffer());
+      const ext = path.extname(filename).toLowerCase();
+      return new NextResponse(buf, {
+        headers: {
+          "Content-Type":
+            upstream.headers.get("content-type") ||
+            MIME[ext] ||
+            "application/octet-stream",
+          "Cache-Control": "public, max-age=86400",
+        },
+      });
+    } catch {
+      return new NextResponse("Not found", { status: 404 });
+    }
   }
 }

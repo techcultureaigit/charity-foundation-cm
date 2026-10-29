@@ -3,7 +3,11 @@ export type PageSlug =
   | "about"
   | "our-work"
   | "get-involved"
-  | "impact-contact";
+  | "impact-contact"
+  | "education"
+  | "campaigns"
+  | "gallery"
+  | "blog";
 
 export interface PageContent {
   slug: PageSlug;

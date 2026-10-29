@@ -3,6 +3,20 @@ import { UtilityIcon } from "@/components/site/icons";
 import type { MediaItem, PageContent } from "@/lib/types";
 import { AccentText } from "./shared";
 
+const CTA_STRIP = "/uploads/cta-corner.png";
+
+/**
+ * Only wide “strip” assets blend into the green footer.
+ * Tall photos (e.g. cta-banner.jpg) cut through the kids and look like
+ * the footer is overlapping — fall back to the designed strip.
+ */
+function resolveCtaStripUrl(url?: string) {
+  if (!url) return CTA_STRIP;
+  if (/cta-corner/i.test(url)) return url;
+  if (/cta-banner-full/i.test(url)) return url;
+  return CTA_STRIP;
+}
+
 export function CtaSection({
   page,
   image,
@@ -13,20 +27,15 @@ export function CtaSection({
   const extras = page.extras ?? {};
   if (!page.ctaHeadline) return null;
 
-  // Corner banner asset — kids + leaves + bottom green swooshes, flush edges
-  const bannerUrl =
-    image?.url &&
-    (image.url.includes("cta-corner") || image.url.includes("cta-banner-full"))
-      ? image.url
-      : "/uploads/cta-corner.png";
+  const bannerUrl = resolveCtaStripUrl(image?.url);
 
   return (
     /*
-      Banner asset is a wide strip (~1024×133). On mobile that scales to ~50px,
-      so absolute overlay text used to spill upward into Events. Mobile keeps
-      content in-flow (defines height); banner fills as cover. sm+ keeps overlay.
+      Strip asset (~1024×133) has cream left + kids corner + green swooshes
+      that continue into the footer. Mobile: in-flow content (defines height);
+      banner fills as cover. sm+: absolute text over the strip.
     */
-    <section className="relative -mb-px bg-[var(--forest)]">
+    <section className="relative z-0 -mb-px bg-[var(--forest)]">
       <div className="relative z-[1] w-full overflow-hidden bg-[var(--ivory)] leading-none">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -36,11 +45,6 @@ export function CtaSection({
           className="m-0 block h-auto w-full max-w-none p-0 max-sm:absolute max-sm:inset-0 max-sm:h-full max-sm:object-cover max-sm:object-[72%_center]"
         />
 
-        {/*
-          Text + button over cream center-left.
-          Right stays clearer on sm+ so kids photo corner of the asset shows.
-          Mobile: in-flow + min-height so section can't collapse under content.
-        */}
         <div className="pointer-events-none relative z-[2] flex min-h-[11.75rem] items-center sm:absolute sm:inset-0 sm:min-h-0 sm:items-center">
           <div className="page-shell pointer-events-auto flex w-full items-center py-5 sm:py-0">
             <div className="flex w-full max-w-full flex-col items-start gap-3 sm:max-w-[68%] sm:flex-row sm:flex-wrap sm:items-center sm:gap-5 sm:pb-[3%] lg:gap-7">

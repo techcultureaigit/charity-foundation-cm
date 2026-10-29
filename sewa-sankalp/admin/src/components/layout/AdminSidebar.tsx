@@ -27,7 +27,7 @@ export function AdminSidebar() {
         </div>
       </div>
 
-      <nav className="flex min-h-0 flex-1 flex-col gap-4 overflow-hidden px-3 py-4">
+      <nav className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto overscroll-contain px-3 py-4 [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.25)_transparent]">
         {adminNavSections.map((section) => (
           <div key={section.title} className="shrink-0">
             <p className="mb-1.5 px-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/40">

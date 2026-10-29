@@ -19,9 +19,11 @@ export default async function GetInvolvedPage() {
   await connection();
   const page = await getPage("get-involved");
 
+  const bannerUrl = page.heroImageUrl?.trim() || "/uploads/contact-hero.png";
+
   return (
     <div className="bg-[var(--cream)]">
-      <PageBannerHero>
+      <PageBannerHero imageUrl={bannerUrl}>
         <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
           Get Involved
         </p>

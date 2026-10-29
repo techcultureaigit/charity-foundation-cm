@@ -7,7 +7,17 @@ const PageSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      enum: ["home", "about", "our-work", "get-involved", "impact-contact"],
+      enum: [
+        "home",
+        "about",
+        "our-work",
+        "get-involved",
+        "impact-contact",
+        "education",
+        "campaigns",
+        "gallery",
+        "blog",
+      ],
     },
     title: { type: String, required: true },
     headline: { type: String, required: true },
@@ -95,6 +105,9 @@ const MediaSchema = new Schema(
     title: { type: String, required: true },
     alt: { type: String, required: true },
     url: { type: String, required: true },
+    /** Stored file bytes (Vercel / serverless — no persistent disk). */
+    dataBase64: { type: String },
+    mimeType: { type: String },
     category: {
       type: String,
       enum: [
@@ -176,6 +189,81 @@ const VolunteerSchema = new Schema(
   { timestamps: { createdAt: true, updatedAt: false } },
 );
 
+const CampaignSchema = new Schema({
+  order: { type: Number, required: true, default: 0 },
+  slug: { type: String, required: true, unique: true },
+  title: { type: String, required: true },
+  subtitle: { type: String, default: "" },
+  description: { type: String, required: true },
+  category: {
+    type: String,
+    enum: ["education", "women", "health", "environment", "community"],
+    required: true,
+  },
+  imageUrl: { type: String, default: "" },
+  raised: { type: Number, default: 0 },
+  target: { type: Number, default: 0 },
+  status: {
+    type: String,
+    enum: ["ongoing", "featured"],
+    default: "ongoing",
+  },
+  highlights: [
+    {
+      icon: { type: String, default: "heart" },
+      label: { type: String, default: "" },
+    },
+  ],
+  href: { type: String, default: "/get-involved" },
+  isPublished: { type: Boolean, default: true },
+});
+
+const BlogPostSchema = new Schema(
+  {
+    order: { type: Number, default: 0 },
+    slug: { type: String, required: true, unique: true },
+    title: { type: String, required: true },
+    excerpt: { type: String, default: "" },
+    dateLabel: { type: String, default: "" },
+    category: {
+      type: String,
+      enum: ["education", "health", "environment", "women", "community", "events"],
+      required: true,
+    },
+    imageUrl: { type: String, default: "" },
+    featureImageUrl: { type: String, default: "" },
+    author: { type: String, default: "Sewa Sankalp Foundation" },
+    views: { type: Number, default: 0 },
+    intro: { type: String, default: "" },
+    challenge: {
+      title: String,
+      body: String,
+      image: String,
+    },
+    initiative: {
+      title: String,
+      body: String,
+      items: [{ icon: String, label: String }],
+    },
+    impact: {
+      title: String,
+      body: String,
+      quote: {
+        text: String,
+        author: String,
+        role: String,
+      },
+    },
+    lookingAhead: {
+      title: String,
+      body: String,
+    },
+    tags: [{ type: String }],
+    isPublished: { type: Boolean, default: true },
+  },
+  { timestamps: { createdAt: true, updatedAt: true } },
+);
+
 module.exports = {
   Page: models.Page || model("Page", PageSchema),
   WorkArea: models.WorkArea || model("WorkArea", WorkAreaSchema),
@@ -191,4 +279,6 @@ module.exports = {
   LegalPage: models.LegalPage || model("LegalPage", LegalPageSchema),
   Enquiry: models.Enquiry || model("Enquiry", EnquirySchema),
   Volunteer: models.Volunteer || model("Volunteer", VolunteerSchema),
+  Campaign: models.Campaign || model("Campaign", CampaignSchema, "campaigns"),
+  BlogPost: models.BlogPost || model("BlogPost", BlogPostSchema, "blogposts"),
 };

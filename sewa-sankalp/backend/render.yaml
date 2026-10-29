@@ -1,0 +1,19 @@
+# Render Blueprint — deploy this backend as a Web Service
+# Dashboard: New → Blueprint → connect this repo, or create Web Service manually.
+services:
+  - type: web
+    name: sewa-sankalp-api
+    runtime: node
+    rootDir: sewa-sankalp/backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: ADMIN_API_KEY
+        sync: false
+      - key: SITE_URL
+        sync: false

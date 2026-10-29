@@ -11,6 +11,10 @@ router.get("/events", publicController.getEvents);
 router.get("/impact", publicController.getImpact);
 router.get("/media", publicController.getMedia);
 router.get("/contact", publicController.getContact);
+router.get("/campaigns", publicController.getCampaigns);
+router.get("/blog-posts", publicController.getBlogPosts);
+router.get("/blog-posts/:slug", publicController.getBlogPost);
+router.get("/files/:id", publicController.getFile);
 router.post("/enquiries", publicController.createEnquiry);
 router.post("/volunteers", publicController.createVolunteer);
 

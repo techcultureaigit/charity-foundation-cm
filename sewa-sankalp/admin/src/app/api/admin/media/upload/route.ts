@@ -35,10 +35,8 @@ export async function POST(request: Request) {
   try {
     const formData = await request.formData();
     const file = formData.get("file");
-    const title = String(formData.get("title") ?? "").trim();
-    const alt = String(formData.get("alt") ?? "").trim();
+    const quick = String(formData.get("mode") ?? "") === "quick";
     const category = oneOfCategory(String(formData.get("category") ?? "general"));
-    const consentConfirmed = formData.get("consentConfirmed") === "on";
 
     if (!(file instanceof File) || file.size === 0) {
       return NextResponse.json(
@@ -46,6 +44,23 @@ export async function POST(request: Request) {
         { status: 400 },
       );
     }
+
+    // Quick uploads (ImageField / hero slides): derive title/alt from filename.
+    const fromName = file.name
+      .replace(/\.[^.]+$/, "")
+      .replace(/[-_]+/g, " ")
+      .trim();
+    const title =
+      String(formData.get("title") ?? "").trim() ||
+      (quick ? fromName || "Uploaded image" : "");
+    const alt =
+      String(formData.get("alt") ?? "").trim() ||
+      (quick ? fromName || "Uploaded image" : "");
+    const consentConfirmed =
+      formData.get("consentConfirmed") === "on" ||
+      formData.get("consentConfirmed") === "true" ||
+      quick;
+
     if (!title || !alt) {
       return NextResponse.json(
         { ok: false, error: "Title and alt text are required" },

@@ -1,25 +1,24 @@
-const express = require("express");
-const cors = require("cors");
+const dns = require("node:dns");
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
+
 const { connectDb } = require("./config/db");
 const { port } = require("./config/env");
-const routes = require("./routes");
-const { notFound, errorHandler } = require("./middleware/error");
+const { createApp } = require("./app");
+const { ensureNavContent } = require("./utils/ensureNavContent");
 
 async function main() {
   await connectDb();
 
-  const app = express();
-  app.use(cors({ origin: true, credentials: true }));
-  app.use(express.json({ limit: "2mb" }));
-  app.use(express.urlencoded({ extended: true }));
+  try {
+    await ensureNavContent();
+  } catch (err) {
+    console.warn("[seed] ensureNavContent skipped:", err.message);
+  }
 
-  app.use("/api", routes);
-  app.use(notFound);
-  app.use(errorHandler);
-
-  app.listen(port, () => {
-    console.log(`[server] Sewa Sankalp API running on http://localhost:${port}`);
-    console.log(`[server] Health: http://localhost:${port}/api/health`);
+  const app = createApp();
+  app.listen(port, "0.0.0.0", () => {
+    console.log(`[server] Sewa Sankalp API running on port ${port}`);
+    console.log(`[server] Health: /api/health`);
   });
 }
 

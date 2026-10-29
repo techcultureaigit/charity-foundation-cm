@@ -7,6 +7,7 @@ import {
   saveMediaMetaAction,
 } from "@/app/admin/actions/cms";
 import { Badge } from "@/components/ui/Badge";
+import { resolveMediaUrl } from "@/lib/mediaUrl";
 import type { MediaItem } from "@/lib/types";
 
 export function MediaManager({ items }: { items: MediaItem[] }) {
@@ -127,7 +128,7 @@ export function MediaManager({ items }: { items: MediaItem[] }) {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={item.url}
+                src={resolveMediaUrl(item.url)}
                 alt={item.alt}
                 className="h-40 w-full object-cover bg-[var(--admin-forest)]"
               />

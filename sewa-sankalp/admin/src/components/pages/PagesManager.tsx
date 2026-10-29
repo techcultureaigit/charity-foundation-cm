@@ -4,9 +4,10 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { savePageAction } from "@/app/admin/actions/pages";
 import { ImageField, type MediaOption, inputClass } from "@/components/cms/fields";
+import { AboutPageFields } from "@/components/pages/AboutPageFields";
+import { HomeSectionFields } from "@/components/pages/HomeSectionFields";
 import { Badge } from "@/components/ui/Badge";
 import { SideDrawer } from "@/components/ui/SideDrawer";
-import { homeExtraFields, homeExtraGroups } from "@/lib/data/homeExtras";
 import type { PageContent } from "@/lib/types";
 
 function formatDate(value: string) {
@@ -42,129 +43,6 @@ function Field({
         <span className="mt-1 block text-xs text-[var(--admin-muted)]">{hint}</span>
       ) : null}
     </label>
-  );
-}
-
-function Group({
-  title,
-  children,
-  open,
-}: {
-  title: string;
-  children: React.ReactNode;
-  open?: boolean;
-}) {
-  return (
-    <details
-      open={open}
-      className="rounded-xl border border-[var(--admin-border)] bg-white p-4"
-    >
-      <summary className="cursor-pointer text-sm font-semibold text-[var(--admin-forest)]">
-        {title}
-      </summary>
-      <div className="mt-4 space-y-4">{children}</div>
-    </details>
-  );
-}
-
-/** Home-only fields: every homepage section's copy (hero → CTA) in one place. */
-function HomeFields({
-  page,
-  media,
-}: {
-  page: PageContent;
-  media: MediaOption[];
-}) {
-  const k = (name: string) => `${page.slug}-${name}-${page.updatedAt}`;
-  const extras = page.extras ?? {};
-
-  return (
-    <div className="space-y-4">
-      <Group title="1 · Hero (headline & body are the fields above)" open>
-        <div key={k("heroAccent")}>
-          <Field
-            label="Hero headline — orange words"
-            name="heroAccentWords"
-            defaultValue={page.heroAccentWords ?? ""}
-            hint="Words inside the headline shown in orange, e.g. “Better”. Stats come from Admin → Impact. Hero photo: Admin → Media → category “hero”."
-          />
-        </div>
-      </Group>
-
-      <Group title="2 · Introduction" open>
-        <div key={k("intro")} className="space-y-4">
-          <Field label="Headline" name="introHeadline" defaultValue={page.introHeadline ?? ""} />
-          <Field
-            label="Headline — gold words"
-            name="introAccentWords"
-            defaultValue={page.introAccentWords ?? ""}
-            hint="e.g. “Right Support.”"
-          />
-          <Field label="Body" name="introBody" rows={5} defaultValue={page.introBody ?? ""} />
-          <Field label="Italic quote (with leaf)" name="quote" defaultValue={page.quote ?? ""} />
-        </div>
-      </Group>
-
-      <Group title="3 · About callout (headline/body come from the About page)">
-        <div key={k("about")} className="space-y-4">
-          <Field
-            label="Callout title (01 …)"
-            name="aboutObjectiveTitle"
-            defaultValue={page.aboutObjectiveTitle ?? ""}
-          />
-          <Field
-            label="Callout text"
-            name="aboutObjectiveBody"
-            rows={3}
-            defaultValue={page.aboutObjectiveBody ?? ""}
-          />
-        </div>
-      </Group>
-
-      <Group title="7 · CTA banner (“Looking For Exclusive Services?”)" open>
-        <div key={k("cta")} className="space-y-4">
-          <Field label="Headline" name="ctaHeadline" defaultValue={page.ctaHeadline ?? ""} />
-          <Field label="Body" name="ctaBody" rows={3} defaultValue={page.ctaBody ?? ""} />
-          <Field label="Button label" name="ctaButtonLabel" defaultValue={page.ctaButtonLabel ?? ""} />
-          <Field label="Button link" name="ctaButtonHref" defaultValue={page.ctaButtonHref ?? ""} />
-          <div>
-            <ImageField
-              name="ctaImageUrl"
-              label="CTA banner photo (right side)"
-              defaultValue={page.ctaImageUrl ?? ""}
-              media={media}
-              preferredCategory="cta"
-            />
-            <p className="mt-1 text-xs text-[var(--admin-muted)]">
-              Upload here — shows on the home page CTA next to “Contact Now”, like the reference design.
-            </p>
-          </div>
-        </div>
-      </Group>
-
-      {homeExtraGroups.map((group) => (
-        <Group key={group} title={`Section headings · ${group}`}>
-          <div key={k(group)} className="space-y-4">
-            {homeExtraFields
-              .filter((field) => field.group === group)
-              .map((field) => (
-                <Field
-                  key={field.key}
-                  label={field.label}
-                  name={`extra_${field.key}`}
-                  rows={field.multiline ? 3 : undefined}
-                  hint={field.hint}
-                  defaultValue={extras[field.key] ?? field.defaultValue}
-                />
-              ))}
-          </div>
-        </Group>
-      ))}
-
-      <p className="text-xs text-[var(--admin-muted)]">
-        Cards &amp; lists are managed in Work Areas, Involvement, Causes, Events, Impact and Media (gallery).
-      </p>
-    </div>
   );
 }
 
@@ -286,7 +164,88 @@ export function PagesManager({
             </label>
 
             {selected.slug === "home" ? (
-              <HomeFields page={selected} media={media} />
+              <div className="space-y-3">
+                <p className="rounded-xl border border-[var(--admin-border)] bg-[var(--admin-ivory)] px-3 py-2 text-xs text-[var(--admin-muted)]">
+                  Prefer{" "}
+                  <a
+                    href="/admin/homepage"
+                    className="font-medium text-[var(--admin-forest)] underline-offset-2 hover:underline"
+                  >
+                    Homepage
+                  </a>{" "}
+                  for the full section-wise editor. Same save fields below.
+                </p>
+                <HomeSectionFields page={selected} media={media} />
+              </div>
+            ) : selected.slug === "about" ? (
+              <div className="space-y-4">
+                <AboutPageFields page={selected} media={media} />
+                <input type="hidden" name="introHeadline" value="" />
+                <input type="hidden" name="introBody" value="" />
+              </div>
+            ) : selected.slug === "our-work" ? (
+              <div className="space-y-4 rounded-xl border border-[var(--admin-border)] bg-white p-4">
+                <p className="text-sm font-semibold text-[var(--admin-forest)]">
+                  Our Work page images
+                </p>
+                <p className="text-xs text-[var(--admin-muted)]">
+                  Focus cards + photos:{" "}
+                  <a
+                    href="/admin/work-areas"
+                    className="font-medium text-[var(--admin-forest)] underline-offset-2 hover:underline"
+                  >
+                    Work Areas
+                  </a>
+                  .
+                </p>
+                <ImageField
+                  name="heroImageUrl"
+                  label="Page banner image"
+                  defaultValue={
+                    selected.heroImageUrl?.trim() || "/uploads/contact-hero.png"
+                  }
+                  media={media}
+                  preferredCategory="work"
+                />
+                <ImageField
+                  name="ctaImageUrl"
+                  label="Bottom CTA photo"
+                  defaultValue={
+                    selected.ctaImageUrl?.trim() || "/uploads/education-cta.png"
+                  }
+                  media={media}
+                  preferredCategory="work"
+                />
+                <input type="hidden" name="introHeadline" value="" />
+                <input type="hidden" name="introBody" value="" />
+              </div>
+            ) : selected.slug === "get-involved" ? (
+              <div className="space-y-4 rounded-xl border border-[var(--admin-border)] bg-white p-4">
+                <p className="text-sm font-semibold text-[var(--admin-forest)]">
+                  Get Involved page
+                </p>
+                <p className="text-xs text-[var(--admin-muted)]">
+                  Homepage involve cards:{" "}
+                  <a
+                    href="/admin/involvement"
+                    className="font-medium text-[var(--admin-forest)] underline-offset-2 hover:underline"
+                  >
+                    Involvement
+                  </a>
+                  .
+                </p>
+                <ImageField
+                  name="heroImageUrl"
+                  label="Page banner image"
+                  defaultValue={
+                    selected.heroImageUrl?.trim() || "/uploads/contact-hero.png"
+                  }
+                  media={media}
+                  preferredCategory="involve"
+                />
+                <input type="hidden" name="introHeadline" value="" />
+                <input type="hidden" name="introBody" value="" />
+              </div>
             ) : selected.slug === "impact-contact" ? (
               <div className="space-y-4 rounded-xl border border-[var(--admin-border)] bg-white p-4">
                 <p className="text-sm font-semibold text-[var(--admin-forest)]">
@@ -302,13 +261,22 @@ export function PagesManager({
                   <ImageField
                     name="heroImageUrl"
                     label="Hero photo (right side)"
-                    defaultValue={selected.heroImageUrl ?? ""}
+                    defaultValue={
+                      selected.heroImageUrl?.trim() ||
+                      "/uploads/contact-hero.png"
+                    }
                     media={media}
                     preferredCategory="contact"
                   />
                   <p className="mt-1 text-xs text-[var(--admin-muted)]">
-                    Upload in Admin → Media with category “Contact hero”, then
-                    pick it here — shows in the Contact Us page hero frame.
+                    Shows in the Contact Us page hero frame. Address / phone:{" "}
+                    <a
+                      href="/admin/settings/contact"
+                      className="font-medium text-[var(--admin-forest)] underline-offset-2 hover:underline"
+                    >
+                      Contact Settings
+                    </a>
+                    .
                   </p>
                 </div>
                 <input type="hidden" name="introHeadline" value="" />

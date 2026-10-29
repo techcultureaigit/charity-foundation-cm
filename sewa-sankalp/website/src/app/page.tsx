@@ -20,30 +20,21 @@ export const instant = false;
 
 export default async function HomePage() {
   await connection();
-  const [
-    home,
-    about,
-    workAreas,
-    impact,
-    involvement,
-    causes,
-    events,
-    heroMedia,
-    aboutMedia,
-    ctaMedia,
-  ] = await Promise.all([
-    getPage("home"),
-    getPage("about"),
-    getWorkAreas(),
-    getPublishedImpact(),
-    getInvolvementCards(),
-    getCauses(),
-    getEvents(),
-    getPublishedMedia("hero"),
-    getPublishedMedia("about"),
-    getPublishedMedia("cta"),
-  ]);
+  const [home, about, workAreas, impact, involvement, causes, events, aboutMedia, ctaMedia] =
+    await Promise.all([
+      getPage("home"),
+      getPage("about"),
+      getWorkAreas(),
+      getPublishedImpact(),
+      getInvolvementCards(),
+      getCauses(),
+      getEvents(),
+      getPublishedMedia("about"),
+      getPublishedMedia("cta"),
+    ]);
 
+  // Prefer page CTA image, then Media “cta”. Never fall back to hero photos —
+  // those break the strip layout and look like a footer overlap.
   const ctaImage = home.ctaImageUrl
     ? {
         id: "cta-page",
@@ -52,13 +43,27 @@ export default async function HomePage() {
         url: home.ctaImageUrl,
         category: "cta" as const,
       }
-    : ctaMedia[0] ?? heroMedia[1] ?? heroMedia[0];
+    : ctaMedia[0];
 
   return (
     <div>
-      <HeroSection page={home} impact={impact} image={heroMedia[0]} />
+      <HeroSection page={home} impact={impact} />
       <IntroSection page={home} areas={workAreas} />
-      <AboutSection home={home} about={about} image={aboutMedia[0]} />
+      <AboutSection
+        home={home}
+        about={about}
+        image={
+          home.extras?.aboutImageUrl
+            ? {
+                id: "about-page",
+                title: "About",
+                alt: "Sewa Sankalp Foundation community work",
+                url: home.extras.aboutImageUrl,
+                category: "about" as const,
+              }
+            : aboutMedia[0]
+        }
+      />
       <InvolveSection page={home} cards={involvement} />
       <CausesSection page={home} causes={causes} />
       <EventsSection page={home} events={events} />

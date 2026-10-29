@@ -43,7 +43,7 @@ export function AboutSection({
             <SmartImage
               src={image?.url || "/uploads/1793021222636-x82thu.jpg"}
               alt={image?.alt || "Sewa Sankalp Foundation community work"}
-              hint="About photo: Admin → Media → category “about”"
+              hint="About photo: Admin → Homepage → About section photo"
               tint="from-[#d6e4d0] to-[#f0e2c2]"
               className="h-[270px] w-full sm:h-[330px] lg:h-[390px]"
               imgClassName="object-[center_32%]"

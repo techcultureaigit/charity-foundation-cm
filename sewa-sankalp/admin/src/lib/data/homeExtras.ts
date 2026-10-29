@@ -12,6 +12,25 @@ export interface HomeExtraField {
  * Keep in sync with website/src/lib/content/homeExtras.ts (defaults only).
  */
 export const homeExtraFields: HomeExtraField[] = [
+  // Hero slideshow — JSON list of image URLs (managed by HeroSlidesField)
+  {
+    group: "Hero",
+    key: "heroSlides",
+    label: "Hero slides (JSON)",
+    defaultValue: JSON.stringify([
+      "/uploads/hero-home.jpg",
+      "/uploads/hero-home-2.png",
+    ]),
+    hint: "Ordered list of homepage hero slideshow images.",
+  },
+  {
+    group: "Hero",
+    key: "heroSlide2Url",
+    label: "Hero slide 2 (legacy)",
+    defaultValue: "/uploads/hero-home-2.png",
+    hint: "Kept in sync with slide 2 for older content.",
+  },
+
   // Introduction
   { group: "Introduction", key: "introTitle", label: "Section title", defaultValue: "Introduction" },
   { group: "Introduction", key: "introLabel", label: "Gold label above headline", defaultValue: "Introduction" },
@@ -24,6 +43,13 @@ export const homeExtraFields: HomeExtraField[] = [
   { group: "About", key: "aboutQuoteAccent", label: "Banner quote — gold words", defaultValue: "better" },
   { group: "About", key: "aboutButtonLabel", label: "Button label", defaultValue: "Read More About Us" },
   { group: "About", key: "aboutButtonHref", label: "Button link", defaultValue: "/about" },
+  {
+    group: "About",
+    key: "aboutImageUrl",
+    label: "About photo URL",
+    defaultValue: "/uploads/1793021222636-x82thu.jpg",
+    hint: "Homepage About section photo (same as live). Prefer the image picker on Homepage · About.",
+  },
 
   // CTA banner
   { group: "CTA banner", key: "ctaAccentWords", label: "Headline — gold words", defaultValue: "Exclusive Services?", hint: "Headline, body and button are in the CTA group above." },
