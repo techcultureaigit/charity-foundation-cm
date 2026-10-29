@@ -150,12 +150,12 @@ export function GalleryPageView({
                         className={`box-border flex h-12 w-full shrink-0 items-center gap-3 rounded-md border-b-2 px-3.5 text-left text-[13.5px] font-semibold transition-colors ${
                           selected
                             ? "border-[#D97706] bg-[#F8EBD7] text-[#D97706]"
-                            : "border-transparent bg-transparent text-[#2C3A4A] hover:bg-[var(--ivory)]"
+                            : "border-transparent bg-transparent text-[#00332B] hover:bg-[var(--ivory)]"
                         }`}
                       >
                         <Icon
                           className={`h-[18px] w-[18px] shrink-0 ${
-                            selected ? "text-[#D97706]" : "text-[#4A5568]"
+                            selected ? "text-[#D97706]" : "text-[#00332B]"
                           }`}
                         />
                         <span className="min-w-0 flex-1 leading-tight">

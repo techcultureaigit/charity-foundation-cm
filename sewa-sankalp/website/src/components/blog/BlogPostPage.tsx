@@ -252,7 +252,7 @@ export function BlogPostPageView({
                     </h3>
                   ) : null}
                   {post.challenge.body?.trim() ? (
-                    <p className="mt-3 text-[14px] leading-[1.8] text-[#4A4A4A]">
+                    <p className="mt-3 whitespace-pre-wrap text-[14px] leading-[1.8] text-[#4A4A4A]">
                       {post.challenge.body}
                     </p>
                   ) : null}

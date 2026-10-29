@@ -319,6 +319,11 @@ export function getBlogPostDetail(slug: string): BlogPostDetail | undefined {
   if (!post) return undefined;
   if (slug === SHOWCASE_DETAIL.slug) return SHOWCASE_DETAIL;
 
+  const challengeBySlug: Record<string, string> = {
+    "green-hands-dehradun":
+      "Dehradun and its surrounding neighbourhoods have grown quickly, but green cover has not kept pace. Open stretches along community roads, school boundaries and residential belts are losing shade trees to heat, dust and unplanned expansion. Families feel the change in hotter summers, poorer air quality and fewer shared spaces where children can play safely under natural cover.\n\nMany plantation efforts stop at a single-day event. Saplings are placed without watering plans, fencing or community ownership, so survival rates stay low. Local groups want to help, yet they often lack saplings, guidance and a simple system to care for young trees through the first dry seasons.\n\nSewa Sankalp Foundation stepped into this gap with a neighbourhood-led drive: plant native and resilient saplings where people live and travel every day, then stay with the community to protect, water and watch those trees grow. The challenge is not only to plant more — it is to make every sapling a lasting part of the street, the school and the city’s shared future.",
+  };
+
   return {
     ...post,
     author: post.author ?? "Sewa Sankalp Foundation",
@@ -327,7 +332,9 @@ export function getBlogPostDetail(slug: string): BlogPostDetail | undefined {
     intro: post.excerpt,
     challenge: {
       title: "The Challenge",
-      body: "On the ground, families still face gaps in access, awareness and resources. Our teams work closely with local partners to understand what communities need most and respond with practical support.",
+      body:
+        challengeBySlug[slug] ??
+        "On the ground, families still face gaps in access, awareness and resources. Our teams work closely with local partners to understand what communities need most and respond with practical support.",
       image: post.image,
     },
     initiative: {

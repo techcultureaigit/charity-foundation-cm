@@ -33,7 +33,7 @@ function ProgressBlock({
   return (
     <div>
       <div
-        className="relative h-2 overflow-hidden rounded-full bg-[#ebe4d8]"
+        className="relative h-3 overflow-hidden rounded-full bg-[#ebe4d8]"
         role="progressbar"
         aria-valuenow={pct}
         aria-valuemin={0}
@@ -43,7 +43,7 @@ function ProgressBlock({
           className="relative h-full rounded-full bg-[var(--forest)]"
           style={{ width: `${pct}%` }}
         >
-          <span className="absolute right-1 top-1/2 -translate-y-1/2 text-[9px] font-bold leading-none text-white">
+          <span className="absolute right-1.5 top-1/2 -translate-y-1/2 text-[10px] font-bold leading-none text-white">
             {pct}%
           </span>
         </div>

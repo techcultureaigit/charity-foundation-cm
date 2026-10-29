@@ -275,6 +275,13 @@ const BLOG_SEED = [
     author: "Sewa Sankalp Foundation",
     views: 860,
     ...emptyDetail,
+    intro:
+      "Volunteers planted over 500 saplings along community roads — a small step toward cleaner air and cooler streets for families across Dehradun.",
+    challenge: {
+      title: "The Challenge",
+      body: "Dehradun and its surrounding neighbourhoods have grown quickly, but green cover has not kept pace. Open stretches along community roads, school boundaries and residential belts are losing shade trees to heat, dust and unplanned expansion. Families feel the change in hotter summers, poorer air quality and fewer shared spaces where children can play safely under natural cover.\n\nMany plantation efforts stop at a single-day event. Saplings are placed without watering plans, fencing or community ownership, so survival rates stay low. Local groups want to help, yet they often lack saplings, guidance and a simple system to care for young trees through the first dry seasons.\n\nSewa Sankalp Foundation stepped into this gap with a neighbourhood-led drive: plant native and resilient saplings where people live and travel every day, then stay with the community to protect, water and watch those trees grow. The challenge is not only to plant more — it is to make every sapling a lasting part of the street, the school and the city’s shared future.",
+      image: "/uploads/event-01-planting.jpg",
+    },
     tags: ["Environment"],
   },
   {

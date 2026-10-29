@@ -96,6 +96,8 @@ function ImpactArrow() {
 }
 
 export function EducationPageView({ page }: { page?: PageContent } = {}) {
+  const bannerUrl =
+    page?.heroImageUrl?.trim() || "/uploads/contact-hero.png";
   const heroEyebrow =
     page?.extras?.pageHeroEyebrow?.trim() || "Our Objectives";
   const heroLine1 =
@@ -110,8 +112,6 @@ export function EducationPageView({ page }: { page?: PageContent } = {}) {
     page?.extras?.heroBody?.trim() ||
     page?.body?.trim() ||
     "We believe education is the foundation of a stronger, more equitable society. Our initiatives focus on providing quality education, learning resources and opportunities for underprivileged children and youth.";
-  const bannerUrl =
-    page?.heroImageUrl?.trim() || "/uploads/contact-hero.png";
 
   return (
     <div className="bg-[#FBF6EE]">
@@ -328,19 +328,15 @@ export function EducationPageView({ page }: { page?: PageContent } = {}) {
                     {c.text}
                   </p>
                   <div className="mt-5">
-                    <div className="relative mb-1 h-4">
-                      <span
-                        className="absolute top-0 -translate-x-1/2 text-[11px] font-bold leading-none text-[var(--forest)]"
-                        style={{ left: `${c.pct}%` }}
-                      >
-                        {c.pct}%
-                      </span>
-                    </div>
                     <div className="h-6 overflow-hidden rounded-full bg-[#ebe4d8]">
                       <div
-                        className="h-full rounded-full bg-[var(--forest)]"
+                        className="relative flex h-full items-start justify-end rounded-full bg-[var(--forest)] px-2 pt-0.5"
                         style={{ width: `${c.pct}%` }}
-                      />
+                      >
+                        <span className="text-[11px] font-bold leading-none text-white">
+                          {c.pct}%
+                        </span>
+                      </div>
                     </div>
                     <div className="mt-2.5 flex justify-between text-[12px]">
                       <span className="flex flex-col items-start">
