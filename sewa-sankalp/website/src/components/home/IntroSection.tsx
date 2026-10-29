@@ -125,11 +125,11 @@ export function IntroSection({
             {cards.map((area, index) => {
               const theme = area.theme ?? defaultThemes[index % 4];
               const style = themeStyles[theme] ?? themeStyles.green;
-              // Designed focus-card art keeps wavy card layout. Use Work Area
-              // upload only when it is already a focus-card asset.
+              // Designed focus-card art keeps wavy card size/layout.
+              // Only swap when the Work Area upload is already a focus-card asset.
               const uploaded = area.imageUrl?.trim() || "";
               const art =
-                uploaded ||
+                (/focus-card/i.test(uploaded) ? uploaded : "") ||
                 FOCUS_CARD_ART[theme] ||
                 FOCUS_CARD_ART[defaultThemes[index % 4]];
 

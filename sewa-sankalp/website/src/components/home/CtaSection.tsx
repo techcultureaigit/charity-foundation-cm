@@ -5,11 +5,16 @@ import { AccentText } from "./shared";
 
 const CTA_STRIP = "/uploads/cta-corner.png";
 
-/** Prefer CMS / Media upload; designed strip is fallback only. */
+/**
+ * Only wide “strip” assets blend into the green footer.
+ * Tall photos (e.g. cta-banner.jpg) cut through the kids and overlap
+ * the headline — fall back to the designed strip.
+ */
 function resolveCtaStripUrl(url?: string) {
-  const trimmed = url?.trim();
-  if (!trimmed) return CTA_STRIP;
-  return trimmed;
+  if (!url) return CTA_STRIP;
+  if (/cta-corner/i.test(url)) return url;
+  if (/cta-banner-full/i.test(url)) return url;
+  return CTA_STRIP;
 }
 
 export function CtaSection({
