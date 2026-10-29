@@ -11,12 +11,12 @@ import { SocialIcon, UtilityIcon } from "@/components/site/icons";
 import {
   BLOG_CATEGORIES,
   categoryBadge,
-  categoryCounts,
   categoryLabel,
-  getRecentPosts,
-  getRelatedPosts,
+  type BlogCategoryId,
+  type BlogPost,
   type BlogPostDetail,
 } from "@/lib/content/blogPosts";
+import type { PageContent } from "@/lib/types";
 
 function formatViews(n: number) {
   return n.toLocaleString("en-IN");
@@ -85,14 +85,56 @@ function FeatureParallax({
 export function BlogPostPageView({
   post,
   heroImageUrl,
+  page,
+  posts = [],
 }: {
   post: BlogPostDetail;
   heroImageUrl: string;
+  page?: PageContent;
+  posts?: BlogPost[];
 }) {
   const [query, setQuery] = useState("");
-  const counts = useMemo(() => categoryCounts(), []);
-  const recent = useMemo(() => getRecentPosts(post.slug, 4), [post.slug]);
-  const related = useMemo(() => getRelatedPosts(post.slug, 3), [post.slug]);
+  const catalog = posts.length > 0 ? posts : [post];
+  const counts = useMemo(() => {
+    const next: Record<BlogCategoryId, number> = {
+      all: catalog.length,
+      education: 0,
+      health: 0,
+      environment: 0,
+      women: 0,
+      community: 0,
+      events: 0,
+    };
+    for (const item of catalog) {
+      if (item.category in next) next[item.category as BlogCategoryId] += 1;
+    }
+    return next;
+  }, [catalog]);
+  const recent = useMemo(
+    () => catalog.filter((p) => p.slug !== post.slug).slice(0, 4),
+    [catalog, post.slug],
+  );
+  const related = useMemo(() => {
+    const same = catalog.filter(
+      (p) => p.slug !== post.slug && p.category === post.category,
+    );
+    const rest = catalog.filter(
+      (p) => p.slug !== post.slug && p.category !== post.category,
+    );
+    return [...same, ...rest].slice(0, 3);
+  }, [catalog, post.category, post.slug]);
+  const heroEyebrow =
+    page?.extras?.pageHeroEyebrow?.trim() || "Our Blog";
+  const heroHeadline =
+    page?.extras?.heroHeadline?.trim() ||
+    page?.headline?.trim() ||
+    "Stories that Create Change.";
+  const heroAccent =
+    page?.extras?.heroAccent?.trim() || "Create Change.";
+  const heroBody =
+    page?.extras?.heroBody?.trim() ||
+    page?.body?.trim() ||
+    "Real stories from classrooms, communities and campaigns — how collective care creates lasting change.";
   const sharePath = `/blog/${post.slug}`;
   const shareText = encodeURIComponent(post.title);
 
@@ -118,18 +160,17 @@ export function BlogPostPageView({
     <div className="bg-[var(--cream)]">
       <PageBannerHero imageUrl={heroImageUrl}>
         <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
-          Our Blog
+          {heroEyebrow}
         </p>
         <h1 className="display mt-1.5 text-[clamp(1.55rem,7vw,3rem)] font-bold leading-[1.08] text-[var(--forest)] sm:mt-2">
           <AccentText
-            text="Stories that Create Change."
-            accent="Create Change."
+            text={heroHeadline}
+            accent={heroAccent}
             accentClass="text-[#D68C23]"
           />
         </h1>
         <p className="mt-2 max-w-[30rem] line-clamp-3 text-[12px] leading-[1.65] text-[#4A4A4A] sm:mt-2.5 sm:line-clamp-none sm:text-[13.5px] sm:leading-[1.7]">
-          Real stories from classrooms, communities and campaigns — how
-          collective care creates lasting change.
+          {heroBody}
         </p>
       </PageBannerHero>
 

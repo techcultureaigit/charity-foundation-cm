@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useTransition } from "react";
 import { resolveMediaUrl } from "@/lib/mediaUrl";
+import { MAX_UPLOAD_LABEL, validateUploadSize } from "@/lib/uploadLimits";
 
 const inputClass =
   "w-full rounded-xl border border-[var(--admin-border)] bg-[var(--admin-ivory)] px-3 py-2.5 outline-none ring-[var(--admin-forest)] focus:ring-2";
@@ -51,6 +52,12 @@ export function ImageField({
   function onFileChange(fileList: FileList | null) {
     const file = fileList?.[0];
     if (!file) return;
+    const sizeError = validateUploadSize(file);
+    if (sizeError) {
+      setError(sizeError);
+      if (fileRef.current) fileRef.current.value = "";
+      return;
+    }
     setError(null);
     startTransition(async () => {
       const formData = new FormData();
@@ -116,6 +123,9 @@ export function ImageField({
             Remove
           </button>
         ) : null}
+        <span className="self-center text-xs text-[var(--admin-muted)]">
+          Max {MAX_UPLOAD_LABEL}
+        </span>
       </div>
 
       <input type="hidden" name={name} value={value} />

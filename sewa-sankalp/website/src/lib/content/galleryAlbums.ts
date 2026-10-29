@@ -153,20 +153,16 @@ export function buildGalleryPhotos(media: MediaItem[]): GalleryPhoto[] {
       albumId: matchAlbum(m.title || m.alt || ""),
     }));
 
-  if (fromDb.length >= 6) return fromDb;
+  // Prefer CMS media only when anything is published; fallbacks only if empty
+  if (fromDb.length > 0) return fromDb;
 
-  const used = new Set(fromDb.map((p) => p.url));
-  const extras: GalleryPhoto[] = GALLERY_FALLBACK_PHOTOS.filter(
-    (p) => !used.has(p.url),
-  ).map((p, i) => ({
+  return GALLERY_FALLBACK_PHOTOS.map((p, i) => ({
     id: `fallback-${i}`,
     title: p.title,
     url: p.url,
     alt: p.title,
     albumId: p.albumId,
   }));
-
-  return [...fromDb, ...extras];
 }
 
 export interface AlbumCard {

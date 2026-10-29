@@ -9,6 +9,7 @@ import {
 import { Badge } from "@/components/ui/Badge";
 import { resolveMediaUrl } from "@/lib/mediaUrl";
 import type { MediaItem } from "@/lib/types";
+import { MAX_UPLOAD_LABEL, validateUploadSize } from "@/lib/uploadLimits";
 
 export function MediaManager({ items }: { items: MediaItem[] }) {
   const router = useRouter();
@@ -24,6 +25,15 @@ export function MediaManager({ items }: { items: MediaItem[] }) {
           event.preventDefault();
           const form = event.currentTarget;
           const formData = new FormData(form);
+          const file = formData.get("file");
+          if (file instanceof File) {
+            const sizeError = validateUploadSize(file);
+            if (sizeError) {
+              setError(sizeError);
+              setMessage(null);
+              return;
+            }
+          }
           startTransition(async () => {
             setError(null);
             setMessage(null);
@@ -54,6 +64,9 @@ export function MediaManager({ items }: { items: MediaItem[] }) {
             required
             className="w-full rounded-xl border border-[var(--admin-border)] bg-[var(--admin-ivory)] px-3 py-2"
           />
+          <span className="mt-1 block text-xs text-[var(--admin-muted)]">
+            Please upload below than {MAX_UPLOAD_LABEL}.
+          </span>
         </label>
         <label className="block text-sm">
           <span className="mb-1.5 block font-medium">Title</span>

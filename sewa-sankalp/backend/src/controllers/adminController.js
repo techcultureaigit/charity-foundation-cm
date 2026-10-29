@@ -16,6 +16,7 @@ const {
   BlogPost,
 } = require("../models");
 const { uploadsDir, storeUploadsInDb, publicApiUrl } = require("../config/env");
+const { uploadBuffer } = require("../utils/gridfs");
 const {
   mapPage,
   mapWorkArea,
@@ -241,19 +242,25 @@ async function uploadMedia(req, res, next) {
     const consentConfirmed = req.body?.consentConfirmed === "true";
     const isPublished = req.body?.isPublished !== "false";
 
-    // On Vercel the filesystem is ephemeral — keep bytes in Mongo and serve via /api/files/:id
+    // On Vercel the filesystem is ephemeral — store in GridFS.
+    // Platform request body limit is ~4.5MB, so reject earlier with a clear message.
+    const maxLiveBytes = Math.floor(4.5 * 1024 * 1024);
     if (storeUploadsInDb) {
-      if (req.file.buffer.length > 4 * 1024 * 1024) {
+      if (req.file.buffer.length > maxLiveBytes) {
         return res.status(400).json({
           ok: false,
-          error: "Image too large for live upload (max 4MB). Compress and try again.",
+          error: "Please upload below than 4.5 MB.",
         });
       }
+      const gridFsId = await uploadBuffer(req.file.buffer, {
+        filename,
+        contentType: mimeType,
+      });
       const doc = await Media.create({
         title,
         alt,
         url: "pending",
-        dataBase64: req.file.buffer.toString("base64"),
+        gridFsId: String(gridFsId),
         mimeType,
         category,
         consentConfirmed,

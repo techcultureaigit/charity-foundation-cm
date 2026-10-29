@@ -21,35 +21,18 @@ export default async function ImpactContactPage() {
     getContactSettings(),
   ]);
 
-  // Prefer admin hero image; fall back to packaged wide banner asset
   const rawHero = page.heroImageUrl?.trim() || "";
   const heroImageUrl =
     !rawHero || rawHero.includes("contact-hero.jpg")
       ? "/uploads/contact-hero.png"
       : rawHero;
 
-  // Force reference copy until admin saves custom Contact Us content
-  const referenceBody =
-    "We'd love to hear from you. Reach out to us for any queries, collaborations, partnerships or to get involved in our mission.";
-  const needsReferenceCopy =
-    page.headline ===
-      "The Measure of Our Work Is the Difference We Strive to Make." ||
-    page.body.includes("Whether you would like to learn more") ||
-    page.body.includes("supporting deprived families");
-
-  const viewPage = needsReferenceCopy
-    ? {
-        ...page,
-        title: "Contact Us",
-        headline: "Contact Us",
-        body: referenceBody,
-        heroAccentWords: page.heroAccentWords || "Us",
-      }
-    : {
-        ...page,
-        headline: page.headline || "Contact Us",
-        heroAccentWords: page.heroAccentWords || "Us",
-      };
+  const viewPage = {
+    ...page,
+    title: page.title || "Contact Us",
+    headline: page.headline?.trim() || "Contact Us",
+    heroAccentWords: page.heroAccentWords?.trim() || "Us",
+  };
 
   return (
     <ContactPageView

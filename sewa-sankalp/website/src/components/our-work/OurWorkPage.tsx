@@ -54,8 +54,8 @@ function WorkFocusCard({
   const theme = area.theme ?? defaultThemes[index % 4];
   const style = themeStyles[theme] ?? themeStyles.green;
   const art =
+    area.imageUrl?.trim() ||
     FOCUS_CARD_ART[theme] ||
-    area.imageUrl ||
     FOCUS_CARD_ART[defaultThemes[index % 4]];
 
   return (
@@ -86,6 +86,11 @@ function WorkFocusCard({
               {area.title}
             </h3>
           </div>
+          {area.subtitle?.trim() ? (
+            <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--forest)]/70 sm:text-[11.5px]">
+              {area.subtitle}
+            </p>
+          ) : null}
           <p className="mt-2 line-clamp-4 text-[11.5px] leading-[1.5] text-[var(--charcoal)]/78 sm:mt-2.5 sm:text-[12.5px] sm:leading-[1.55]">
             {area.description}
           </p>

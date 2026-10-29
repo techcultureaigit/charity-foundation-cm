@@ -5,7 +5,8 @@ const adminController = require("../controllers/adminController");
 
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 12 * 1024 * 1024 },
+  // Vercel serverless request body cap is ~4.5MB — keep multer in sync
+  limits: { fileSize: Math.floor(4.5 * 1024 * 1024) },
 });
 
 const router = Router();

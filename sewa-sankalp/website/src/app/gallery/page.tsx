@@ -28,5 +28,11 @@ export default async function GalleryPage() {
     media.find((m) => /hero|banner/i.test(m.title || ""))?.url ||
     "/uploads/contact-hero.png";
 
-  return <GalleryPageView photos={photos} heroImageUrl={heroImageUrl} />;
+  return (
+    <GalleryPageView
+      photos={photos}
+      heroImageUrl={heroImageUrl}
+      page={page}
+    />
+  );
 }

@@ -141,7 +141,10 @@ export function CampaignsPageView({
 
   const featuredImageUrl =
     page?.extras?.featuredImageUrl?.trim() ||
+    featured.image?.trim() ||
     "/uploads/featured-campaign-education.jpg";
+  const ctaBgUrl =
+    page?.extras?.ctaBgImageUrl?.trim() || "/uploads/campaign-cta-bg.png";
 
   /* Structured extras keep the designed two-line hero; flat headline is SEO-only. */
   const heroEyebrow =
@@ -154,6 +157,8 @@ export function CampaignsPageView({
     page?.extras?.heroBody?.trim() ||
     page?.body?.trim() ||
     "Together, we can create real change. Our campaigns focus on supporting children, empowering women, improving health and strengthening communities for a better tomorrow.";
+  const bannerUrl =
+    page?.heroImageUrl?.trim() || "/uploads/contact-hero.png";
 
   const filtered = useMemo(() => {
     const list =
@@ -168,7 +173,7 @@ export function CampaignsPageView({
 
   return (
     <div className="bg-[#FBF6EE]">
-      <PageBannerHero>
+      <PageBannerHero imageUrl={bannerUrl}>
         <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
           {heroEyebrow}
         </p>
@@ -347,7 +352,7 @@ export function CampaignsPageView({
           <div className="relative overflow-hidden rounded-[1.25rem] bg-[#0B3B24] text-white shadow-[0_20px_48px_rgba(0,51,43,0.22)] sm:rounded-[1.5rem]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/uploads/campaign-cta-bg.png"
+              src={ctaBgUrl}
               alt=""
               className="pointer-events-none absolute inset-0 h-full w-full object-cover object-left"
             />

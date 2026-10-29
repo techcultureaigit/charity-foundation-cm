@@ -129,9 +129,8 @@ export function IntroSection({
               // upload only when it is already a focus-card asset.
               const uploaded = area.imageUrl?.trim() || "";
               const art =
-                (/focus-card/i.test(uploaded) ? uploaded : "") ||
-                FOCUS_CARD_ART[theme] ||
                 uploaded ||
+                FOCUS_CARD_ART[theme] ||
                 FOCUS_CARD_ART[defaultThemes[index % 4]];
 
               return (

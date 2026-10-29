@@ -105,8 +105,10 @@ const MediaSchema = new Schema(
     title: { type: String, required: true },
     alt: { type: String, required: true },
     url: { type: String, required: true },
-    /** Stored file bytes (Vercel / serverless — no persistent disk). */
+    /** Legacy small uploads embedded on the Media doc. */
     dataBase64: { type: String },
+    /** GridFS file id for larger live uploads (up to 20MB). */
+    gridFsId: { type: String },
     mimeType: { type: String },
     category: {
       type: String,

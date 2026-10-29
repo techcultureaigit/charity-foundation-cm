@@ -7,6 +7,7 @@ import {
   serializeHeroSlides,
 } from "@/lib/data/heroSlides";
 import { resolveMediaUrl } from "@/lib/mediaUrl";
+import { validateUploadSize } from "@/lib/uploadLimits";
 
 const inputClass =
   "w-full rounded-xl border border-[var(--admin-border)] bg-[var(--admin-ivory)] px-3 py-2.5 outline-none ring-[var(--admin-forest)] focus:ring-2";
@@ -51,6 +52,12 @@ function SlidePicker({
   function onFileChange(fileList: FileList | null) {
     const file = fileList?.[0];
     if (!file) return;
+    const sizeError = validateUploadSize(file);
+    if (sizeError) {
+      setError(sizeError);
+      if (fileRef.current) fileRef.current.value = "";
+      return;
+    }
     setError(null);
     startTransition(async () => {
       const formData = new FormData();

@@ -110,11 +110,16 @@ export function EducationPageView({ page }: { page?: PageContent } = {}) {
     page?.extras?.heroBody?.trim() ||
     page?.body?.trim() ||
     "We believe education is the foundation of a stronger, more equitable society. Our initiatives focus on providing quality education, learning resources and opportunities for underprivileged children and youth.";
+  const bannerUrl =
+    page?.heroImageUrl?.trim() || "/uploads/contact-hero.png";
 
   return (
     <div className="bg-[#FBF6EE]">
-      {/* Hero — same banner image/bg as Campaigns; keep Education copy */}
-      <PageBannerHero contentClassName="w-full max-w-[40rem]">
+      {/* Hero — CMS banner image + Education copy */}
+      <PageBannerHero
+        imageUrl={bannerUrl}
+        contentClassName="w-full max-w-[40rem]"
+      >
         <p className="nav-bar text-[10px] font-bold uppercase tracking-[0.22em] text-[#D68C23] sm:text-[11px]">
           {heroEyebrow}
         </p>

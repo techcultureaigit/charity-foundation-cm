@@ -188,11 +188,19 @@ async function getBlogPost(req, res, next) {
   }
 }
 
-/** Serve images stored in Mongo (live/serverless uploads). */
+/** Serve images stored in Mongo / GridFS (live/serverless uploads). */
 async function getFile(req, res, next) {
   try {
     const doc = await Media.findById(req.params.id).lean();
-    if (!doc?.dataBase64) {
+    if (!doc) {
+      return res.status(404).json({ ok: false, error: "File not found" });
+    }
+    if (doc.gridFsId) {
+      const { downloadToResponse } = require("../utils/gridfs");
+      await downloadToResponse(doc.gridFsId, res, doc.mimeType);
+      return;
+    }
+    if (!doc.dataBase64) {
       return res.status(404).json({ ok: false, error: "File not found" });
     }
     const buf = Buffer.from(doc.dataBase64, "base64");

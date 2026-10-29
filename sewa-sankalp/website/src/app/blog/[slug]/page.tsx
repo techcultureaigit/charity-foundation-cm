@@ -3,7 +3,11 @@ import { connection } from "next/server";
 import { notFound } from "next/navigation";
 import { BlogPostPageView } from "@/components/blog/BlogPostPage";
 import { BLOG_POSTS } from "@/lib/content/blogPosts";
-import { getBlogPostBySlug, getPage } from "@/lib/services/content";
+import {
+  getBlogPostBySlug,
+  getBlogPosts,
+  getPage,
+} from "@/lib/services/content";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -27,13 +31,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function BlogPostPage({ params }: Props) {
   await connection();
   const { slug } = await params;
-  const [post, page] = await Promise.all([
+  const [post, page, posts] = await Promise.all([
     getBlogPostBySlug(slug),
     getPage("blog"),
+    getBlogPosts(),
   ]);
   if (!post) notFound();
 
   const heroImageUrl = page.heroImageUrl ?? "/uploads/contact-hero.png";
 
-  return <BlogPostPageView post={post} heroImageUrl={heroImageUrl} />;
+  return (
+    <BlogPostPageView
+      post={post}
+      heroImageUrl={heroImageUrl}
+      page={page}
+      posts={posts}
+    />
+  );
 }
