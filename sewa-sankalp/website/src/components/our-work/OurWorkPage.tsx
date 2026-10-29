@@ -44,6 +44,17 @@ const FOCUS_CARD_ART: Record<FocusTheme, string> = {
   blue: "/uploads/focus-card-education.png?v=5",
 };
 
+function resolveFocusCardArt(area: WorkArea, theme: FocusTheme, index: number) {
+  // Designed focus-card PNGs leave a pastel left panel for text.
+  // Square CMS photos (focus-01…jpg) fill the card and cause text/face overlap.
+  const uploaded = area.imageUrl?.trim() || "";
+  if (/focus-card/i.test(uploaded)) return uploaded;
+  return (
+    FOCUS_CARD_ART[theme] ||
+    FOCUS_CARD_ART[defaultThemes[index % 4]]
+  );
+}
+
 function WorkFocusCard({
   area,
   index,
@@ -53,52 +64,45 @@ function WorkFocusCard({
 }) {
   const theme = area.theme ?? defaultThemes[index % 4];
   const style = themeStyles[theme] ?? themeStyles.green;
-  const art =
-    area.imageUrl?.trim() ||
-    FOCUS_CARD_ART[theme] ||
-    FOCUS_CARD_ART[defaultThemes[index % 4]];
+  const art = resolveFocusCardArt(area, theme, index);
 
   return (
     <Link
       href={area.href === "/our-work" ? "/get-involved" : area.href || "/get-involved"}
-      className={`group relative block overflow-hidden rounded-[1.5rem] ${style.card} shadow-[0_12px_32px_rgba(0,51,43,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(0,51,43,0.12)]`}
+      className={`group relative block overflow-hidden rounded-[1.25rem] ${style.card} shadow-[0_10px_28px_rgba(0,51,43,0.08)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_36px_rgba(0,51,43,0.12)]`}
     >
+      {/* Art defines card size; slight zoom hides PNG corner fringe */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={art}
         alt={area.title}
-        className="block h-auto w-full scale-[1.03] object-cover"
+        className="block h-auto w-full scale-[1.04] object-cover"
       />
 
-      {/* Text on pastel left of designed art */}
-      <div className="absolute inset-0 z-10 flex w-[56%] flex-col justify-between p-4 sm:w-[54%] sm:p-5 lg:p-6">
-        <div>
-          <div className="flex items-start gap-2 sm:gap-2.5">
+      {/* Text sits on the empty pastel left — keep copy short so it fits the strip art */}
+      <div className="absolute inset-0 z-10 flex w-[58%] flex-col justify-between p-3 sm:w-[54%] sm:p-4">
+        <div className="min-w-0">
+          <div className="flex items-start gap-1.5 sm:gap-2">
             <span
-              className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border bg-white/95 sm:h-9 sm:w-9 ${style.icon}`}
+              className={`mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border bg-white/90 sm:h-8 sm:w-8 ${style.icon}`}
             >
               <IconByKey
                 iconKey={area.iconKey}
-                className="h-3.5 w-3.5 sm:h-4 sm:w-4"
+                className="h-3 w-3 sm:h-3.5 sm:w-3.5"
               />
             </span>
-            <h3 className="display pt-0.5 text-[1.05rem] font-bold leading-[1.15] text-[var(--forest)] sm:text-[1.2rem] lg:text-[1.3rem]">
+            <h3 className="display min-w-0 pt-0.5 text-[0.9rem] font-bold leading-[1.15] text-[var(--forest)] sm:text-[1.08rem] lg:text-[1.15rem]">
               {area.title}
             </h3>
           </div>
-          {area.subtitle?.trim() ? (
-            <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--forest)]/70 sm:text-[11.5px]">
-              {area.subtitle}
-            </p>
-          ) : null}
-          <p className="mt-2 line-clamp-4 text-[11.5px] leading-[1.5] text-[var(--charcoal)]/78 sm:mt-2.5 sm:text-[12.5px] sm:leading-[1.55]">
+          <p className="mt-1.5 line-clamp-3 text-[10.5px] leading-[1.45] text-[var(--charcoal)]/78 sm:line-clamp-4 sm:text-[11.5px] sm:leading-[1.5]">
             {area.description}
           </p>
         </div>
         <span
-          className={`inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors duration-300 sm:h-9 sm:w-9 ${style.button}`}
+          className={`inline-flex h-7 w-7 items-center justify-center rounded-full transition-colors duration-300 sm:h-8 sm:w-8 ${style.button}`}
         >
-          <UtilityIcon name="arrow" className="h-3.5 w-3.5" />
+          <UtilityIcon name="arrow" className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
         </span>
       </div>
     </Link>
@@ -155,7 +159,7 @@ export function OurWorkPageView({
             </p>
           </div>
 
-          <div className="mt-8 grid gap-4 sm:mt-9 sm:grid-cols-2 sm:gap-5 lg:gap-6">
+          <div className="mt-8 grid gap-3.5 sm:mt-9 sm:grid-cols-2 sm:gap-4 lg:gap-5">
             {areas.map((area, index) => (
               <WorkFocusCard key={area.id} area={area} index={index} />
             ))}
